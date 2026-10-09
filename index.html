@@ -3,280 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Code Genius Activity Library</title>
+  <title>Code Genius Activity Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: light;
-      --ink: #211d32;
-      --muted: #676073;
-      --line: #ddd7e8;
-      --paper: #fff9f0;
-      --panel: #ffffff;
-      --green: #4c8f6f;
-      --gold: #c4872e;
-      --blue: #476a9f;
+      --teal: #00B3C5;
+      --teal-dark: #008A99;
+      --yellow: #FDD736;
+      --ink: #29384C;
+      --tint: #E6F7FA;
+      --border: #C0D8DC;
+      --warn-bg: #FFFBE6;
+      --mute: #55707A;
+      --paper: #ffffff;
+      --shadow: rgba(41, 56, 76, .16);
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--paper);
-      color: var(--ink);
-    }
-    main {
-      width: min(1060px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 48px 0 56px;
-    }
-    header { margin-bottom: 32px; }
-    .eyebrow {
-      margin: 0 0 8px;
-      color: var(--green);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(36px, 7vw, 72px);
-      line-height: 1;
-      letter-spacing: 0;
-    }
-    p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-    .lead {
-      max-width: 780px;
-      font-size: 18px;
-    }
-    .thai {
-      color: var(--ink);
-      font-weight: 700;
-    }
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 18px;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 32px;
-      padding: 6px 10px;
-      border: 1.5px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .7);
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 700;
-    }
-    .course {
-      padding: 24px 0 30px;
-      border-top: 1.5px solid var(--line);
-    }
-    .course-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: end;
-      margin-bottom: 16px;
-    }
-    h2 {
-      margin: 0 0 6px;
-      font-size: clamp(24px, 4vw, 38px);
-      line-height: 1.08;
-      letter-spacing: 0;
-    }
-    .subtitle {
-      color: var(--blue);
-      font-weight: 800;
-    }
-    .count {
-      flex: 0 0 auto;
-      color: var(--gold);
-      font-weight: 800;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    a {
-      display: flex;
-      min-height: 190px;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 18px;
-      border: 1.5px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      color: inherit;
-      text-decoration: none;
-      box-shadow: 0 7px 0 rgba(33, 29, 50, .08);
-      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-    }
-    a:hover,
-    a:focus-visible {
-      transform: translateY(-3px);
-      border-color: var(--green);
-      box-shadow: 0 10px 0 rgba(33, 29, 50, .1);
-      outline: none;
-    }
-    .number {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: #eef7f0;
-      color: var(--green);
-      font-weight: 800;
-      border: 1.5px solid #cbe4d4;
-    }
-    h3 {
-      margin: 0 0 8px;
-      font-size: 20px;
-      line-height: 1.16;
-      letter-spacing: 0;
-    }
-    .label-th {
-      display: block;
-      margin-top: 4px;
-      color: var(--blue);
-      font-size: 15px;
-      font-weight: 800;
-    }
-    .open {
-      color: var(--green);
-      font-weight: 800;
-    }
-    footer {
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-      font-size: 14px;
-    }
-    @media (max-width: 860px) {
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 620px) {
-      main { padding: 34px 0; }
-      .course-head { display: block; }
-      .count { display: inline-block; margin-top: 10px; }
-      .grid { grid-template-columns: 1fr; }
-      a { min-height: 165px; }
-    }
+    body { margin: 0; min-height: 100vh; font-family: "Sarabun", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: linear-gradient(180deg, var(--tint) 0, #ffffff 340px), #ffffff; color: var(--ink); }
+    .accent { height: 3px; background: linear-gradient(90deg, var(--teal), var(--teal-dark), var(--yellow)); }
+    main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 44px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; padding: 14px 16px 16px; border: 2px solid var(--ink); border-top: 0; border-radius: 0 0 8px 8px; background: #ffffff; box-shadow: 6px 6px 0 var(--shadow); position: relative; }
+    .topbar::after { content: ""; position: absolute; right: 16px; bottom: 0; left: 16px; height: 3px; background: var(--teal); }
+    .brand { display: inline-flex; align-items: center; gap: 12px; min-width: 0; }
+    .logo-wrap { display: grid; place-items: center; width: clamp(132px, 12vw, 154px); height: clamp(132px, 12vw, 154px); padding: 8px; border: 2px solid var(--ink); border-radius: 8px; background: #ffffff; box-shadow: 5px 5px 0 var(--ink); flex: 0 0 auto; overflow: hidden; }
+    .logo { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .brand-copy { min-width: 0; }
+    .brand-name { margin: 0; font-size: 18px; font-weight: 800; line-height: 1.15; }
+    .brand-label { margin: 2px 0 0; color: var(--mute); font-size: 14px; font-weight: 700; line-height: 1.25; }
+    .language-switch { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 4px; border: 2px solid var(--ink); border-radius: 8px; background: #ffffff; box-shadow: 4px 4px 0 var(--ink); }
+    .language-switch button { min-width: 64px; min-height: 44px; padding: 0 10px; border: 2px solid transparent; border-radius: 5px; background: transparent; color: var(--ink); font: inherit; font-size: 14px; font-weight: 800; white-space: nowrap; cursor: pointer; }
+    .language-switch button[aria-pressed="true"] { border-color: var(--ink); background: var(--yellow); box-shadow: inset 0 -4px 0 var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+    .language-switch button[aria-pressed="true"]::before { content: "✓ "; }
+    .language-switch button:focus-visible, .activity-card:focus-visible { outline: 3px solid var(--teal-dark); outline-offset: 3px; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); gap: 28px; align-items: end; margin-bottom: 32px; padding: 28px; border: 2px solid var(--ink); border-radius: 8px; background: #ffffff; box-shadow: 8px 8px 0 var(--ink); }
+    .eyebrow { display: inline-flex; align-items: center; min-height: 30px; margin: 0 0 14px; padding: 4px 10px; border: 2px solid var(--ink); border-radius: 999px; background: var(--teal); color: var(--ink); font-size: 13px; font-weight: 800; line-height: 1.2; }
+    h1 { margin: 0; max-width: 760px; font-size: clamp(34px, 8vw, 76px); font-weight: 800; line-height: 1.12; letter-spacing: 0; }
+    .lead { margin: 16px 0 0; max-width: 760px; color: var(--mute); font-size: 18px; font-weight: 600; line-height: 1.6; }
+    .stats { display: grid; gap: 10px; margin: 0; }
+    .stat { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 12px; border: 2px solid var(--ink); border-radius: 8px; background: var(--warn-bg); }
+    .stat strong { font-size: 28px; line-height: 1; }
+    .stat span { color: var(--mute); font-weight: 800; text-align: right; }
+    .course { margin-top: 22px; padding: 22px; border: 2px solid var(--ink); border-radius: 8px; background: #ffffff; box-shadow: 6px 6px 0 var(--shadow); }
+    .course-head { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 2px solid var(--border); }
+    h2 { margin: 0; font-size: clamp(24px, 4vw, 42px); font-weight: 800; line-height: 1.05; letter-spacing: 0; }
+    .subtitle { margin: 8px 0 0; color: var(--mute); font-size: 16px; font-weight: 600; line-height: 1.55; }
+    .count { display: inline-flex; align-items: center; min-height: 36px; padding: 5px 10px; border: 2px solid var(--ink); border-radius: 8px; background: var(--yellow); color: var(--ink); font-size: 14px; font-weight: 800; white-space: nowrap; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .activity-card { display: flex; min-height: 208px; flex-direction: column; justify-content: space-between; gap: 18px; padding: 16px; border: 2px solid var(--ink); border-radius: 8px; background: #ffffff; color: inherit; text-decoration: none; box-shadow: 5px 5px 0 var(--teal-dark); transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease; }
+    .activity-card:hover { transform: translate(-2px, -2px); background: var(--tint); box-shadow: 7px 7px 0 var(--teal-dark); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .number { display: grid; place-items: center; width: 48px; height: 42px; border: 2px solid var(--ink); border-radius: 8px; background: var(--teal); color: var(--ink); font-size: 18px; font-weight: 800; line-height: 1; }
+    .tag { min-height: 28px; padding: 3px 8px; border: 2px solid var(--ink); border-radius: 999px; background: var(--warn-bg); color: var(--ink); font-size: 12px; font-weight: 800; line-height: 1.35; text-align: right; }
+    h3 { margin: 0 0 8px; font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: 0; }
+    .description { margin: 0; color: var(--mute); font-size: 15px; font-weight: 600; line-height: 1.55; }
+    .open { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 10px; border: 2px solid var(--ink); border-radius: 8px; background: var(--yellow); color: var(--ink); font-size: 15px; font-weight: 800; line-height: 1.25; }
+    .note { margin: 24px 0 0; padding: 14px 16px; border: 2px solid var(--ink); border-radius: 8px; background: var(--tint); color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.55; }
+    [data-i18n] { display: block; }
+    [data-mode="both"] [data-i18n] + [data-i18n] { margin-top: 8px; }
+    h1 [data-i18n] + [data-i18n] { margin-top: 0; }
+    [data-mode="th"] [data-i18n="en"], [data-mode="en"] [data-i18n="th"] { display: none; }
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; align-items: start; } .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } .stat { display: block; } .stat span { display: block; margin-top: 6px; text-align: left; } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 640px) { main { width: min(100% - 24px, 1120px); padding: 14px 0 30px; } .topbar { display: grid; gap: 16px; } .brand { align-items: center; } .language-switch { width: 100%; } .language-switch button { flex: 1 1 0; } .hero, .course { padding: 18px; box-shadow: 5px 5px 0 var(--ink); } .hero { gap: 20px; } .stats, .grid { grid-template-columns: 1fr; } .course-head { grid-template-columns: 1fr; } .count { justify-self: start; } .activity-card { min-height: 180px; } }
+    @media (max-width: 360px) { main { width: min(100% - 18px, 1120px); } .logo-wrap { width: 124px; height: 124px; } h1 { font-size: 32px; } .lead { font-size: 16px; } }
   </style>
 </head>
-<body>
+<body data-mode="both">
+  <div class="accent" aria-hidden="true"></div>
   <main>
-    <header>
-      <p class="eyebrow">Code Genius</p>
-      <h1>Activity Library</h1>
-      <p class="lead"><span class="thai">คลังกิจกรรมสำหรับเปิดใช้ในห้องเรียน</span><br>Classroom-ready HTML activities for Code Genius lessons, organized for ongoing updates.</p>
-      <div class="meta" aria-label="Library details">
-        <span class="pill">8 activities</span>
-        <span class="pill">2 lesson groups</span>
-        <span class="pill">Thai / English menu</span>
-      </div>
+    <header class="topbar">
+      <div class="brand"><span class="logo-wrap"><img class="logo" src="assets/code-genius-logo.jpeg" alt="Code Genius"></span><div class="brand-copy"><p class="brand-name">Code Genius</p><p class="brand-label">Activity Hub</p></div></div>
+      <nav class="language-switch" aria-label="Language"><button type="button" data-mode-button="th" aria-pressed="false">TH</button><button type="button" data-mode-button="en" aria-pressed="false">EN</button><button type="button" data-mode-button="both" aria-pressed="true">TH/EN</button></nav>
     </header>
-
-    <section class="course" aria-labelledby="password-title">
-      <div class="course-head">
-        <div>
-          <h2 id="password-title">Password Survivor</h2>
-          <p><span class="subtitle">ความปลอดภัยของรหัสผ่าน</span><br>Password safety activities and a classroom code-breaking game.</p>
-        </div>
-        <span class="count">3 activities</span>
-      </div>
-      <div class="grid">
-        <a href="password/00_Password_Playground_Intro.html">
-          <span class="number">00</span>
-          <span>
-            <h3>Password Playground<span class="label-th">บทนำและกิจกรรมทดลองรหัสผ่าน</span></h3>
-            <p>Intro activity for exploring how passwords work.</p>
-          </span>
-          <span class="open">Open / เปิด</span>
-        </a>
-        <a href="password/01_Password_Quiz_Slides.html">
-          <span class="number">01</span>
-          <span>
-            <h3>Password Quiz Slides<span class="label-th">สไลด์ถามตอบ Password Survivor</span></h3>
-            <p>Question slides for leading the classroom discussion.</p>
-          </span>
-          <span class="open">Open / เปิด</span>
-        </a>
-        <a href="password/02_Password_Survivor_Game.html">
-          <span class="number">02</span>
-          <span>
-            <h3>Password Survivor Game<span class="label-th">เกมเดารหัส 4 หลักแบบทีม</span></h3>
-            <p>Team game for practicing password logic and strategy.</p>
-          </span>
-          <span class="open">Open / เปิด</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="course" aria-labelledby="dictionary-title">
-      <div class="course-head">
-        <div>
-          <h2 id="dictionary-title">Python Dictionary</h2>
-          <p><span class="subtitle">กิจกรรม Dictionary และ Alien Passport</span><br>Dictionary practice, alien profiles, and quiz activities.</p>
-        </div>
-        <span class="count">5 activities</span>
-      </div>
-      <div class="grid">
-        <a href="dictionary/Dictionary_Quiz.html">
-          <span class="number">01</span>
-          <span>
-            <h3>Dictionary Quiz<span class="label-th">แบบทดสอบแนวคิด Dictionary</span></h3>
-            <p>Visual quiz for reviewing key dictionary concepts.</p>
-          </span>
-          <span class="open">Open / เปิด</span>
-        </a>
-        <a href="dictionary/Alien_Visitor_Randomizer.html">
-          <span class="number">02</span>
-          <span>
-            <h3>Alien Visitor Randomizer<span class="label-th">ด่านต้อนรับเอเลี่ยน</span></h3>
-            <p>Random visitor cards for passport-based activities.</p>
-          </span>
-          <span class="open">Open / เปิด</span>
-        </a>
-        <a href="dictionary/Alien_Dictionary_Lab.html">
-          <span class="number">03</span>
-          <span>
-            <h3>Alien Dictionary Lab<span class="label-th">แล็บอ่านข้อมูลทีละ Passport</span></h3>
-            <p>Guided practice for reading structured data.</p>
-          </span>
-          <span class="open">Open / เปิด</span>
-        </a>
-        <a href="dictionary/Alien_Passport_Class_1_Inner_Worlds.html">
-          <span class="number">04</span>
-          <span>
-            <h3>Alien Passport: Class 1<span class="label-th">Inner Worlds</span></h3>
-            <p>Passport data set for the first activity group.</p>
-          </span>
-          <span class="open">Open / เปิด</span>
-        </a>
-        <a href="dictionary/Alien_Passport_Class_2_Outer_Worlds.html">
-          <span class="number">05</span>
-          <span>
-            <h3>Alien Passport: Class 2<span class="label-th">Outer Worlds</span></h3>
-            <p>Passport data set for the second activity group.</p>
-          </span>
-          <span class="open">Open / เปิด</span>
-        </a>
-      </div>
-    </section>
-
-    <footer>
-      <p><span class="thai">อัปเดตได้เรื่อย ๆ โดยเพิ่มไฟล์ HTML และลิงก์ใหม่ในเมนูนี้</span><br>Maintained as a growing library of selected classroom HTML activities.</p>
-    </footer>
+    <section class="hero" aria-labelledby="page-title"><div><p class="eyebrow">Classroom HTML Activities</p><h1 id="page-title" lang="en">Code Genius Activity Hub</h1><p class="lead"><span data-i18n="th" lang="th">เมนูสำหรับเปิดกิจกรรม HTML ที่พร้อมใช้ในห้องเรียน นักเรียนเข้าใช้งานผ่านลิงก์ได้ทันที และรองรับการอัปเดตเพิ่มกิจกรรมในอนาคต</span><span data-i18n="en" lang="en">A tidy launch menu for classroom-ready HTML activities. Students can open each activity directly, and the hub is ready for ongoing updates.</span></p></div><dl class="stats" aria-label="Library summary"><div class="stat"><strong>8</strong><span>activities</span></div><div class="stat"><strong>2</strong><span>lesson groups</span></div><div class="stat"><strong>TH/EN</strong><span>menu</span></div></dl></section>
+    <section class="course" aria-labelledby="password-title"><div class="course-head"><div><h2 id="password-title">Password Survivor</h2><p class="subtitle"><span data-i18n="th" lang="th">กิจกรรมเรื่องความปลอดภัยของรหัสผ่าน ตั้งแต่ทดลองแนวคิด ไปจนถึงเกมเดารหัสแบบทีม</span><span data-i18n="en" lang="en">Password safety activities, from concept exploration to a team code-breaking game.</span></p></div><span class="count">3 activities</span></div><div class="grid"><a class="activity-card" href="password/00_Password_Playground_Intro.html"><span class="card-top"><span class="number">00</span><span class="tag">Intro</span></span><span><h3>Password Playground</h3><p class="description"><span data-i18n="th" lang="th">บทนำและกิจกรรมทดลองรหัสผ่าน เพื่อชวนให้นักเรียนเห็นภาพว่ารหัสผ่านทำงานอย่างไร</span><span data-i18n="en" lang="en">An intro activity for exploring how passwords work.</span></p></span><span class="open">Open / เปิด</span></a><a class="activity-card" href="password/01_Password_Quiz_Slides.html"><span class="card-top"><span class="number">01</span><span class="tag">Quiz</span></span><span><h3>Password Quiz Slides</h3><p class="description"><span data-i18n="th" lang="th">สไลด์ถามตอบสำหรับนำอภิปราย Password Survivor ในห้องเรียน</span><span data-i18n="en" lang="en">Question slides for leading the classroom discussion.</span></p></span><span class="open">Open / เปิด</span></a><a class="activity-card" href="password/02_Password_Survivor_Game.html"><span class="card-top"><span class="number">02</span><span class="tag">Game</span></span><span><h3>Password Survivor Game</h3><p class="description"><span data-i18n="th" lang="th">เกมเดารหัส 4 หลักแบบทีม สำหรับฝึกตรรกะและกลยุทธ์เรื่องรหัสผ่าน</span><span data-i18n="en" lang="en">A team game for practicing password logic and strategy.</span></p></span><span class="open">Open / เปิด</span></a></div></section>
+    <section class="course" aria-labelledby="dictionary-title"><div class="course-head"><div><h2 id="dictionary-title">Python Dictionary</h2><p class="subtitle"><span data-i18n="th" lang="th">กิจกรรม Dictionary และ Alien Passport สำหรับฝึกอ่านข้อมูลแบบ key-value ผ่านโจทย์ที่จับต้องได้</span><span data-i18n="en" lang="en">Dictionary and Alien Passport activities for practicing key-value data through concrete classroom tasks.</span></p></div><span class="count">5 activities</span></div><div class="grid"><a class="activity-card" href="dictionary/Dictionary_Quiz.html"><span class="card-top"><span class="number">01</span><span class="tag">Quiz</span></span><span><h3>Dictionary Quiz</h3><p class="description"><span data-i18n="th" lang="th">แบบทดสอบภาพรวมสำหรับทบทวนแนวคิดสำคัญของ Dictionary</span><span data-i18n="en" lang="en">A visual quiz for reviewing key dictionary concepts.</span></p></span><span class="open">Open / เปิด</span></a><a class="activity-card" href="dictionary/Alien_Visitor_Randomizer.html"><span class="card-top"><span class="number">02</span><span class="tag">Randomizer</span></span><span><h3>Alien Visitor Randomizer</h3><p class="description"><span data-i18n="th" lang="th">สุ่มบัตรผู้มาเยือนจากต่างดาวสำหรับใช้กับกิจกรรม Passport</span><span data-i18n="en" lang="en">Random visitor cards for passport-based activities.</span></p></span><span class="open">Open / เปิด</span></a><a class="activity-card" href="dictionary/Alien_Dictionary_Lab.html"><span class="card-top"><span class="number">03</span><span class="tag">Lab</span></span><span><h3>Alien Dictionary Lab</h3><p class="description"><span data-i18n="th" lang="th">แล็บฝึกอ่านข้อมูลทีละ Passport และเชื่อมโยงกับโครงสร้าง Dictionary</span><span data-i18n="en" lang="en">Guided practice for reading structured data one passport at a time.</span></p></span><span class="open">Open / เปิด</span></a><a class="activity-card" href="dictionary/Alien_Passport_Class_1_Inner_Worlds.html"><span class="card-top"><span class="number">04</span><span class="tag">Lesson Slides</span></span><span><h3>Alien Passport: Class 1</h3><p class="description"><span data-i18n="th" lang="th">สื่อฉายสอน 9 ฉากสำหรับคาบ 1 เรื่องดาวชั้นใน</span><span data-i18n="en" lang="en">Nine-scene lesson slides for Class 1 on the Inner Worlds.</span></p></span><span class="open">Open / เปิด</span></a><a class="activity-card" href="dictionary/Alien_Passport_Class_2_Outer_Worlds.html"><span class="card-top"><span class="number">05</span><span class="tag">Lesson Slides</span></span><span><h3>Alien Passport: Class 2</h3><p class="description"><span data-i18n="th" lang="th">สื่อฉายสอน 9 ฉากสำหรับคาบ 2 เรื่องดาวชั้นนอก</span><span data-i18n="en" lang="en">Nine-scene lesson slides for Class 2 on the Outer Worlds.</span></p></span><span class="open">Open / เปิด</span></a></div></section>
+    <p class="note"><span data-i18n="th" lang="th">เมนูนี้อัปเดตเพิ่มกิจกรรมได้เรื่อย ๆ โดยเพิ่มไฟล์ HTML และลิงก์ใหม่ในหมวดที่เหมาะสม</span><span data-i18n="en" lang="en">This hub can keep growing by adding new HTML files and linking them in the right lesson group.</span></p>
   </main>
+  <script>
+    const modeButtons = document.querySelectorAll("[data-mode-button]");
+    const body = document.body;
+    function setMode(mode) { body.dataset.mode = mode; document.documentElement.lang = mode === "en" ? "en" : "th"; modeButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.modeButton === mode))); }
+    modeButtons.forEach((button) => button.addEventListener("click", () => setMode(button.dataset.modeButton)));
+  </script>
 </body>
 </html>

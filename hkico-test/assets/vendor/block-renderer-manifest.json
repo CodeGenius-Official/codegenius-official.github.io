@@ -1,0 +1,86 @@
+{
+  "purpose": "Project-local renderer assets for HKICO Scratch/Blockly block visuals.",
+  "primaryScratchRenderer": {
+    "package": "scratch-blocks",
+    "version": "2.1.32",
+    "origin": "Scratch Foundation / MIT package from npm registry",
+    "repository": "https://github.com/scratchfoundation/scratch-blocks",
+    "license": "Apache-2.0",
+    "npmIntegrity": "sha512-P+fKUMyGLogoaOYEPJMgEyVQkNaqNxjjVPzdgdqhOLJ4ancxnU+hce8Phro2FJ1V3ODwifjpODtUYlw+g6t1Rg==",
+    "npmShasum": "06c41ad98374fb34916f66f9bd1894474e8f67e0",
+    "tarballSha256": "df642e4cb598ed8df7358e158b5bd3649b1d33555227c25c1ceab97e636184ee",
+    "localFiles": [
+      {
+        "path": "assets/vendor/scratch-blocks-2.1.32/main.mjs",
+        "sha256": "f8ee76698f7b24cd91a4f03f4a76a49064b59dd97d9136332b0a997895451f33"
+      },
+      {
+        "path": "assets/vendor/scratch-blocks-2.1.32/en.json",
+        "sha256": "df7133f369d916405deb7ed4f3d1a4bc73c4fb454c50f73f75424d8120ddd81a"
+      },
+      {
+        "path": "assets/vendor/scratch-blocks-2.1.32/LICENSE",
+        "sha256": "259faa4a7f78c30220404c7ac8026d380e11ada27efdea01108231d494f50184"
+      },
+      {
+        "path": "assets/vendor/scratch-blocks-2.1.32/TRADEMARK",
+        "sha256": "1de28ca56df1d6fcd40f7dbf6c979c0359c2417231d5364f0d2dde9f53ff6037"
+      },
+      {
+        "path": "assets/vendor/scratch-blocks-2.1.32/media/",
+        "sha256Manifest": "run `find assets/vendor/scratch-blocks-2.1.32/media -type f -print0 | xargs -0 shasum -a 256 | sort`"
+      }
+    ],
+    "notes": "This is the Scratch Foundation block editor/workspace renderer. It is preferred for Scratch visuals when question data supplies Scratch-blocks-compatible XML/serialization and real block IDs."
+  },
+  "primaryBlocklyRenderer": {
+    "package": "blockly",
+    "version": "13.3.0",
+    "origin": "Raspberry Pi Foundation / Blockly package from npm registry",
+    "repository": "https://github.com/RaspberryPiFoundation/blockly",
+    "license": "Apache-2.0",
+    "npmIntegrity": "sha512-qAHFGMGTSF67Lupr3pjZz9LQu4JCFdN76CMZxegBKiveZreK08yXhaCz0g9q9/xe5GEdoeFT3POAlQavPIRPEw==",
+    "npmShasum": "18947fe0f4992bbf1ee5051e2d18dabee7ee9581",
+    "tarballSha256": "4b1ff98578bc8f4dbee81fa14ed00bf466b621b680da26f9dceaf29b4eda8e84",
+    "localFiles": [
+      {
+        "path": "assets/vendor/blockly-13.3.0/blockly.min.js",
+        "sha256": "ff9d8dc68e095890c6eb64962ca76130f9c3f49f0bc647076ee2f825f328de48"
+      },
+      {
+        "path": "assets/vendor/blockly-13.3.0/blocks_compressed.js",
+        "sha256": "25284edec82c518a4699a6c2e763f6a47ba863e93327c7c9685bd9a5c6edc812"
+      },
+      {
+        "path": "assets/vendor/blockly-13.3.0/en.js",
+        "sha256": "155b0e29ad2bd59ad463ebde5c3ace7685ea5c25d019e950aab625b3259d7e02"
+      },
+      {
+        "path": "assets/vendor/blockly-13.3.0/LICENSE",
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    ],
+    "notes": "Use Blockly's own workspace SVG, serialization APIs, and block IDs for interactive highlighting."
+  },
+  "fallbackScratchPictureRenderer": {
+    "package": "scratchblocks",
+    "version": "3.7.1",
+    "origin": "Community-maintained scratchblocks package from npm registry",
+    "repository": "https://github.com/scratchblocks/scratchblocks",
+    "license": "MIT",
+    "npmIntegrity": "sha512-e78d7V1QhW+u/dmjsPYKeWebsEBQOQonVeZiIPQYBqg/GhbBD5AQts0M6B6VaGzb5j636mW/gXyLUVWWIWVTlg==",
+    "npmShasum": "01a08e1576f1239c7a0465fe59f5778c60815521",
+    "tarballSha256": "de19c608c7b834947413244bce0828b0deabf2fc83778f01d8bf2bc53bc3da8a",
+    "localFiles": [
+      {
+        "path": "assets/vendor/scratchblocks-3.7.1-fallback/scratchblocks.min.js",
+        "sha256": "565f4f31b5e11926364fe4ec9638ba6567bc0ee5e9555812068dc7881cbde8d4"
+      },
+      {
+        "path": "assets/vendor/scratchblocks-3.7.1-fallback/LICENSE",
+        "sha256": "a1d118afba0cfe37e0a94ecba8c985547db0fa3061c984c10ee3077436452d1f"
+      }
+    ],
+    "notes": "Fallback only. It can render Scratch-style pictures from text, but it is not the official Scratch editor renderer and must be disclosed as community-maintained."
+  }
+}

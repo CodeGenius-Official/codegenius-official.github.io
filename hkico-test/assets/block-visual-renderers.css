@@ -1,0 +1,64 @@
+.hkico-block-visual {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.hkico-block-frame {
+  position: relative;
+  min-height: 180px;
+  border: 1px solid var(--border, #c0d8dc);
+  border-radius: 8px;
+  background: #fff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+.hkico-block-frame[data-status="failed"],
+.hkico-block-frame[data-status="unsupported"] {
+  min-height: 0;
+  border-color: var(--bad, #c4473d);
+  background: #fff0ed;
+}
+
+.hkico-block-workspace {
+  min-width: 340px;
+  min-height: 180px;
+}
+
+.hkico-block-workspace .blocklySvg {
+  background: transparent;
+}
+
+.hkico-block-fallback {
+  margin: 0;
+  max-width: 100%;
+  overflow: auto;
+  white-space: pre;
+}
+
+.hkico-block-note {
+  color: var(--mute, #55707a);
+  font-size: 13px;
+}
+
+.hkico-block-active > .blocklyPath,
+.hkico-block-active.blocklySelected > .blocklyPath {
+  filter: drop-shadow(0 0 0.55rem rgba(253, 215, 54, 0.95));
+  stroke: #29384c;
+  stroke-width: 2px;
+}
+
+.hkico-block-active .blocklyText,
+.hkico-block-active .blocklyNonEditableText > text {
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hkico-block-active > .blocklyPath {
+    filter: none;
+    stroke: #29384c;
+    stroke-width: 3px;
+  }
+}

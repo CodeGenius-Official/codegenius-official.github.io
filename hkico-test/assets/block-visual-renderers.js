@@ -8,6 +8,22 @@ const BLOCKLY_SCRIPTS = [
 let scratchBlocksPromise;
 let blocklyPromise;
 
+const SCRATCH_NATIVE_STYLES = {
+  argument: 'more',
+  control: 'control',
+  data: 'data',
+  event: 'event',
+  looks: 'looks',
+  math: 'textField',
+  motion: 'motion',
+  operator: 'operators',
+  pen: 'pen',
+  procedures: 'more',
+  sensing: 'sensing',
+  sound: 'sounds',
+  text: 'textField',
+};
+
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     const existing = document.querySelector(`script[data-hkico-src="${src}"]`);
@@ -120,6 +136,22 @@ function fitWorkspace(api, workspace, mount) {
   } catch {}
 }
 
+function restoreScratchNativeColours(workspace) {
+  const blocks = workspace.getAllBlocks ? workspace.getAllBlocks(false) : [];
+  blocks.forEach(block => {
+    const type = String(block.type || '');
+    const category = type.split('_')[0];
+    let style = SCRATCH_NATIVE_STYLES[category];
+    if (type === 'data_listindexall' || type === 'data_listindexrandom') style = 'textField';
+    else if (type === 'data_listcontents' || (type.startsWith('data_') && type.includes('list'))) style = 'data_lists';
+    if (!style || !block.setStyle) return;
+    try {
+      block.setStyle(style);
+      if (block.render) block.render();
+    } catch {}
+  });
+}
+
 function loadXml(api, workspace, xmlText) {
   const xmlApi = api.Xml || api.utils?.xml || api.Xml;
   if (!xmlApi) throw new Error('XML API is unavailable.');
@@ -211,14 +243,14 @@ async function renderScratchBlocks(target, visual, activeBlocks) {
     zoom: { controls: false, wheel: false, startScale: 0.82 },
     pathToMedia: SCRATCH_MEDIA_URL,
     media: SCRATCH_MEDIA_URL,
-    renderer: 'scratch',
-    theme: ScratchBlocks.ScratchBlocksTheme,
+    scratchTheme: ScratchBlocks.ScratchBlocksTheme?.CLASSIC || 'classic',
   };
   const workspace = ScratchBlocks.inject(mount, options);
   if (typeof visual.serialization !== 'string') {
     throw new Error('Scratch Blocks currently requires XML serialization.');
   }
   loadXml(ScratchBlocks, workspace, visual.serialization);
+  restoreScratchNativeColours(workspace);
   fitWorkspace(ScratchBlocks, workspace, mount);
   const missing = highlightBlocks(workspace, activeBlocks);
   return { workspace, missing };

@@ -8,20 +8,19 @@ const BLOCKLY_SCRIPTS = [
 let scratchBlocksPromise;
 let blocklyPromise;
 
-const SCRATCH_NATIVE_STYLES = {
-  argument: 'more',
-  control: 'control',
-  data: 'data',
-  event: 'event',
-  looks: 'looks',
-  math: 'textField',
-  motion: 'motion',
-  operator: 'operators',
-  pen: 'pen',
-  procedures: 'more',
-  sensing: 'sensing',
-  sound: 'sounds',
-  text: 'textField',
+const SCRATCH_NATIVE_BLOCK_STYLES = {
+  motion: { colourPrimary: '#4C97FF', colourSecondary: '#4280D7', colourTertiary: '#3373CC' },
+  looks: { colourPrimary: '#9966FF', colourSecondary: '#855CD6', colourTertiary: '#774DCB' },
+  sounds: { colourPrimary: '#CF63CF', colourSecondary: '#C94FC9', colourTertiary: '#BD42BD' },
+  event: { colourPrimary: '#FFBF00', colourSecondary: '#E6AC00', colourTertiary: '#CC9900' },
+  control: { colourPrimary: '#FFAB19', colourSecondary: '#EC9C13', colourTertiary: '#CF8B17' },
+  sensing: { colourPrimary: '#5CB1D6', colourSecondary: '#47A8D1', colourTertiary: '#2E8EB8' },
+  operators: { colourPrimary: '#59C059', colourSecondary: '#46B946', colourTertiary: '#389438' },
+  data: { colourPrimary: '#FF8C1A', colourSecondary: '#FF8000', colourTertiary: '#DB6E00' },
+  data_lists: { colourPrimary: '#FF661A', colourSecondary: '#FF5500', colourTertiary: '#E64D00' },
+  pen: { colourPrimary: '#0FBD8C', colourSecondary: '#0DA57A', colourTertiary: '#0B8E69' },
+  more: { colourPrimary: '#FF6680', colourSecondary: '#FF4D6A', colourTertiary: '#FF3355' },
+  textField: { colourPrimary: '#FFFFFF', colourSecondary: '#FFFFFF', colourTertiary: '#FFFFFF' },
 };
 
 function loadScript(src) {
@@ -136,20 +135,26 @@ function fitWorkspace(api, workspace, mount) {
   } catch {}
 }
 
-function restoreScratchNativeColours(workspace) {
-  const blocks = workspace.getAllBlocks ? workspace.getAllBlocks(false) : [];
-  blocks.forEach(block => {
-    const type = String(block.type || '');
-    const category = type.split('_')[0];
-    let style = SCRATCH_NATIVE_STYLES[category];
-    if (type === 'data_listindexall' || type === 'data_listindexrandom') style = 'textField';
-    else if (type === 'data_listcontents' || (type.startsWith('data_') && type.includes('list'))) style = 'data_lists';
-    if (!style || !block.setStyle) return;
-    try {
-      block.setStyle(style);
-      if (block.render) block.render();
-    } catch {}
+function createScratchNativeTheme(api) {
+  const categoryStyles = {};
+  Object.entries(SCRATCH_NATIVE_BLOCK_STYLES).forEach(([name, style]) => {
+    categoryStyles[`${name}_category`] = { colour: style.colourPrimary };
   });
+  const themeDef = {
+    base: api.Themes?.Classic || api.Themes?.Zelos,
+    blockStyles: SCRATCH_NATIVE_BLOCK_STYLES,
+    categoryStyles,
+    componentStyles: {},
+  };
+  try {
+    if (api.Theme?.defineTheme) return api.Theme.defineTheme('hkico-scratch-native', themeDef);
+  } catch {}
+  try {
+    if (api.Theme) {
+      return new api.Theme('hkico-scratch-native', themeDef.blockStyles, themeDef.categoryStyles, themeDef.componentStyles);
+    }
+  } catch {}
+  return undefined;
 }
 
 function loadXml(api, workspace, xmlText) {
@@ -244,13 +249,13 @@ async function renderScratchBlocks(target, visual, activeBlocks) {
     pathToMedia: SCRATCH_MEDIA_URL,
     media: SCRATCH_MEDIA_URL,
     scratchTheme: ScratchBlocks.ScratchBlocksTheme?.CLASSIC || 'classic',
+    theme: createScratchNativeTheme(ScratchBlocks),
   };
   const workspace = ScratchBlocks.inject(mount, options);
   if (typeof visual.serialization !== 'string') {
     throw new Error('Scratch Blocks currently requires XML serialization.');
   }
   loadXml(ScratchBlocks, workspace, visual.serialization);
-  restoreScratchNativeColours(workspace);
   fitWorkspace(ScratchBlocks, workspace, mount);
   const missing = highlightBlocks(workspace, activeBlocks);
   return { workspace, missing };

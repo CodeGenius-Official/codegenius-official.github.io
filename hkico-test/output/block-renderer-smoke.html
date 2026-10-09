@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HKICO Block Renderer Smoke</title>
+<link rel="stylesheet" href="../assets/block-visual-renderers.css">
+<style>
+:root{--border:#c0d8dc;--bad:#c4473d;--mute:#55707a;--teal:#00b3c5;--yellow:#fdd736;--ink:#29384c;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}body{margin:0;padding:18px;background:#f7fbfc;color:var(--ink);font-family:system-ui,-apple-system,sans-serif}.wrap{max-width:980px;margin:auto;display:grid;gap:18px}.panel{background:white;border:1px solid var(--border);border-radius:8px;padding:16px;min-width:0}.code{background:#172233;color:#f4fbff;border-radius:8px;padding:13px;white-space:pre-wrap;font-family:var(--mono);font-size:14px;overflow:auto}.feedback{margin-top:12px;padding:12px;border:1px solid var(--border);border-radius:8px;background:#e6f7fa}.wrong{background:#fff0ed;border-color:var(--bad)}button{font:inherit;border:1px solid var(--border);border-radius:8px;background:white;padding:8px 12px}.primary{background:var(--teal);border-color:var(--teal);color:white}.row{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="panel">
+<h1>HKICO Block Renderer Smoke</h1>
+<p>This page verifies project-local renderer assets only. It is not a quiz and not official HKICO content.</p>
+<div class="row">
+<button class="primary" id="scratchStep">Scratch next highlight</button>
+<button class="primary" id="blocklyStep">Blockly next highlight</button>
+</div>
+</section>
+<section class="panel">
+<h2>Scratch Blocks 2.1.32</h2>
+<div id="scratchMount"></div>
+</section>
+<section class="panel">
+<h2>Blockly 13.3.0</h2>
+<div id="blocklyMount"></div>
+</section>
+</main>
+<script type="module" src="../assets/block-visual-renderers.js"></script>
+<script type="module">
+const scratchVisual = {
+  renderer: 'scratch-blocks',
+  version: '2.1.32',
+  serialization: `<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="event_whenflagclicked" id="hat-green-flag" x="24" y="24">
+      <next>
+        <block type="data_setvariableto" id="set-score">
+          <field name="VARIABLE" id="score">score</field>
+          <value name="VALUE">
+            <shadow type="math_number" id="score-zero"><field name="NUM">0</field></shadow>
+          </value>
+          <next>
+            <block type="control_repeat" id="repeat-three">
+              <value name="TIMES">
+                <shadow type="math_whole_number" id="three"><field name="NUM">3</field></shadow>
+              </value>
+              <statement name="SUBSTACK">
+                <block type="data_changevariableby" id="change-score">
+                  <field name="VARIABLE" id="score">score</field>
+                  <value name="VALUE">
+                    <shadow type="math_number" id="score-one"><field name="NUM">1</field></shadow>
+                  </value>
+                </block>
+              </statement>
+            </block>
+          </next>
+        </block>
+      </next>
+    </block>
+  </xml>`,
+  textFallback: 'when green flag clicked\nset score to (0)\nrepeat (3)\n  change score by (1)\nend',
+  blockIdsByLine: { 1: 'hat-green-flag', 2: 'set-score', 3: 'repeat-three', 4: 'change-score' },
+};
+const blocklyVisual = {
+  renderer: 'blockly',
+  version: '13.3.0',
+  serialization: {
+    blocks: {
+      languageVersion: 0,
+      blocks: [{
+        type: 'variables_set',
+        id: 'set-total',
+        x: 24,
+        y: 24,
+        fields: { VAR: { name: 'total', id: 'total-id' } },
+        inputs: { VALUE: { shadow: { type: 'math_number', id: 'num-zero', fields: { NUM: 0 } } } },
+        next: { block: {
+          type: 'math_change',
+          id: 'change-total',
+          fields: { VAR: { name: 'total', id: 'total-id' } },
+          inputs: { DELTA: { shadow: { type: 'math_number', id: 'num-three', fields: { NUM: 3 } } } },
+        } },
+      }],
+    },
+    variables: [{ name: 'total', id: 'total-id' }],
+  },
+  textFallback: 'set total to 0\nchange total by 3',
+  blockIdsByLine: { 1: 'set-total', 2: 'change-total' },
+};
+let scratchIndex = 0;
+let blocklyIndex = 0;
+const scratchSteps = [['hat-green-flag'], ['set-score'], ['repeat-three'], ['change-score']];
+const blocklySteps = [['set-total'], ['change-total']];
+
+async function waitForBridge() {
+  for (let i = 0; i < 50; i += 1) {
+    if (window.HKICOBlockVisuals) return;
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+  throw new Error('HKICOBlockVisuals did not load.');
+}
+
+await waitForBridge();
+await window.HKICOBlockVisuals.renderInto(document.getElementById('scratchMount'), scratchVisual, scratchSteps[0]);
+await window.HKICOBlockVisuals.renderInto(document.getElementById('blocklyMount'), blocklyVisual, blocklySteps[0]);
+scratchStep.onclick = () => {
+  scratchIndex = (scratchIndex + 1) % scratchSteps.length;
+  window.HKICOBlockVisuals.updateActive(document.getElementById('scratchMount'), scratchSteps[scratchIndex]);
+};
+blocklyStep.onclick = () => {
+  blocklyIndex = (blocklyIndex + 1) % blocklySteps.length;
+  window.HKICOBlockVisuals.updateActive(document.getElementById('blocklyMount'), blocklySteps[blocklyIndex]);
+};
+</script>
+</body>
+</html>

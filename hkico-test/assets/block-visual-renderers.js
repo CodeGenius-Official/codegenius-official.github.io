@@ -2,7 +2,6 @@ const SCRATCH_MODULE_URL = '../assets/vendor/scratch-blocks-2.1.32/main.mjs';
 const SCRATCH_MEDIA_URL = '../assets/vendor/scratch-blocks-2.1.32/media/';
 const BLOCKLY_SCRIPTS = [
   '../assets/vendor/blockly-13.3.0/blockly.min.js',
-  '../assets/vendor/blockly-13.3.0/blocks_compressed.js',
   '../assets/vendor/blockly-13.3.0/en.js',
 ];
 
@@ -102,6 +101,25 @@ function resizeWorkspace(api, workspace) {
   } catch {}
 }
 
+function prepareWorkspaceMount(mount) {
+  mount.style.width = '720px';
+  mount.style.height = '220px';
+}
+
+function fitWorkspace(api, workspace, mount) {
+  resizeWorkspace(api, workspace);
+  try {
+    const metrics = workspace.getMetrics && workspace.getMetrics();
+    const contentWidth = Math.ceil(metrics?.contentWidth || metrics?.viewWidth || 0);
+    const contentHeight = Math.ceil(metrics?.contentHeight || metrics?.viewHeight || 0);
+    if (contentWidth || contentHeight) {
+      mount.style.width = `${Math.max(340, Math.min(1100, contentWidth + 56))}px`;
+      mount.style.height = `${Math.max(180, Math.min(640, contentHeight + 56))}px`;
+      resizeWorkspace(api, workspace);
+    }
+  } catch {}
+}
+
 function loadXml(api, workspace, xmlText) {
   const xmlApi = api.Xml || api.utils?.xml || api.Xml;
   if (!xmlApi) throw new Error('XML API is unavailable.');
@@ -179,8 +197,11 @@ function registerScratchDynamicMenus(api, dynamicMenus = {}) {
 
 async function renderScratchBlocks(target, visual, activeBlocks) {
   const ScratchBlocks = await getScratchBlocks();
+  if (ScratchBlocks.ScratchMsgs?.setLocale) ScratchBlocks.ScratchMsgs.setLocale('en');
+  else if (ScratchBlocks.setLocale) ScratchBlocks.setLocale('en');
   registerScratchDynamicMenus(ScratchBlocks, visual.dynamicMenus);
   const mount = target.querySelector('.hkico-block-workspace');
+  prepareWorkspaceMount(mount);
   const options = {
     readOnly: true,
     scrollbars: false,
@@ -198,7 +219,7 @@ async function renderScratchBlocks(target, visual, activeBlocks) {
     throw new Error('Scratch Blocks currently requires XML serialization.');
   }
   loadXml(ScratchBlocks, workspace, visual.serialization);
-  resizeWorkspace(ScratchBlocks, workspace);
+  fitWorkspace(ScratchBlocks, workspace, mount);
   const missing = highlightBlocks(workspace, activeBlocks);
   return { workspace, missing };
 }
@@ -206,6 +227,7 @@ async function renderScratchBlocks(target, visual, activeBlocks) {
 async function renderBlockly(target, visual, activeBlocks) {
   const Blockly = await getBlockly();
   const mount = target.querySelector('.hkico-block-workspace');
+  prepareWorkspaceMount(mount);
   const workspace = Blockly.inject(mount, {
     readOnly: true,
     scrollbars: false,
@@ -220,7 +242,7 @@ async function renderBlockly(target, visual, activeBlocks) {
   } else {
     throw new Error('Blockly JSON serialization API is unavailable.');
   }
-  resizeWorkspace(Blockly, workspace);
+  fitWorkspace(Blockly, workspace, mount);
   const missing = highlightBlocks(workspace, activeBlocks);
   return { workspace, missing };
 }

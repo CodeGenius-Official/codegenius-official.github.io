@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Session 3 · Token Machine</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="assets/logo.jpeg" alt="logo"><div><b>Pre-Python Mini Game Studio</b><span>Session 3 · Token Machine</span></div></div>
+    <div class="top-actions">
+      <button id="langBtn" type="button">TH/EN</button>
+      <button id="motionBtn" type="button" aria-pressed="false">Reduce motion</button>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="mission">
+      <div>
+        <p class="eyebrow">Mission 3</p>
+        <h1><span data-th="เครื่องทำแพ็กโทเคน" data-en="Arcade Token Machine">เครื่องทำแพ็กโทเคน</span></h1>
+        <p data-th="ลองป้อนใบคำตอบเป็นข้อความ เห็นความต่างระหว่าง str กับ int แล้วเขียน Python จริงให้เครื่องคำนวณโทเคน" data-en="Feed text input slips, see the difference between str and int, then write real Python that powers the token calculator.">ลองป้อนใบคำตอบเป็นข้อความ เห็นความต่างระหว่าง str กับ int แล้วเขียน Python จริงให้เครื่องคำนวณโทเคน</p>
+      </div>
+      <div class="runtime" id="runtimeStatus">Loading real Python...</div>
+    </section>
+
+    <section class="arcade">
+      <aside class="control-bay">
+        <h2 data-th="เริ่มเล่นใน 10 วินาที" data-en="Play in 10 seconds">เริ่มเล่นใน 10 วินาที</h2>
+        <label><span>Avatar slip</span><input id="avatarInput" value="Nori"></label>
+        <label><span>Rounds slip</span><input id="roundsInput" value="4"></label>
+        <label><span>Tokens / round</span><input id="priceInput" type="range" min="1" max="6" value="3"><output id="priceOut">3</output></label>
+        <div class="seg">
+          <button id="feedBtn" class="primary" type="button">Feed slips</button>
+          <button id="joinBtn" type="button">Show "2"+"3"</button>
+          <button id="convertBtn" type="button">Convert + dispense</button>
+        </div>
+        <p class="note" id="toyLabel">Authored teaching toy. It shows the concept before real Python runs.</p>
+      </aside>
+
+      <section class="machine" aria-labelledby="machineTitle">
+        <h2 id="machineTitle">Token Machine</h2>
+        <div class="track">
+          <div class="slip avatar" id="avatarSlip">"Nori"<span>str</span></div>
+          <div class="gate">input()</div>
+          <div class="slot" id="avatarSlot">avatar: waiting</div>
+        </div>
+        <div class="track">
+          <div class="slip rounds" id="roundsSlip">"4"<span>str</span></div>
+          <div class="gate" id="converterGate">int()</div>
+          <div class="slot" id="roundsSlot">rounds_text: waiting</div>
+        </div>
+        <div class="split-view">
+          <div class="demo-panel">
+            <b>Text path</b>
+            <div class="paper-stack" id="joinResult">"2" + "3" → ?</div>
+            <p>ข้อความต่อกันเหมือนกระดาษ ไม่ใช่การบวกเลข</p>
+          </div>
+          <div class="demo-panel">
+            <b>Number path</b>
+            <div class="reel" id="tokenReel">0</div>
+            <p id="machineExplain">กด Convert + dispense เพื่อเปลี่ยน str เป็น int แล้วคูณราคา</p>
+          </div>
+        </div>
+        <div class="output-ribbon" id="toyOutput">Output will appear here.</div>
+      </section>
+    </section>
+
+    <section class="python-lab">
+      <div class="code-panel">
+        <div class="panel-head">
+          <h2>Real Python</h2>
+          <div class="seg"><button id="starterBtn" type="button">Starter</button><button id="challengeBtn" type="button">4-token challenge</button></div>
+        </div>
+        <textarea id="codeEditor" spellcheck="false"></textarea>
+        <label class="inputs">Inputs for this run<textarea id="inputQueue">Nori
+4</textarea></label>
+        <div class="runbar">
+          <button id="runBtn" class="primary" type="button">Run Python</button>
+          <button id="stopBtn" type="button" disabled>Stop</button>
+          <button id="checkBtn" type="button">Check customer tests</button>
+          <button id="receiptBtn" type="button">Export receipt</button>
+          <span id="runState">Ready</span>
+        </div>
+      </div>
+      <div class="evidence-panel">
+        <h2>Code microscope</h2>
+        <div class="microscope" id="microscope"></div>
+        <h2>Customer Tests</h2>
+        <div class="customer-cards" id="customerCards"></div>
+        <h3>stdout / error</h3>
+        <pre id="outputBox"></pre>
+        <h3>Input transcript</h3>
+        <pre id="inputTranscript"></pre>
+      </div>
+    </section>
+  </main>
+  <script src="js/app.js"></script>
+</body>
+</html>

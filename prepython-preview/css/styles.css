@@ -1,0 +1,61 @@
+:root{
+  --primary:#00B3C5; --deep:#008A99; --yellow:#FDD736; --ink:#29384C;
+  --pale:#E6F7FA; --border:#C0D8DC; --warn:#FFFBE6; --muted:#55707A;
+  --ok:#247A48; --bad:#B43333; --surface:#fff; --shadow:0 18px 55px rgba(41,56,76,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Sarabun,Th Sarabun New,Noto Sans Thai,system-ui,-apple-system,sans-serif;color:var(--ink);background:linear-gradient(180deg,#f7fdff,#fff 34%,#f6fbfb);line-height:1.55}
+button,select,textarea,input{font:inherit}
+button,.filebtn{min-height:44px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--ink);padding:9px 13px;cursor:pointer;font-weight:700}
+button:hover,.filebtn:hover{border-color:var(--deep)}
+button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid #8ee8f0;outline-offset:2px}
+button.primary{background:var(--yellow);border-color:#d9b500;color:#17202d}
+button:disabled{opacity:.55;cursor:not-allowed}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;padding:8px;z-index:20}.skip:focus{left:8px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.brandbox{display:flex;align-items:center;gap:14px}.logo{width:62px;height:62px;object-fit:contain;background:#fff;border:1px solid var(--border);border-radius:8px;padding:4px}
+h1,h2,h3,h4,p{margin:0} h1{font-size:22px} h2{font-size:clamp(24px,3vw,40px);line-height:1.15} h3{font-size:20px}
+.eyebrow{font-size:13px;letter-spacing:0;text-transform:uppercase;color:var(--deep);font-weight:800}
+.top-actions,.inline-controls,.hero-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.toggle,.selectlabel{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:14px}
+.shell{max-width:1500px;margin:0 auto;padding:22px}.hero{display:grid;grid-template-columns:minmax(280px,520px) 1fr;gap:22px;align-items:stretch}
+.hero-copy,.studio-map,.stage-card,.workbench,.thinking,.assessment,.teacher-panel,.portfolio-panel,.mission,.lesson-detail{background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow)}
+.hero-copy{padding:28px;display:grid;gap:18px;align-content:center}.runtime-line{padding:10px;border-radius:8px;background:var(--pale);font-weight:700}
+.studio-map{padding:16px}.map-grid{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:12px}
+.map-stop{min-height:132px;text-align:left;display:grid;align-content:space-between;background:linear-gradient(160deg,#fff,var(--pale));position:relative;overflow:hidden}
+.map-stop:before{content:"";position:absolute;right:-18px;bottom:-28px;width:88px;height:88px;border:12px solid rgba(0,179,197,.18);border-radius:50%}
+.map-stop.done{border-color:var(--ok)}.map-stop.current{box-shadow:0 0 0 3px var(--yellow) inset}
+.lesson-tabs{display:flex;gap:8px;overflow:auto;padding-bottom:10px}.lesson-tabs button{white-space:nowrap}
+.workspace{display:grid;gap:14px}.mission{padding:18px;display:flex;justify-content:space-between;gap:16px;align-items:start}
+.badge{display:inline-flex;align-items:center;min-height:30px;border-radius:999px;padding:4px 10px;background:var(--ink);color:#fff;font-size:13px;font-weight:800}.badge.soft{background:var(--pale);color:var(--ink)}
+.main-grid{display:grid;grid-template-columns:minmax(330px,0.95fr) minmax(360px,1.05fr);gap:14px}.stage-card,.workbench,.thinking,.assessment,.teacher-panel,.portfolio-panel{padding:16px}
+.card-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}
+.stage{min-height:420px;border:1px solid var(--border);border-radius:8px;background:linear-gradient(180deg,#eafcff,#fff);position:relative;overflow:hidden;padding:16px}
+.arcade-machine{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:12px}.marquee{background:var(--ink);color:var(--yellow);border-radius:8px;padding:12px;text-align:center;font-weight:900;font-size:26px}
+.concept-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.slot,.branch,.loop-cell,.function-frame{border:2px solid var(--border);border-radius:8px;padding:12px;background:#fff;min-height:82px}
+.slot.active,.branch.active,.loop-cell.active,.function-frame.active{border-color:var(--primary);box-shadow:0 0 0 4px rgba(0,179,197,.13)}
+.token{display:inline-block;background:var(--yellow);color:#17202d;border:1px solid #d3b000;border-radius:7px;padding:5px 9px;font-weight:900;margin:3px}
+.arrowline{height:8px;background:linear-gradient(90deg,var(--primary),var(--yellow));border-radius:999px;margin:12px 0}
+.sr-summary{margin-top:10px;color:var(--muted)}
+#codeEditor{width:100%;min-height:310px;resize:vertical;font-family:SFMono-Regular,Consolas,Liberation Mono,monospace;font-size:15px;line-height:1.55;background:#17202d;color:#f7fbff;border:0;border-radius:8px;padding:14px;tab-size:4}
+.input-panel{display:grid;gap:6px;margin:10px 0}.input-panel textarea,.thinking textarea,#teacherReason{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px}
+.runbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.status{font-weight:900;color:var(--deep)}
+.console-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}pre{white-space:pre-wrap;word-break:break-word;background:#101722;color:#e8f5ff;border-radius:8px;padding:12px;min-height:130px;margin:0}
+.thinking{display:grid;grid-template-columns:1fr 1fr minmax(260px,.8fr);gap:12px}.thinking label{display:grid;gap:6px}
+.lesson-detail{padding:16px;display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;gap:12px}
+.detail-card{border:1px solid var(--border);border-radius:8px;background:#fff;padding:12px;min-width:0}
+.detail-card ol,.detail-card ul{padding-left:22px;margin:8px 0 0}
+.activity-step{border-left:4px solid var(--primary);padding:8px 10px;margin-top:8px;background:#f7fdff;border-radius:0 8px 8px 0}
+.activity-step strong{display:block;color:var(--deep)}
+.rubric-anchor{font-size:13px;color:var(--muted);margin-top:4px}
+.hints{background:var(--warn);border:1px solid #e2d06b;border-radius:8px;padding:12px}.hints li.locked{color:#777}
+.assessment{display:grid;grid-template-columns:1fr 1fr;gap:16px}.assessment ul{padding-left:22px}.result-pass{color:var(--ok);font-weight:800}.result-fail{color:var(--bad);font-weight:800}
+#rubricGrid{display:grid;gap:8px}.rubric-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border:1px solid var(--border);border-radius:8px;padding:8px}
+.teacher-panel[hidden],.portfolio-panel[hidden],.workspace[hidden],.hero[hidden]{display:none}
+#agendaList{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;margin:10px 0}.agenda-item{border:1px solid var(--border);border-radius:8px;padding:10px;background:#fff}
+.timer{display:flex;gap:8px;align-items:center;margin-top:10px}.timer span{font-size:28px;font-weight:900;color:var(--deep)}
+.portfolio-card{border:1px solid var(--border);border-radius:8px;padding:12px;margin:10px 0;background:#fff}.portfolio-card code{white-space:pre-wrap;display:block;background:#f4fbfc;border-radius:8px;padding:10px}
+dialog{border:1px solid var(--border);border-radius:8px;max-width:720px;width:90%;box-shadow:var(--shadow)}
+.filebtn input{display:none}
+@media (max-width:980px){.hero,.main-grid,.assessment,.thinking,.lesson-detail{grid-template-columns:1fr}.map-grid{grid-template-columns:repeat(2,1fr)}.topbar{position:static;align-items:flex-start;flex-direction:column}.console-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.shell{padding:12px}.map-grid{grid-template-columns:1fr}.card-head,.mission{display:grid}.stage{min-height:340px}#codeEditor{font-size:14px}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

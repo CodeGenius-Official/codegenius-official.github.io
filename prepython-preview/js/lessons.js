@@ -93,8 +93,34 @@ lesson08:{lineExplanations:[{line:1,th:"ใช้ Session 7 game เป็นฐ
 
 for (const [id, patch] of Object.entries(EXPLICIT_LESSON_PATCHES)) Object.assign(window.PP_LESSONS.find(l => l.id === id), patch);
 
+const CURRICULUM_RENDERER_ENRICHMENT = {
+lesson01:{exitAnswer:{th:"Go! จะพิมพ์ก่อน เพราะ Python ทำงานจากบรรทัดบนลงล่าง",en:"Go! prints first because Python runs top to bottom."}},
+lesson02:{exitAnswer:{th:"ค่าเป็น 7 เพราะอ่าน 4 ทางขวา บวก 3 แล้วเก็บกลับใน score",en:"The value is 7: Python reads 4 on the right, adds 3, then stores it back in score."}},
+lesson03:{exitAnswer:{th:"rounds_text คือ str \"4\" ส่วน rounds คือ int 4 เพราะ int(...) สร้างค่าเลขใหม่",en:"rounds_text is the string \"4\"; rounds is the integer 4 because int(...) creates a new numeric value."}},
+lesson04:{exitAnswer:{th:"input 8 แยก >= 8 ออกจาก > 8 เพราะเท่ากับผ่านเฉพาะ >= เท่านั้น",en:"Input 8 distinguishes >= 8 from > 8 because equality passes only with >=."}},
+lesson05:{exitAnswer:{th:"range(1, 6) ให้ 1,2,3,4,5 และ Final ควรอยู่นอก loop ถ้าต้องการพิมพ์ครั้งเดียว",en:"range(1, 6) produces 1,2,3,4,5; Final should be outside the loop to print once."}},
+lesson06:{exitAnswer:{th:"ถ้า define แต่ไม่ call จะไม่มี output จาก body; show_score(score) ส่งค่าปัจจุบันของ score เข้า points",en:"A definition with no call produces no body output; show_score(score) passes score's current value into points."}},
+lesson07:{exitAnswer:{th:"score = 0 ใน for จะรีเซ็ตคะแนนทุกครั้ง ทำให้คะแนนไม่สะสมข้ามรอบ",en:"score = 0 inside the for loop resets every round, so score cannot accumulate."}},
+lesson08:{exitAnswer:{th:"บรรทัด rule เช่น multiplier หรือคะแนนต่อคำตอบถูกต้องตรงกับ test ที่เลือก",en:"The rule line, such as multiplier or points per correct answer, must match the selected tests."}}
+};
+
+for (const lesson of window.PP_LESSONS) {
+  lesson.referenceCode ||= lesson.starter;
+  const refLines = lesson.referenceCode.split(/\r?\n/);
+  lesson.lineExplanations = (lesson.lineExplanations||[]).map(x => ({...x, exactCode: x.exactCode ?? refLines[x.line-1]}));
+  Object.assign(lesson, CURRICULUM_RENDERER_ENRICHMENT[lesson.id]||{});
+  const worked = (lesson.activityPath||[]).find(x => x.phase === "worked") || (lesson.activityPath||[])[0];
+  const guided = (lesson.activityPath||[]).find(x => x.phase === "guided") || (lesson.activityPath||[])[1] || worked;
+  const independent = (lesson.activityPath||[]).find(x => x.phase === "independent") || (lesson.activityPath||[])[2] || guided;
+  lesson.tasks = [
+    {id:"worked",label:{th:"Start together",en:"Start together"},instruction:{th:worked?.th||lesson.challengeTh,en:worked?.en||lesson.challengeEn},successChecks:{th:[lesson.objectiveTh],en:[lesson.objectiveEn]},teacherKey:{th:"ครูใช้ตัวอย่างอ้างอิงและ trace เพื่อถาม Predict → Run → Notice",en:"Use the reference example and trace to prompt Predict -> Run -> Notice."}},
+    {id:"guided",label:{th:"Make it yours",en:"Make it yours"},instruction:{th:guided?.th||lesson.challengeTh,en:guided?.en||lesson.challengeEn},successChecks:{th:lesson.criteria,en:lesson.criteria},teacherKey:{th:"เปิดเฉลยหลังผู้เรียนคาดเดาและลองเปลี่ยนเองแล้ว",en:"Reveal only after learners predict and attempt the change."}},
+    {id:"independent",label:{th:"Independent challenge",en:"Independent challenge"},instruction:{th:independent?.th||lesson.challengeTh,en:independent?.en||lesson.challengeEn},successChecks:{th:lesson.criteria,en:lesson.criteria},teacherKey:{th:"ใช้ผล Run/Check คำอธิบาย และงาน debug เป็นหลักฐาน ไม่ใช้การเปิดหน้าเป็นคะแนน",en:"Use Run/Check results, explanation, and debug work as evidence; opening the page is not completion."}}
+  ];
+}
+
 for (const l of window.PP_LESSONS) {
-  for (const field of ["lineExplanations","activityPath","scaffold","stretch","debugTask","rubricAnchors"]) {
+  for (const field of ["lineExplanations","activityPath","tasks","scaffold","stretch","debugTask","rubricAnchors","exitAnswer"]) {
     if (!l[field]) console.error(`Missing required lesson field ${field} for ${l.id}`);
   }
 }

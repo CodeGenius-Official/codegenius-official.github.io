@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pre-Python Mini Game Studio</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">ข้ามไปเนื้อหา / Skip to content</a>
+  <header class="topbar">
+    <div class="brandbox">
+      <img src="assets/logo.jpeg" alt="โลโก้สถาบันที่ได้รับมา" class="logo">
+      <div>
+        <p class="eyebrow">Pre-Python Mini Game Studio</p>
+        <h1 data-i18n="appTitle">Pre-Python Mini Game Studio</h1>
+      </div>
+    </div>
+    <div class="top-actions">
+      <label class="selectlabel"><span data-i18n="mode">โหมด</span>
+        <select id="modeSelect">
+          <option value="practice" data-i18n="practiceMode">ฝึกเอง</option>
+          <option value="teacher" data-i18n="teacherMode">ครูฉายหน้าห้อง</option>
+          <option value="portfolio" data-i18n="portfolioMode">แฟ้มผลงาน</option>
+        </select>
+      </label>
+      <button id="langToggle" class="iconbtn" type="button">TH/EN</button>
+      <label class="toggle"><input id="motionToggle" type="checkbox"><span data-i18n="reduceMotion">ลดการเคลื่อนไหว</span></label>
+    </div>
+  </header>
+
+  <main id="main" class="shell">
+    <section class="hero" id="homePanel">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="courseMeta">อายุ 10+ · 8 ครั้ง · ครั้งละ 90 นาที · รวม 12 ชั่วโมง</p>
+        <h2 data-i18n="courseTitleTh">ค่อย ๆ สร้างเกมข้อความด้วย Python จริง</h2>
+        <p data-i18n="coursePromise">ผู้เรียนจะอ่าน พิมพ์ แก้ ทดสอบ และอธิบายโปรแกรม Python ขนาดเล็กที่ใช้ print, ตัวแปร, input, int, if/else, for/range และฟังก์ชันหนึ่งพารามิเตอร์</p>
+        <div class="hero-actions">
+          <button id="startBtn" class="primary" type="button" data-i18n="startSession">เริ่มครั้งที่ 1</button>
+          <button id="continueBtn" type="button" data-i18n="continueWork">ทำงานต่อ</button>
+          <button id="exportAllBtn" type="button" data-i18n="exportBackup">ส่งออกข้อมูล</button>
+          <label class="filebtn"><input id="importInput" type="file" accept="application/json"><span data-i18n="importBackup">นำเข้าข้อมูล</span></label>
+        </div>
+        <p class="runtime-line" id="runtimeStatus">Runtime: loading…</p>
+      </div>
+      <div class="studio-map" aria-label="แผนที่สตูดิโอ 8 ครั้ง">
+        <div id="lessonMap"></div>
+      </div>
+    </section>
+
+    <section class="workspace" id="workspacePanel">
+      <nav class="lesson-tabs" id="lessonTabs" aria-label="เลือกบทเรียน"></nav>
+      <section class="mission">
+        <div>
+          <p class="eyebrow" id="lessonKicker"></p>
+          <h2 id="lessonTitle"></h2>
+          <p id="lessonObjective"></p>
+        </div>
+        <div class="mission-badges">
+          <span id="saveState" class="badge">Saved</span>
+          <span id="evidenceState" class="badge soft">Not started</span>
+        </div>
+      </section>
+
+      <div class="main-grid">
+        <section class="stage-card" aria-labelledby="stageTitle">
+          <div class="card-head">
+            <h3 id="stageTitle" data-i18n="visualStage">เวทีอธิบายโค้ด</h3>
+            <div class="inline-controls">
+              <button id="stagePrev" type="button" aria-label="ก่อนหน้า">◀</button>
+              <button id="stagePlay" type="button" data-i18n="play">เล่น</button>
+              <button id="stageNext" type="button" aria-label="ถัดไป">▶</button>
+              <select id="speedSelect" aria-label="ความเร็ว">
+                <option value="1200">0.5x</option>
+                <option value="750" selected>1x</option>
+                <option value="350">2x</option>
+              </select>
+            </div>
+          </div>
+          <div class="stage" id="visualStage" tabindex="0"></div>
+          <p class="sr-summary" id="stageSummary" aria-live="polite"></p>
+        </section>
+
+        <section class="workbench" aria-labelledby="codeTitle">
+          <div class="card-head">
+            <h3 id="codeTitle" data-i18n="codeWorkbench">โต๊ะเขียนโค้ด</h3>
+            <div class="inline-controls">
+              <button id="copyBtn" type="button" data-i18n="copy">คัดลอก</button>
+              <button id="downloadPyBtn" type="button" data-i18n="downloadPy">ดาวน์โหลด .py</button>
+              <button id="resetCodeBtn" type="button" data-i18n="resetCode">คืนโค้ดเริ่มต้น</button>
+            </div>
+          </div>
+          <textarea id="codeEditor" spellcheck="false" aria-label="Python code editor"></textarea>
+          <div class="input-panel">
+            <label for="inputQueue" data-i18n="inputsForRun">Inputs for this run: ใส่หนึ่งบรรทัดต่อ input()</label>
+            <textarea id="inputQueue" rows="4" spellcheck="false"></textarea>
+          </div>
+          <div class="runbar">
+            <button id="runBtn" class="primary" type="button" data-i18n="runPython">Run Python</button>
+            <button id="stopBtn" type="button" disabled data-i18n="stop">Stop</button>
+            <button id="retryRuntimeBtn" type="button">Retry runtime</button>
+            <button id="checkBtn" type="button" data-i18n="check">Check</button>
+            <span id="runState" class="status">Ready</span>
+          </div>
+          <div class="console-grid">
+            <section>
+              <h4>stdout / stderr</h4>
+              <pre id="outputBox" aria-live="polite"></pre>
+            </section>
+            <section>
+              <h4 data-i18n="inputTranscript">บันทึก input ที่ถูกใช้</h4>
+              <pre id="inputTranscript"></pre>
+            </section>
+          </div>
+        </section>
+      </div>
+
+      <section class="thinking">
+        <label><span data-i18n="prediction">คาดเดาก่อนรัน</span><textarea id="predictionText" rows="2"></textarea></label>
+        <label><span data-i18n="reflection">อธิบายสิ่งที่เห็น</span><textarea id="reflectionText" rows="2"></textarea></label>
+        <div class="hints">
+          <h3 data-i18n="hints">ตัวช่วยแบบค่อยเป็นค่อยไป</h3>
+          <ol id="hintList"></ol>
+          <button id="nextHintBtn" type="button" data-i18n="nextHint">ขอตัวช่วยถัดไป</button>
+        </div>
+      </section>
+
+      <section class="lesson-detail" id="lessonDetailPanel">
+        <div class="detail-card">
+          <h3 data-i18n="lineExplain">อธิบายทีละบรรทัด</h3>
+          <ol id="lineExplanationList"></ol>
+        </div>
+        <div class="detail-card">
+          <h3 data-i18n="activityPath">เส้นทางกิจกรรม</h3>
+          <div id="activityPathList"></div>
+          <button id="loadBridgeBtn" type="button" hidden>Load bridge example</button>
+        </div>
+        <div class="detail-card">
+          <h3 data-i18n="supportStretch">ตัวช่วยและต่อยอด</h3>
+          <div id="supportStretchBox"></div>
+        </div>
+        <div class="detail-card">
+          <h3 data-i18n="debugLab">ห้องแก้บั๊ก</h3>
+          <pre id="debugExampleBox"></pre>
+          <p id="debugPromptText"></p>
+        </div>
+      </section>
+
+      <section class="assessment">
+        <div>
+          <h3 data-i18n="missionCard">ภารกิจและหลักฐาน</h3>
+          <p id="challengeText"></p>
+          <ul id="criteriaList"></ul>
+          <div id="checkResults"></div>
+        </div>
+        <div>
+          <h3 data-i18n="rubric">รูบริก 0–2</h3>
+          <div id="rubricGrid"></div>
+          <label><span data-i18n="teacherReason">บันทึกครู / เหตุผล</span><textarea id="teacherReason" rows="3"></textarea></label>
+          <div class="inline-controls">
+            <button id="saveEvidenceBtn" class="primary" type="button" data-i18n="saveEvidence">บันทึกหลักฐาน</button>
+            <button id="teacherReviewBtn" type="button" data-i18n="teacherReviewed">ครูบันทึกว่าแสดงความเข้าใจแล้ว</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="teacher-panel" id="teacherPanel">
+        <h3 data-i18n="teacherMode">ครูฉายหน้าห้อง</h3>
+        <div id="agendaList"></div>
+        <p><strong data-i18n="misconception">จุดที่มักเข้าใจผิด:</strong> <span id="misconceptionText"></span></p>
+        <p><strong data-i18n="exitCheck">Exit check:</strong> <span id="exitCheckText"></span></p>
+        <div class="timer">
+          <span id="timerReadout">90:00</span>
+          <button id="timerStart" type="button">Start/Pause</button>
+          <button id="timerReset" type="button">Reset</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="portfolio-panel" id="portfolioPanel">
+      <h2 data-i18n="portfolioMode">แฟ้มผลงาน</h2>
+      <div class="inline-controls">
+        <button id="parentReportBtn" class="primary" type="button" data-i18n="parentReport">รายงานผู้ปกครอง</button>
+        <button id="finalPackageBtn" type="button" data-i18n="finalPackage">แพ็กเกจเกมสุดท้าย</button>
+        <button id="clearDataBtn" type="button" data-i18n="clearData">ล้างข้อมูลเครื่องนี้</button>
+      </div>
+      <div id="portfolioList"></div>
+    </section>
+  </main>
+
+  <dialog id="importDialog">
+    <h2 data-i18n="importPreview">ตรวจข้อมูลก่อนนำเข้า</h2>
+    <pre id="importPreview"></pre>
+    <button id="confirmImportBtn" class="primary" type="button" data-i18n="confirm">ยืนยัน</button>
+    <button id="cancelImportBtn" type="button" data-i18n="cancel">ยกเลิก</button>
+  </dialog>
+
+  <script src="js/lessons.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

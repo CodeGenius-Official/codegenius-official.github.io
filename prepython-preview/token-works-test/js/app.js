@@ -274,6 +274,7 @@ function feedSlips() {
   pulse("#roundsSlip");
   setText($("#avatarSlot"), `avatar = "${avatar}" (str)`);
   setText($("#roundsSlot"), `rounds_text = "${roundsText}" (str); rounds is not created yet`);
+  if ($("#roundsIntSlot")) setText($("#roundsIntSlot"), "rounds: not created");
   setText($("#joinResult"), `"${avatar}" and "${roundsText}" are separate input slips`);
   setText($("#machineExplain"), "input() gives text first. Digits still arrive as str.");
   setText($("#toyOutput"), "Authored model: the booth has text slips, not numbers yet.");
@@ -311,6 +312,7 @@ function convertAndDispense() {
   if (!canInt) {
     setText($("#tokenReel"), "ERR");
     setText($("#roundsSlot"), `rounds_text = "${roundsText}" (str); rounds not created`);
+    if ($("#roundsIntSlot")) setText($("#roundsIntSlot"), "rounds: not created");
     setText($("#machineExplain"), `Authored model matched to Python int(): "${roundsText}" fails. Try 0, 03, +3, or " 4 "; not three, empty, or 3.5.`);
     setText($("#toyOutput"), "Conversion stopped at the chamber. Real Python will report ValueError.");
     setSceneOwnership({ owner: "prepared_model", label: "Prepared model", stale: false, source: "authored" });
@@ -327,6 +329,7 @@ function convertAndDispense() {
   }
   const tokens = rounds * price;
   setText($("#roundsSlot"), `rounds_text = "${roundsText}" (str) remains exactly; rounds = ${rounds} (int) is new`);
+  if ($("#roundsIntSlot")) setText($("#roundsIntSlot"), `rounds = ${rounds} (int)`);
   setText($("#tokenReel"), String(tokens));
   setText($("#machineExplain"), `${rounds} x ${price} = ${tokens}. The original text slip is still visible.`);
   setText($("#toyOutput"), `${avatar} needs ${tokens} tokens (${activity().label})`);
@@ -416,6 +419,10 @@ function stepTrace() {
   const snap = snapshots[currentStep];
   setText($("#avatarSlot"), snap.avatarSlot);
   setText($("#roundsSlot"), snap.roundsSlot);
+  if ($("#roundsIntSlot")) {
+    if (currentStep >= 3 && canInt) setText($("#roundsIntSlot"), `rounds = ${rounds} (int)`);
+    else setText($("#roundsIntSlot"), "rounds: not created");
+  }
   setText($("#tokenReel"), snap.reel);
   setText($("#toyOutput"), snap.output);
   setText($("#machineExplain"), `${snap.explain} Prepared trace for ${LESSON_ID}/${spec.activityId}; real edited code must be run.`);
@@ -597,12 +604,17 @@ function renderRealRunVisual(message) {
       if (roundsValue !== undefined) parts.push(`rounds = ${JSON.stringify(roundsValue)} (${actualTypes.rounds})`);
       if (tokensValue !== undefined) parts.push(`tokens = ${JSON.stringify(tokensValue)} (${actualTypes.tokens})`);
       setText($("#roundsSlot"), parts.join("; "));
+      if ($("#roundsIntSlot")) {
+        setText($("#roundsIntSlot"), roundsValue !== undefined ? `rounds = ${JSON.stringify(roundsValue)} (${actualTypes.rounds})` : "rounds: not created in this run");
+      }
     } else {
       setText($("#roundsSlot"), "rounds_text / rounds / tokens not created in this run");
+      if ($("#roundsIntSlot")) setText($("#roundsIntSlot"), "rounds: not created in this run");
     }
   } else {
     setText($("#avatarSlot"), "no runtime variables reported");
     setText($("#roundsSlot"), "no runtime variables reported");
+    if ($("#roundsIntSlot")) setText($("#roundsIntSlot"), "no runtime variables reported");
   }
   if (message.ok && stdout.includes(" needs ")) {
     const finalLine = stdout.trim().split(/\r?\n/).at(-1);

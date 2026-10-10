@@ -49,16 +49,20 @@
     }
     if (event.phase === "input") {
       setText("#avatarSlot", values.avatar ? `${values.avatar} · ${types.avatar || "str"}` : "waiting");
-      setText("#roundsSlot", values.rounds_text ? `${values.rounds_text} · ${types.rounds_text || "str"}` : "waiting");
+      setText("#roundsSlot", values.rounds_text !== undefined ? `rounds_text=${JSON.stringify(values.rounds_text)} · ${types.rounds_text || "str"}` : "rounds_text: waiting");
+      setText("#roundsIntSlot", "rounds: not created");
       pulse("#avatarSlip", "move");
       pulse("#roundsSlip", "move");
     }
     if (event.phase === "convert") {
-      setText("#roundsSlot", values.rounds === undefined ? "rounds not created" : `rounds=${values.rounds} · ${types.rounds || "int"}`);
+      setText("#roundsSlot", values.rounds_text !== undefined ? `rounds_text=${JSON.stringify(values.rounds_text)} · ${types.rounds_text || "str"}` : "rounds_text: unavailable");
+      setText("#roundsIntSlot", values.rounds === undefined ? "rounds: not created" : `rounds=${JSON.stringify(values.rounds)} · ${types.rounds || "int"}`);
       pulse("#converterGate", "flash");
     }
     if (event.phase === "output" || event.phase === "result") {
       const line = event.output || "";
+      if (values.rounds_text !== undefined) setText("#roundsSlot", `rounds_text=${JSON.stringify(values.rounds_text)} · ${types.rounds_text || "str"}`);
+      if (values.rounds !== undefined) setText("#roundsIntSlot", `rounds=${JSON.stringify(values.rounds)} · ${types.rounds || "int"}`);
       setText("#receiptLine1", line.slice(0, 22) || "printed output");
       setText("#receiptLine2", line.slice(22, 44) || `run ${event.runId || ""}`.trim());
       setText("#receiptLine3", event.owner === "actual-run" ? "real Python output" : "authored demo only");
@@ -68,6 +72,8 @@
     }
     if (event.phase === "error") {
       setText("#tokenReel", "ERR");
+      if (values.rounds_text !== undefined) setText("#roundsSlot", `rounds_text=${JSON.stringify(values.rounds_text)} · ${types.rounds_text || "str"}`);
+      if (values.rounds === undefined) setText("#roundsIntSlot", "rounds: not created");
       setText("#receiptLine1", event.status || "Python error");
       setText("#receiptLine2", event.output || "see stdout");
       setText("#receiptLine3", `run ${event.runId || ""}`.trim());

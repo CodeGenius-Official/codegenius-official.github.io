@@ -298,4 +298,121 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  next.addEventListener('click',()=>{const v=cases[caseSelect.value],result=evaluateAction({...INITIAL_STATE,hasPotion:v[0],ghostGone:v[1],chestOpen:v[2]},'Ghost'),passes=result.trace.map(item=>item.pass);if(step>=3)return;const current=step++,pass=passes[current];statuses[current].textContent=pass?'TRUE':'FALSE';statuses[current].parentElement.className=pass?'checked-pass':'checked-fail';if(!pass){for(let i=step;i<3;i++){statuses[i].textContent='Not evaluated: an earlier check failed.';statuses[i].parentElement.className='skipped';}explain.textContent=current===2?'All three checks were reached. Chest is closed, so this branch does not clear Ghost.':'Stop here. Deeper checks are skipped, not false.';step=3;next.disabled=true;next.textContent='Check complete. Restart or choose another case.';}else if(step===3){explain.textContent='All three checks pass. Now change ghostGone to 1, fade Ghost and reveal Clue.';next.disabled=true;next.textContent='Check complete. Restart or choose another case.';tone('collect');}else explain.textContent='Only this check is being tested now. Predict whether the next question will be reached.';});
  caseSelect.addEventListener('change',resetExplanation);document.getElementById('ghost-restart').addEventListener('click',resetExplanation);resetExplanation();
 })();
-</script></body></html>
+</script><style>
+#code-game{width:min(1100px,96vw);max-height:94vh;margin:auto;padding:22px;border:1px solid var(--line);border-radius:22px;color:var(--ink);background:var(--bg);overflow:auto}
+#code-game::backdrop{background:#050a13db}#code-game h2{font-size:2rem;margin:8px 0}#code-game p{margin:8px 0;line-height:1.45}
+.cg-toolbar,.cg-buttons,.cg-rounds{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.cg-toolbar{justify-content:space-between}.cg-toolbar button{font-size:.85rem;padding:8px 12px}
+.cg-layout{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;margin-top:14px}.cg-map{border:2px solid var(--amber);padding:14px;border-radius:14px;background:#222c38}.cg-level{margin-top:12px;padding:12px;border-left:4px solid var(--purple);border-radius:8px;background:#293447}.cg-level .cg-level{margin-left:18px;background:#303e51}.cg-check{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.cg-check code{font-size:1.15rem}.cg-status{font-size:.85rem;font-weight:800}.cg-pass{border-color:var(--mint)}.cg-fail{border-color:var(--red)}.cg-skip{opacity:.6;border-style:dashed}.cg-link{color:var(--muted);font-size:.8rem;margin-top:8px}.cg-values{font-size:1.05rem;line-height:1.8;background:#172135;border-radius:12px;padding:12px;display:flex;gap:8px 18px;flex-wrap:wrap}
+.cg-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.cg-options button{min-height:58px;text-align:left}.cg-options [aria-pressed=true]{outline:2px solid var(--mint);background:#24463f}
+.cg-options button:disabled{opacity:.8}.cg-options button[aria-pressed=true]:disabled{opacity:1}#cg-feedback{min-height:72px;padding:12px;background:#1d3038;border-radius:12px;font-size:1.05rem}.cg-rounds{margin:14px 0}.cg-rounds button{min-width:92px}.cg-digit{font-size:1.5rem;color:var(--amber);letter-spacing:.25em}
+.cg-help{padding:12px 16px;background:#202e40;border-radius:12px}#cg-help ol{margin:8px 0;padding-left:24px}#cg-help li{margin:7px 0}
+#cg-code{font-size:1.8rem;letter-spacing:.35em;width:180px;background:#172135;color:var(--ink);border:2px solid var(--mint);border-radius:8px;padding:10px}#cg-reset-panel{padding:12px;border:2px solid var(--red);border-radius:10px;margin-top:12px}
+@media(max-width:760px){.cg-layout{grid-template-columns:1fr}#code-game{padding:15px}.cg-options{grid-template-columns:1fr 1fr}.top-actions{flex-wrap:wrap}.topbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){#code-game *{animation:none!important;transition:none!important}}
+</style>
+<dialog id="code-game" aria-labelledby="cg-title" translate="no">
+<div class="cg-toolbar"><div class="cg-buttons"><button id="cg-language" type="button"></button><button id="cg-sound" type="button"></button><button id="cg-how" type="button" aria-expanded="false"></button></div><button id="cg-close" type="button"></button></div>
+<h2 id="cg-title"></h2>
+<div id="cg-help" class="cg-help" hidden></div>
+<div class="cg-rounds" id="cg-rounds" aria-label="Rounds"></div>
+<div id="cg-play">
+<div class="cg-layout"><div><div id="cg-values" class="cg-values"></div><p id="cg-state-note" class="tiny"></p><div class="cg-map"><strong id="cg-map-title"></strong><div id="cg-tree"></div></div></div>
+<div><h3 id="cg-question" style="font-size:1.35rem;margin:4px 0"></h3><div id="cg-options" class="cg-options"></div><div class="cg-buttons"><button id="cg-step" class="primary" type="button"></button><button id="cg-retry" type="button"></button></div><p id="cg-feedback" role="status" aria-live="polite"></p><div class="cg-buttons"><button id="cg-next" type="button"></button><span id="cg-digit" class="cg-digit"></span></div></div></div>
+</div>
+<div id="cg-finish" hidden><h3 id="cg-final-question"></h3><p id="cg-collected" class="cg-digit"></p><div class="cg-buttons"><label for="cg-code" id="cg-code-label"></label><input id="cg-code" inputmode="numeric" maxlength="4" autocomplete="off" aria-describedby="cg-final-message"><button id="cg-unlock" class="primary" type="button"></button></div><p id="cg-final-message" role="status" aria-live="polite"></p></div>
+<div class="cg-buttons" style="margin-top:14px"><button id="cg-reset" class="small" type="button"></button><span id="cg-progress" class="tiny"></span></div>
+<div id="cg-reset-panel" hidden><p id="cg-reset-question"></p><button id="cg-confirm" type="button"></button> <button id="cg-cancel" type="button"></button></div>
+</dialog>
+<script id="code-game-script">
+(()=>{
+'use strict';
+const el=id=>document.getElementById(id),dialog=el('code-game');
+const launch=document.createElement('button');launch.type='button';launch.id='code-game-launch';launch.className='small';launch.setAttribute('translate','no');document.querySelector('.top-actions').append(launch);
+const rounds=[
+ {object:'Chest',values:{hasKey:0,chestOpen:0},conditions:['hasKey = 1','chestOpen = 0']},
+ {object:'Chest',values:{hasKey:1,chestOpen:1},conditions:['hasKey = 1','chestOpen = 0']},
+ {object:'Ghost',values:{hasPotion:1,ghostGone:0,chestOpen:0},conditions:['hasPotion = 1','ghostGone = 0','chestOpen = 1'],controlled:true},
+ {object:'Ghost',values:{hasPotion:1,ghostGone:0,chestOpen:1},conditions:['hasPotion = 1','ghostGone = 0','chestOpen = 1']}
+];
+let at=0,steps=[0,0,0,0],choices=['','','',''],done=[false,false,false,false],unlocked=false,finalTried=false;
+const tr=(en,th)=>document.documentElement.lang==='th'?th:en;
+const result=i=>evaluateAction({...INITIAL_STATE,...rounds[i].values},rounds[i].object);
+const answer=i=>{const r=result(i);return r.trace.every(x=>x.pass)?'success':String(r.trace.length);};
+const code=()=>rounds.map((_,i)=>result(i).trace.length).join('');
+function txt(id,en,th){el(id).textContent=tr(en,th);}
+function render(){
+ launch.textContent=tr('Mini game','มินิเกม');
+ txt('cg-title','Unlock the code','ไขรหัสเงื่อนไขซ้อน');
+ txt('cg-language','ไทย / English','English / ไทย');
+ txt('cg-sound',audioOn?'Sound: on':'Sound: off',audioOn?'เสียง: เปิด':'เสียง: ปิด');
+ el('cg-sound').setAttribute('aria-pressed',String(audioOn));
+ txt('cg-how','How to play · 5–8 min','วิธีเล่น · 5–8 นาที');txt('cg-close','Back to lesson','กลับบทเรียน');
+ el('cg-how').setAttribute('aria-expanded',String(!el('cg-help').hidden));
+ el('cg-help').innerHTML=tr('<b>One class, one screen. Teacher operates; everyone reasons aloud.</b><ol><li>Read the values. Predict the first failed level—or success.</li><li>Teacher selects the class answer. Reveal one check at a time; explain why deeper checks run or are skipped.</li><li>Count checks actually reached: this is the round’s code digit. Collect four digits, then unlock together.</li></ol><span>No timer or penalty. Take turns explaining; a wrong prediction can be discussed and corrected. Optional activity for up to six learners.</span>','<b>ทั้งห้องใช้จอเดียว ครูเป็นคนกด ทุกคนช่วยกันอธิบาย</b><ol><li>ดูค่าตัวแปร ทายว่าชั้นไหนไม่ผ่านเป็นชั้นแรก หรือสำเร็จ</li><li>ครูเลือกคำตอบของห้อง เปิดทีละเงื่อนไข แล้วอธิบายว่าทำไมตรวจต่อหรือข้ามชั้นลึกลงไป</li><li>นับเงื่อนไขที่ตรวจจริง เป็นเลขรหัสของรอบนี้ เก็บสี่หลักแล้วปลดล็อกด้วยกัน</li></ol><span>ไม่จับเวลา ไม่หักคะแนน ผลัดกันอธิบาย ทายผิดคุยและแก้ได้ เป็นกิจกรรมเสริมสำหรับไม่เกินหกคน</span>');
+ el('cg-rounds').setAttribute('aria-label',tr('Rounds','รอบเกม'));
+ el('cg-rounds').replaceChildren();
+ rounds.forEach((r,i)=>{const b=document.createElement('button');b.type='button';b.textContent=tr('Round ','รอบ ')+(i+1)+(done[i]?' · '+result(i).trace.length:' · ?');b.setAttribute('aria-current',at===i?'step':'false');b.disabled=i>0&&!done[i-1];b.onclick=()=>{at=i;render();};el('cg-rounds').append(b);});
+ el('cg-play').hidden=at===4;el('cg-finish').hidden=at!==4;
+ txt('cg-reset','Restart mini game','เริ่มมินิเกมใหม่');txt('cg-reset-question','Clear all four rounds and the code?','ล้างทั้งสี่รอบและรหัสใช่ไหม?');txt('cg-confirm','Yes, restart','ใช่ เริ่มใหม่');txt('cg-cancel','Keep playing','เล่นต่อ');
+ el('cg-progress').textContent=tr('Shared progress: ','ความคืบหน้าของห้อง: ')+done.filter(Boolean).length+'/4';
+ if(at===4){
+  txt('cg-final-question','Enter the four check-count digits in round order.','ใส่จำนวนเงื่อนไขที่ตรวจจริงทั้งสี่รอบ ตามลำดับ');
+  el('cg-collected').textContent=rounds.map((_,i)=>result(i).trace.length).join(' · ');
+  txt('cg-code-label','Class code','รหัสของห้อง');txt('cg-unlock','Unlock','ปลดล็อก');
+  txt('cg-final-message',unlocked?'Unlocked! Outer checks decide which inner checks can run.':finalTried?'Not yet. Read the four collected digits in order; try again.':'Everyone: explain one skipped check before unlocking.',unlocked?'ปลดล็อกแล้ว! เงื่อนไขชั้นนอกเป็นตัวกำหนดว่าจะตรวจชั้นในหรือไม่':finalTried?'ยังไม่ตรง ลองอ่านสี่หลักที่เก็บได้ตามลำดับ แล้วลองใหม่':'ช่วยกันอธิบายหนึ่งเงื่อนไขที่ถูกข้าม ก่อนปลดล็อก');
+  return;
+ }
+ const r=rounds[at],res=result(at),complete=steps[at]>=res.trace.length;
+ el('cg-values').replaceChildren();Object.entries(r.values).forEach(([k,v])=>{const c=document.createElement('code');c.textContent=k+' = '+v;el('cg-values').append(c);});
+ txt('cg-state-note',r.controlled?'Editor test only: Potion with a closed Chest is not a normal play state.':'Use these starting values for this click.',r.controlled?'ค่าทดสอบใน editor เท่านั้น: มี Potion ทั้งที่ Chest ปิด ไม่ใช่สถานะเล่นปกติ':'ใช้ค่าเริ่มต้นนี้สำหรับการคลิกครั้งนี้');
+ el('cg-map-title').textContent=r.object+' · '+tr('nested condition map','แผนภาพเงื่อนไขซ้อน');
+ el('cg-tree').replaceChildren();let parent=el('cg-tree');
+ r.conditions.forEach((condition,i)=>{
+  const box=document.createElement('div');box.className='cg-level';
+  const reached=i<steps[at]&&i<res.trace.length,skipped=complete&&i>=res.trace.length;
+  if(reached)box.classList.add(res.trace[i].pass?'cg-pass':'cg-fail');if(skipped)box.classList.add('cg-skip');
+  const line=document.createElement('div');line.className='cg-check';const c=document.createElement('code');c.textContent=condition;const status=document.createElement('span');status.className='cg-status';
+  status.textContent=reached?(res.trace[i].pass?tr('TRUE','จริง (TRUE)'):tr('FALSE','ไม่จริง (FALSE)')):skipped?tr('NOT EVALUATED','ข้าม ไม่ได้ตรวจ'):tr('Not checked yet','ยังไม่เปิดผล');
+  line.append(c,status);box.append(line);
+  if(i<r.conditions.length-1){const link=document.createElement('div');link.className='cg-link';link.textContent=tr('Only if TRUE → go inside','เมื่อ TRUE เท่านั้น → เข้าไปชั้นใน');box.append(link);}
+  parent.append(box);parent=box;
+ });
+ txt('cg-question','Which level fails first—or do all checks pass?','ชั้นไหนไม่ผ่านเป็นชั้นแรก หรือผ่านทุกชั้น?');
+ el('cg-options').replaceChildren();
+ [...r.conditions.map((_,i)=>String(i+1)),'success'].forEach(v=>{const b=document.createElement('button');b.type='button';b.textContent=v==='success'?tr('All checks pass','ผ่านทุกชั้น'):tr('Level ','ชั้น ')+v+tr(' fails',' ไม่ผ่าน');b.setAttribute('aria-pressed',String(choices[at]===v));b.disabled=steps[at]>0;b.onclick=()=>{choices[at]=v;render();el('cg-step').focus();};el('cg-options').append(b);});
+ txt('cg-step','Reveal one check →','เปิดหนึ่งเงื่อนไข →');el('cg-step').disabled=!choices[at]||complete;
+ txt('cg-retry','Predict again','ทายใหม่');el('cg-retry').disabled=steps[at]===0;
+ txt('cg-next',at===3?'Enter the code →':'Next round →',at===3?'ใส่รหัส →':'รอบต่อไป →');el('cg-next').disabled=!complete;
+ el('cg-digit').textContent=complete?tr('Digit = ','เลขรหัส = ')+res.trace.length:'';
+ let feedback=tr('Discuss, then choose one answer.','คุยกัน แล้วเลือกหนึ่งคำตอบ');
+ if(choices[at]&&steps[at]===0)feedback=tr('Prediction saved. Which check comes first?','เลือกแล้ว ต้องตรวจเงื่อนไขไหนก่อน?');
+ if(steps[at]>0&&!complete)feedback=tr('This check is true. Only now can we enter the next level.','เงื่อนไขนี้เป็นจริง จึงเข้าไปตรวจชั้นถัดไปได้');
+ if(complete){
+  feedback=(choices[at]===answer(at)?tr('Prediction matches. ','ทายตรงกับผล '):tr('Compare with your prediction. ','เทียบกับที่ทายไว้ '));
+  feedback+=res.trace.every(x=>x.pass)?tr('All checks pass: ','ผ่านทุกชั้น: ')+ (r.object==='Ghost'?'ghostGone = 1':'chestOpen = 1'):res.trace[res.trace.length-1].condition+' → FALSE. '+(res.trace.length<r.conditions.length?tr('Deeper checks are skipped—not false. ','ชั้นที่ลึกกว่านั้นถูกข้าม ไม่ใช่ไม่ผ่าน '):tr('Stop here; no state change. ','หยุดตรงนี้ ไม่เปลี่ยนสถานะ '));
+  feedback+=tr(' Count the revealed checks: ',' นับเงื่อนไขที่เปิดตรวจ: ')+res.trace.length+'.';
+ }
+ el('cg-feedback').textContent=feedback;
+}
+launch.onclick=()=>{dialog.showModal();render();};
+el('cg-close').onclick=()=>{audioRequest++;stopTones();dialog.close();launch.focus();};
+dialog.addEventListener('keydown',e=>e.stopPropagation());
+dialog.addEventListener('cancel',()=>{audioRequest++;stopTones();});
+el('cg-how').onclick=()=>{el('cg-help').hidden=!el('cg-help').hidden;render();};
+el('cg-language').onclick=()=>{el('language-toggle').click();render();};
+el('cg-sound').onclick=()=>{el('sound-btn').click();setTimeout(render,0);};
+el('cg-step').onclick=()=>{if(at===4||!choices[at])return;const res=result(at);if(steps[at]>=res.trace.length)return;steps[at]++;if(steps[at]===res.trace.length){done[at]=true;tone('collect');}render();};
+el('cg-retry').onclick=()=>{if(at===4)return;steps[at]=0;choices[at]='';render();};
+el('cg-next').onclick=()=>{if(at<4&&steps[at]>=result(at).trace.length){at++;render();}};
+el('cg-unlock').onclick=()=>{finalTried=true;unlocked=el('cg-code').value.trim()===code();if(unlocked)tone('win');render();};
+el('cg-code').addEventListener('keydown',e=>{if(e.key==='Enter')el('cg-unlock').click();});
+el('cg-reset').onclick=()=>{el('cg-reset-panel').hidden=false;el('cg-cancel').focus();};
+el('cg-cancel').onclick=()=>{el('cg-reset-panel').hidden=true;el('cg-reset').focus();};
+el('cg-confirm').onclick=()=>{at=0;steps=[0,0,0,0];choices=['','','',''];done=[false,false,false,false];unlocked=false;finalTried=false;el('cg-code').value='';el('cg-reset-panel').hidden=true;audioRequest++;stopTones();render();el('cg-how').focus();};
+let lastLanguage=document.documentElement.lang;new MutationObserver(()=>{if(lastLanguage!==document.documentElement.lang){lastLanguage=document.documentElement.lang;render();}}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+let lastAudio=audioOn;new MutationObserver(()=>{if(lastAudio!==audioOn){lastAudio=audioOn;render();}}).observe(el('sound-btn'),{childList:true,characterData:true,subtree:true,attributes:true,attributeFilter:['aria-pressed']});
+render();
+})();
+</script>
+
+</body></html>

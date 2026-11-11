@@ -1,26 +1,361 @@
 <!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GE-RO-08 · Don’t Wake the Dragon · Code Genius</title><style>
 :root{--ink:#29384c;--teal:#00b3c5;--yellow:#fdd736;--paper:#f3f6f6;--line:#cbd5db;--muted:#526172}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 system-ui,-apple-system,"Noto Sans Thai",sans-serif}button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--ink);border-radius:10px;padding:10px 16px;background:white;color:var(--ink);font-weight:650}button:hover{background:#e7f8fa}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #805500;outline-offset:3px}button:disabled{cursor:not-allowed;opacity:.5}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(30px,5vw,52px);line-height:1.12;margin-bottom:16px;letter-spacing:-1px}h2{font-size:23px;line-height:1.35}h3{font-size:18px}header{background:white;border-bottom:1px solid var(--line)}.wrap{max-width:1180px;margin:auto;padding:26px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:800;letter-spacing:.08em;font-size:14px}.pill{display:inline-block;background:var(--yellow);font-size:13px;font-weight:750;border-radius:30px;padding:4px 12px}.hero{padding:30px 0 12px;max-width:850px}.sub{font-size:19px;color:var(--muted)}.teacher{background:#e3f6f8;padding:16px 20px;border-radius:14px;margin-bottom:24px}.teacher summary{cursor:pointer;font-weight:750}.phases{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 8px}.phases button[aria-pressed=true]{background:var(--ink);color:white}.small{font-size:14px;color:var(--muted)}.grid{display:grid;grid-template-columns:1.1fr 1fr;gap:24px}.card{background:white;padding:26px;border:1px solid var(--line);border-radius:18px;margin-bottom:24px}.accent{border-top:6px solid var(--teal)}.step{display:inline-block;font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-weight:750;color:var(--muted);margin-bottom:10px}.callout{background:#fff8d3;padding:13px 16px;border-radius:10px}.flow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.flow>div{background:var(--paper);padding:12px;border-radius:10px}.flow b{display:block}.flow p{font-size:14px;margin:5px 0 0}.led{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;background:#15202e;border:12px solid #15202e;border-radius:16px;width:200px;aspect-ratio:1;margin:20px auto}.led span{border-radius:50%;background:#344052}.led span.on{background:#fdd736;box-shadow:0 0 7px #fdd73666}.state{text-align:center;font-size:27px;font-weight:800;margin:0}.live-state{display:flex;justify-content:center;gap:24px;margin:10px 0}.live-state code{font-size:14px}.control-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}label{font-weight:650}input[type=number]{width:90px;padding:7px;border:1px solid #8592a1;border-radius:7px}input[type=range]{width:100%;accent-color:#007784}select{max-width:100%;padding:10px;border:1px solid #8592a1;border-radius:8px;background:white;color:var(--ink)}.primary{background:var(--teal)}.wide{width:100%}.readout{font-size:38px;font-weight:800;font-variant-numeric:tabular-nums}.pair{display:flex;justify-content:space-between;align-items:center}.quiet{border-left:4px solid var(--teal);padding-left:12px}.test-buttons{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.test-buttons button{font-family:ui-monospace,monospace}.feedback{background:var(--paper);padding:12px;border-radius:8px;min-height:60px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:10px 6px}th{background:var(--paper)}.editor{display:grid;grid-template-columns:repeat(5,36px);gap:5px;justify-content:center}.editor button{padding:0;width:36px;height:36px;border-radius:5px;background:#e7edf1}.editor button[aria-pressed=true]{background:var(--yellow);border-color:#706000}.icon-editors{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-around}.icon-editors h3{text-align:center}.list{padding-left:22px}.list li{margin:9px 0}.sheet{display:none}.blank{border-bottom:1px solid #64748b;height:32px}.answer{background:#edf8f7;border:1px dashed #67897e;padding:18px;border-radius:10px}.answer pre{white-space:pre-wrap;font-size:14px}.footer{font-size:13px;color:var(--muted);padding:10px 0 30px} [hidden]{display:none!important}@media(max-width:760px){.grid{grid-template-columns:1fr}.wrap{padding:18px}.card{padding:20px}.flow{grid-template-columns:1fr}.hero{padding-top:24px}.top{align-items:flex-start}.brand{max-width:170px}.sub{font-size:17px}}@media print{@page{size:A4;margin:14mm}body{background:white;font-size:11pt;line-height:1.45}header,main,.footer{display:none}.sheet{display:block;color:#000}.sheet h1{font-size:24pt;letter-spacing:-.5px}.sheet h2{font-size:14pt;margin:16px 0 8px}.sheet table{font-size:10pt}.sheet th,.sheet td{height:35px;border:1px solid #777;padding:5px}.sheet .blank{height:34px}.sheet .print-note{font-size:9pt}.sheet .draw{display:grid;grid-template-columns:repeat(5,18px);gap:0}.sheet .draw span{height:18px;border:1px solid #777}.sheet .drawrow{display:flex;gap:60px}.sheet section{break-inside:avoid}.sheet p{margin:0 0 8px}.sheet h1{margin:8px 0 12px}.sheet h2{margin:12px 0 6px}.sheet th,.sheet td{height:30px}.sheet .blank{height:30px}.sheet .drawrow>div{width:120px;flex:none;margin-right:40px}.sheet .drawrow{gap:0}.sheet>.print-note{margin-top:10px}}
-</style></head><body><header><div class="wrap"><div class="top"><span class="brand">CODE GENIUS <span class="pill">GE-RO-08 · micro:bit V2</span></span><button id="language" aria-label="Switch to English">English</button></div><div class="hero"><span class="step" data-i="eyebrow"></span><h1>Don’t Wake<br>the Dragon</h1><p class="sub" data-i="subtitle"></p></div></div></header><main class="wrap"><details class="teacher" open><summary data-i="teacherControls"></summary><nav class="phases" aria-label="Lesson phase"><button data-phase="demo" aria-pressed="true" data-i="demo"></button><button data-phase="build" aria-pressed="false" data-i="build"></button><button data-phase="test" aria-pressed="false" data-i="test"></button><button data-phase="reflect" aria-pressed="false" data-i="reflect"></button></nav><p class="small" data-i="phaseNote"></p><div class="control-row"><button id="reveal" aria-expanded="false" data-i="reveal"></button><button id="print" data-i="print"></button></div><div id="answer" class="answer" hidden><h3 data-i="reference"></h3><p data-i="answerText"></p><pre>if (soundLevel &gt;= threshold &amp;&amp; awake == false) {
+
+/* Animated classroom stage. All artwork is local SVG; input remains manual. */
+:root{--ink:#263448;--teal:#007f83;--mint:#baf6dc;--night:#172235;--violet:#8e7ae8}
+body{background:#eff4f4}button{transition:background .18s ease,box-shadow .18s ease}button:hover{box-shadow:0 3px 0 #16233315}button:disabled:hover{box-shadow:none}.primary{background:#007f83;color:white;border-color:#007f83}.primary:hover{background:#00646a}.wrap{max-width:1320px}.top,.pair,.control-row{min-width:0}.top{flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.pill{white-space:normal}.hero{max-width:980px;padding:14px 0 0}.hero .sub{font-size:17px;margin-bottom:0}.hero .step{margin-bottom:6px}.hero h1{margin-bottom:10px}header .wrap{padding-top:18px;padding-bottom:20px}.hero h1{font-size:clamp(35px,5vw,56px);letter-spacing:-.045em;line-height:1.08}.hero h1 br{display:none}.hero .sub{max-width:810px}.hero .step{color:#00777b}.grid>*{min-width:0}.grid{grid-template-columns:1fr 1fr}.card{min-width:0;box-shadow:0 5px 22px #15202e04}.teacher{border:1px solid #c1e3e4;margin-bottom:24px}.lab-card{padding:0;overflow:hidden;border-top:0}.lab-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:25px 28px 14px;flex-wrap:wrap}.lab-heading h2{font-size:clamp(25px,3vw,34px);margin:10px 0 6px}.lab-heading p{margin-bottom:0;max-width:760px}.motion-control{flex:0 1 auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px}.motion-control button{font-size:14px;max-width:100%}.motion-control .small{margin:0;font-size:12px}.lab-layout{display:grid;grid-template-columns:minmax(0,1.13fr) minmax(0,.87fr);gap:0}.stage-column{min-width:0;padding:12px 18px 26px 28px}.console-column{min-width:0;padding:12px 28px 26px 18px}.dragon-scene{position:relative;border-radius:20px;overflow:hidden;background:#152237;isolation:isolate;box-shadow:inset 0 0 0 1px #ffffff12}.dragon-art{display:block;width:100%;height:auto;aspect-ratio:760/460}.scene-caption{position:absolute;left:20px;top:17px;right:20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;pointer-events:none}.scene-caption .scene-label{color:#d7f5ed;font-size:11px;font-weight:750;letter-spacing:.12em;line-height:1.4;text-transform:uppercase;max-width:60%}.scene-status{border:1px solid #baf6dc38;background:#0d1c2dc9;border-radius:30px;color:#e2ffef;font-size:13px;padding:4px 12px;font-weight:750}.dragon-scene[data-state="awake"] .scene-status{color:#ffe2a1;border-color:#ffe2a160}.scene-bottom{position:absolute;bottom:15px;left:20px;right:20px;color:#cadde6;font-size:12px;text-align:center;line-height:1.4;pointer-events:none}.scene-bottom span{background:#152237b3;padding:3px 10px;border-radius:8px;box-decoration-break:clone}.dragon-breathe{transform-origin:390px 340px;animation:dragon-breathe 5.5s ease-in-out infinite}.dragon-shadow{transform-origin:380px 375px;animation:shadow-breathe 5.5s ease-in-out infinite}.dragon-head{transform-origin:500px 300px;transform:translate(0,16px) rotate(7deg);transition:transform 1s cubic-bezier(.2,.7,.3,1)}.dragon-wing{transform-origin:382px 294px;transform:translate(4px,22px) rotate(15deg) scale(.8);transition:transform 1.2s cubic-bezier(.2,.7,.3,1)}.dragon-ear{transform-origin:508px 207px;transition:transform 1s ease}.dragon-scene[data-state="awake"] .dragon-head{transform:translate(0,-10px) rotate(-5deg)}.dragon-scene[data-state="awake"] .dragon-wing{transform:translate(0,-4px) rotate(-24deg) scale(1.06)}.dragon-scene[data-state="awake"] .dragon-ear{transform:rotate(-10deg)}.eye-open,.mouth-awake{opacity:0;transition:opacity .4s ease}.eye-closed,.mouth-asleep{opacity:1;transition:opacity .4s ease}.dragon-scene[data-state="awake"] .eye-open,.dragon-scene[data-state="awake"] .mouth-awake{opacity:1}.dragon-scene[data-state="awake"] .eye-closed,.dragon-scene[data-state="awake"] .mouth-asleep{opacity:0}.dragon-scene[data-state="awake"] .dragon-breathe{animation:awake-breathe 6s ease-in-out infinite}.sleep-z{fill:#d6efe9;font-family:system-ui,sans-serif;font-weight:700;animation:sleep-drift 5.5s ease-out infinite}.sleep-z.z2{animation-delay:1.8s}.sleep-z.z3{animation-delay:3.6s}.sleep-cloud{opacity:1;transition:opacity .45s ease}.dragon-scene[data-state="awake"] .sleep-cloud{opacity:0}.star-speck{opacity:.55}.mote{animation:mote-drift 10s ease-in-out infinite;transform-origin:center}.mote.m2{animation-delay:-4s}.mote.m3{animation-delay:-7s}.cave-glow{opacity:.22;transition:opacity 1.2s ease}.dragon-scene[data-state="awake"] .cave-glow{opacity:.48}.wake-ring,.wake-spark{opacity:0;transform-origin:408px 290px}.dragon-scene[data-transition="wake"] .wake-ring{animation:wake-ring 1.5s ease-out both}.dragon-scene[data-transition="wake"] .wake-spark{animation:wake-spark 1.5s ease-out both}.dragon-scene[data-transition="sleep"] .dragon-settle{animation:dragon-settle .9s ease-out both}.state-dashboard{display:grid;grid-template-columns:92px minmax(0,1fr);align-items:center;gap:16px;padding:16px 4px 12px}.state-dashboard .led{width:88px;margin:0;border-width:8px;border-radius:13px;gap:4px}.state-dashboard .state{text-align:left;font-size:clamp(26px,3vw,38px);line-height:1.2}.state-dashboard .live-state{justify-content:flex-start;flex-wrap:wrap;gap:4px 14px;margin:5px 0 0}.state-dashboard .live-state code{font-size:13px}.state-description{font-size:14px;color:var(--muted);margin:5px 0 0;line-height:1.55}.meter-box{padding:17px 18px 15px;border:1px solid #d2e0e2;border-radius:15px;background:#f4f8f8}.meter-box .pair{gap:12px;align-items:flex-start}.meter-box label{font-size:16px;line-height:1.5}.readout{font-size:38px;line-height:1.1;color:#00777b}.meter-caption{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;font-size:12px;color:#526172;margin:9px 0}.meter-caption span:first-child{max-width:72%}.threshold-badge{white-space:nowrap;font:700 12px/1.5 ui-monospace,monospace;background:#ffe9a8;color:#644100;border-radius:6px;padding:2px 6px}.meter-track{height:28px;border-radius:9px;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 2px),#ffffff65 calc(10% - 2px),#ffffff65 10%),#dae7e7;position:relative;overflow:hidden}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,#4bbaad,#91d8c1);transition:width .22s ease}.meter-threshold{position:absolute;top:0;bottom:0;left:47.06%;width:3px;background:#77500b;box-shadow:0 0 0 2px #fff8}.meter-threshold:after{content:"";position:absolute;top:0;left:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid #77500b}.meter-scale{display:flex;justify-content:space-between;font:11px/1.4 ui-monospace,monospace;color:#5a6875;margin:5px 0 8px}.meter-box input[type=range]{display:block;min-height:30px;margin:7px 0 0}.meter-note{font-size:12px;color:#526172;margin:8px 0 0;line-height:1.5}.console-column .control-row{gap:8px;margin:10px 0}.console-column .test-buttons{gap:6px;margin:12px 0 0}.test-buttons button{font-size:14px;padding:7px 10px;min-width:42px}.threshold-controls{border-bottom:1px solid #dce5e7;padding:0 0 14px;margin:0 0 16px}.threshold-controls label{font-size:14px}.threshold-controls button{font-size:13px;padding:9px 11px}.threshold-controls input{width:76px}.threshold-controls .small{font-size:12px;margin:6px 0 0}.prediction-controls{margin-top:17px}.prediction-controls>label{display:block;line-height:1.5;font-size:16px}.prediction-controls select{width:100%;min-width:0;font-size:15px}.prediction-controls .primary{width:100%;padding:11px}.reset-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.reset-row button{font-size:13px;padding:9px 8px}.feedback{font-size:14px;min-height:60px;border-left:3px solid #007f83}.sample-readout{font-size:12px;margin:8px 0;min-height:1em}.manual-note{margin:0;padding:0 28px 22px;font-size:13px;line-height:1.65}.trace{position:relative;padding:16px;background:#edf4f4;border-radius:14px;margin-top:5px;overflow:hidden}.trace-title{font-size:13px;font-weight:750;margin-bottom:12px}.trace-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1fr);gap:12px}.trace-step{min-width:0;position:relative}.trace-step:not(:last-child):after{content:"→";position:absolute;right:-11px;top:3px;color:#6a8586;font-size:14px}.trace-step b{display:block;font-size:11px;color:#526172;margin-bottom:5px}.trace-step output{display:block;font-size:12px;line-height:1.5;font-weight:650;overflow-wrap:anywhere}.trace-step .trace-memory{font-family:ui-monospace,monospace}.signal-track{position:relative;height:3px;background:#c8dddd;margin:12px 0;border-radius:5px}.signal-dot{position:absolute;left:0;top:-4px;width:11px;height:11px;border-radius:50%;background:#007f83;opacity:0;box-shadow:0 0 0 4px #007f8318}.signal-track[data-pulse="a"] .signal-dot{animation:signal-a 1.5s ease-in-out both}.signal-track[data-pulse="b"] .signal-dot{animation:signal-b 1.5s ease-in-out both}.trace-note{font-size:11px;line-height:1.5;color:#526172;margin:0}.section-label{display:flex;align-items:center;gap:12px;margin:30px 0 16px;font-size:13px;font-weight:750;letter-spacing:.04em;color:#526172}.section-label:after{content:"";height:1px;background:#cbd5db;flex:1}.flow{grid-template-columns:1fr}.flow>div{display:grid;grid-template-columns:95px 1fr;gap:10px;align-items:start}.flow p{margin:0}.flow b{font-size:15px}.answer,.answer pre{overflow-wrap:anywhere}.table-wrap{max-width:100%}.record-heading{gap:12px;flex-wrap:wrap}.record-heading h2{margin-bottom:0}.record-heading+p{margin-top:15px}
+@keyframes dragon-breathe{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-3px) scale(1.012,1.025)}}
+@keyframes awake-breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes shadow-breathe{0%,100%{transform:scaleX(1);opacity:.32}50%{transform:scaleX(.96);opacity:.25}}
+@keyframes sleep-drift{0%{opacity:0;transform:translate(0,10px) scale(.85)}20%,60%{opacity:.8}100%{opacity:0;transform:translate(15px,-30px) scale(1.12)}}
+@keyframes mote-drift{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-12px);opacity:.7}}
+@keyframes wake-ring{0%{transform:scale(.65);opacity:0}20%{opacity:.45}100%{transform:scale(1.4);opacity:0}}
+@keyframes wake-spark{0%{transform:scale(.6);opacity:0}20%{opacity:.9}100%{transform:scale(1.22);opacity:0}}
+@keyframes dragon-settle{0%{transform:translateY(-5px)}70%{transform:translateY(2px)}100%{transform:translateY(0)}}
+@keyframes signal-a{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:calc(100% - 11px);opacity:0}}
+@keyframes signal-b{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:calc(100% - 11px);opacity:0}}
+html[data-motion="paused"] *,html[data-motion="paused"] *:before,html[data-motion="paused"] *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}html[data-motion="paused"] .sleep-z{opacity:.65}html[data-motion="paused"] .wake-ring,html[data-motion="paused"] .wake-spark,html[data-motion="paused"] .signal-dot{opacity:0}
+@media(prefers-reduced-motion:reduce){html:not([data-motion="running"]) *,html:not([data-motion="running"]) *:before,html:not([data-motion="running"]) *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:1000px){.lab-layout{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}.stage-column{padding-left:20px;padding-right:12px}.console-column{padding-left:12px;padding-right:20px}.lab-heading{padding-left:20px;padding-right:20px}.trace-grid{gap:10px}.trace{padding:12px}.trace-step b{font-size:10px}.trace-step output{font-size:11px}.scene-bottom{font-size:10px;bottom:12px}.scene-caption{left:15px;right:15px;top:14px}}
+@media(max-width:820px){.lab-layout{grid-template-columns:minmax(0,1fr)}.stage-column{padding:8px 20px 16px}.console-column{padding:0 20px 20px}.motion-control{align-items:flex-start}.manual-note{padding:0 20px 22px}.trace-step b{font-size:12px}.trace-step output{font-size:14px}.scene-bottom{font-size:13px;bottom:16px}.scene-caption{left:20px;right:20px;top:18px}.lab-heading p{font-size:13px}.grid{grid-template-columns:minmax(0,1fr)}.hero h1{font-size:clamp(35px,8vw,60px)}.state-dashboard{grid-template-columns:92px minmax(0,1fr)}}
+@media(max-width:420px){.wrap{padding:14px}.top{align-items:center;flex-wrap:nowrap;gap:10px}.brand{max-width:190px;font-size:11px;gap:6px}.brand .pill{font-size:10px;padding:3px 8px;letter-spacing:0}.top>button{font-size:12px;padding:8px 10px;flex:none}.card{padding:17px}.lab-card{padding:0}.lab-heading{padding:18px 14px 12px;gap:12px}.stage-column{padding:0 12px 14px}.console-column{padding:0 14px 18px}.scene-caption{left:12px;right:12px;top:12px}.scene-caption .scene-label{font-size:8px;max-width:58%}.scene-status{font-size:10px;padding:3px 8px}.scene-bottom{font-size:9px;bottom:9px;left:10px;right:10px}.dragon-scene{border-radius:14px}.state-dashboard{grid-template-columns:72px minmax(0,1fr);gap:12px}.state-dashboard .led{width:68px;gap:3px;border-width:6px;border-radius:10px}.state-dashboard .state{font-size:27px}.state-dashboard .live-state{gap:0 8px}.state-dashboard .live-state code{font-size:11px}.state-description{font-size:12px}.trace{padding:12px}.trace-grid{gap:12px}.trace-step b{font-size:10px}.trace-step output{font-size:11px}.trace-note{font-size:10px}.trace-title{font-size:12px}.meter-box{padding:14px}.meter-box label{font-size:14px}.meter-caption{font-size:11px}.readout{font-size:34px}.manual-note{padding:0 14px 18px;font-size:12px}.teacher{padding:14px}.teacher summary{font-size:15px}.phases button{font-size:12px;padding:8px 10px}.teacher .control-row button{font-size:12px}.flow>div{grid-template-columns:1fr;gap:4px}.hero h1{line-height:1.15;letter-spacing:-.03em}.hero h1 br{display:block}.hero{padding-top:24px}.sub{font-size:16px}.control-row>button{max-width:100%}select{font-size:14px}}
+@media print{*{animation:none!important;transition:none!important}.lab-card,.section-label{display:none!important}}
+
+</style></head><body><header><div class="wrap"><div class="top"><span class="brand">CODE GENIUS <span class="pill">GE-RO-08 · micro:bit V2</span></span><button id="language" aria-label="Switch to English">English</button></div><div class="hero"><span class="step" data-i="eyebrow"></span><h1>Don’t Wake <br>the Dragon</h1><p class="sub" data-i="subtitle"></p></div></div></header><main class="wrap"><details class="teacher"><summary data-i="teacherControls"></summary><nav class="phases" aria-label="Lesson phase"><button data-phase="demo" aria-pressed="true" data-i="demo"></button><button data-phase="build" aria-pressed="false" data-i="build"></button><button data-phase="test" aria-pressed="false" data-i="test"></button><button data-phase="reflect" aria-pressed="false" data-i="reflect"></button></nav><p class="small" data-i="phaseNote"></p><div class="control-row"><button id="reveal" aria-expanded="false" data-i="reveal"></button><button id="print" data-i="print"></button></div><div id="answer" class="answer" hidden><h3 data-i="reference"></h3><p data-i="answerText"></p><pre>if (soundLevel &gt;= threshold &amp;&amp; awake == false) {
     awake = true
     // show the awake LED icon
 }
 // Button A: awake = false; show the sleeping LED icon</pre><p class="small" data-i="answerCaution"></p></div></details>
-<div class="grid"><div><section class="card accent"><span class="step" id="phaseLabel"></span><h2 id="phaseTitle"></h2><div id="phaseContent"></div></section><section class="card"><h2 data-i="ipo"></h2><div class="flow"><div><b data-i="input"></b><p data-i="inputText"></p></div><div><b data-i="process"></b><p data-i="processText"></p></div><div><b data-i="output"></b><p data-i="outputText"></p></div></div></section><section class="card"><h2 data-i="personalize"></h2><p data-i="personalizeText"></p><div class="icon-editors"><div><h3 data-i="asleep"></h3><div class="editor" id="sleepEditor" role="group"></div></div><div><h3 data-i="awake"></h3><div class="editor" id="wakeEditor" role="group"></div></div></div><p class="small" data-i="iconHelp"></p><button id="restoreIcons" data-i="restoreIcons"></button></section></div>
-<div><section class="card accent" aria-labelledby="simTitle"><span class="pill" data-i="simBadge"></span><h2 id="simTitle" data-i="simTitle" style="margin-top:16px"></h2><p class="small quiet" data-i="simNotice"></p><div class="led" id="led" role="img"></div><p class="state" id="state"></p><div class="live-state"><code id="awakeValue"></code><code id="thresholdValue"></code></div><div class="control-row"><label for="threshold" data-i="threshold"></label><input id="threshold" type="number" min="1" max="254" value="120"><button id="apply" data-i="apply"></button></div><p class="small" data-i="thresholdHint"></p><div class="pair"><label for="level" data-i="level"></label><output class="readout" id="levelValue" for="level">0</output></div><input id="level" type="range" min="0" max="255" value="0"><div class="test-buttons"><button id="below">t − 1</button><button id="equal">t</button><button id="above">t + 1</button><button id="zero">0</button><button id="max">255</button></div><label for="prediction" data-i="predict"></label><div class="control-row"><select id="prediction"><option value="" data-i="choose"></option><option value="asleep" data-i="asleep"></option><option value="awake" data-i="awake"></option></select><button class="primary" id="run" disabled data-i="run"></button></div><div class="control-row"><button id="reset" data-i="reset"></button><button id="sample" data-i="sample"></button></div><p id="sampleValue" class="small"></p><div id="feedback" class="feedback" role="status" aria-live="polite"></div><p class="small" data-i="manual"></p></section></div></div>
-<section class="card"><div class="pair"><h2 data-i="record"></h2><button id="clear" data-i="clear"></button></div><p data-i="recordText"></p><div class="table-wrap"><table><thead><tr><th data-i="trial"></th><th>soundLevel</th><th>threshold</th><th data-i="before"></th><th data-i="prediction"></th><th data-i="observed"></th></tr></thead><tbody id="records"></tbody></table></div><p class="small" data-i="recordLimit"></p></section><div class="footer" data-i="footer"></div></main>
+
+<section class="card lab-card" aria-labelledby="simTitle">
+  <div class="lab-heading">
+    <div><span class="pill" data-i="simBadge"></span><h2 id="simTitle" data-i="simTitle"></h2><p class="small quiet" data-i="simNotice"></p></div>
+    <div class="motion-control"><button id="motion" type="button"></button><p id="motionStatus" class="small"></p></div>
+  </div>
+  <div class="lab-layout">
+    <div class="stage-column">
+      <div id="dragonScene" class="dragon-scene" data-state="asleep" data-transition="idle">
+        <div class="scene-caption"><span class="scene-label" data-i="sceneLabel"></span><span class="scene-status" id="sceneStatus"></span></div>
+        <svg id="dragonArt" class="dragon-art" viewBox="0 0 760 460" role="img" focusable="false">
+          <defs>
+            <linearGradient id="caveSky" x2="0" y2="1"><stop stop-color="#17263c"/><stop offset="1" stop-color="#2a4552"/></linearGradient>
+            <radialGradient id="caveLight"><stop stop-color="#80d6ba" stop-opacity=".65"/><stop offset="1" stop-color="#80d6ba" stop-opacity="0"/></radialGradient>
+            <linearGradient id="dragonSkin" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#b7f4d4"/><stop offset=".5" stop-color="#68c8ae"/><stop offset="1" stop-color="#369f94"/></linearGradient>
+            <linearGradient id="dragonFace" x2=".4" y2="1"><stop stop-color="#bff5d8"/><stop offset="1" stop-color="#66c6a8"/></linearGradient>
+            <linearGradient id="wingMembrane" x2="1" y2="1"><stop stop-color="#e6c386"/><stop offset="1" stop-color="#b38b64"/></linearGradient>
+            <linearGradient id="crystal" x2="1" y2="1"><stop stop-color="#b9a9ed"/><stop offset="1" stop-color="#625c9d"/></linearGradient>
+          </defs>
+          <g aria-hidden="true">
+            <path fill="url(#caveSky)" d="M0 0h760v460H0z"/>
+            <ellipse fill="url(#caveLight)" cx="413" cy="265" rx="310" ry="245"/>
+            <path fill="#111c30" d="M0 0h760v99l-62-35-34 28-52-25-22-38-73 17-62-16-55 13-74-4-48 22-54-12-31 41-48 26-29 66-29 16-20 78-40 32-22 82V0z"/>
+            <path fill="#1d3044" d="M0 0h99L75 70l15 43-20 67 11 52-32 71-49 21zM760 0h-88l32 52-10 57 22 33-6 71 27 47-1 50 24 29z"/>
+            <path fill="#263b4d" d="m91 0-30 68 7 36-26 55 9 59-34 69L0 310V0zm669 0v336l-33-68 8-56-26-65 10-51-31-71 8-25z"/>
+            <path fill="#203845" d="M0 365q105-45 198-20t186 1q192-34 376 8v106H0z"/>
+            <path fill="#2b4550" d="M0 414q193-76 365-21t395-1v68H0z"/>
+            <ellipse class="cave-glow" fill="#b1d99d" cx="396" cy="374" rx="199" ry="37"/>
+            <path fill="#e4dec0" opacity=".7" d="M596 91a25 25 0 1 0 23 37 23 23 0 0 1-23-37z"/>
+            <g class="star-speck" fill="#e2eee0"><circle cx="181" cy="135" r="2"/><circle cx="265" cy="105" r="1.7"/><circle cx="546" cy="151" r="1.7"/><circle cx="636" cy="180" r="2"/><circle cx="364" cy="94" r="1.5"/><path d="m212 204 2-5 2 5 5 2-5 2-2 5-2-5-5-2z"/><path d="m517 92 2-4 2 4 4 2-4 2-2 4-2-4-4-2z"/></g>
+            <g fill="#c5e9c9"><circle class="mote" cx="182" cy="290" r="3"/><circle class="mote m2" cx="596" cy="286" r="2.5"/><circle class="mote m3" cx="252" cy="164" r="2"/><circle class="mote m2" cx="645" cy="332" r="2"/></g>
+            <g transform="translate(91 331)"><path fill="url(#crystal)" d="m0 34 7-55 19-21 16 46-10 35z"/><path fill="#c7b4f2" d="m7-21 19-21-1 65-25 11z"/><path fill="#7465a9" d="m25 23 17-19-16-46z"/><path fill="url(#crystal)" d="m34 34 6-33 17-14 10 36-13 17z"/></g>
+            <g transform="translate(637 354)"><path fill="url(#crystal)" d="m0 21 8-39 14-13 14 43-18 15z"/><path fill="#c7b4f2" d="m8-18 14-13-4 58L0 21z"/></g>
+            <g stroke="#5a897b" stroke-width="5" stroke-linecap="round"><path d="M145 379v-24m19 21v-13m443 17v-23m-16 21v-10"/></g>
+            <g fill="#b2ceaa"><path d="M130 356q15-25 30 0z"/><path d="M154 364q10-17 20 0z"/><path d="M592 358q15-23 30 0z"/><path d="M582 368q9-15 18 0z"/></g>
+            <ellipse class="dragon-shadow" fill="#071b29" opacity=".32" cx="393" cy="378" rx="192" ry="25"/>
+            <g class="wake-ring" fill="none" stroke="#ead7a2" stroke-width="2"><ellipse cx="408" cy="290" rx="152" ry="112"/><ellipse cx="408" cy="290" rx="168" ry="127" opacity=".45"/></g>
+            <g class="wake-spark" fill="#f2d69b"><path d="m260 186 3-10 3 10 10 3-10 3-3 10-3-10-10-3z"/><path d="m553 181 3-10 3 10 10 3-10 3-3 10-3-10-10-3z"/><path d="m547 342 2-7 2 7 7 2-7 2-2 7-2-7-7-2z"/><path d="m320 140 2-7 2 7 7 2-7 2-2 7-2-7-7-2z"/></g>
+            <g class="dragon-settle"><g class="dragon-breathe">
+              <path d="M320 326c-43-30-100-31-126-4-28 30-3 63 30 58-25-8-24-24-9-30 22-9 44 33 100 21" fill="url(#dragonSkin)" stroke="#318c83" stroke-width="3"/>
+              <path d="m198 326-19-9 3 25m32-31-9-22 29 13" fill="#dfbd7d" stroke="#a98e60" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M271 327c-8-66 44-116 120-116 84 0 129 57 121 111-5 41-49 58-118 58-75 0-117-12-123-53" fill="url(#dragonSkin)" stroke="#318c83" stroke-width="3"/>
+              <path d="m305 244-5-22 27 5m7-15 7-22 19 22m15-5 17-22 13 24m13 5 22-17 8 27" fill="#dfbd7d" stroke="#a98e60" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M394 305c22-32 62-22 71-1 13 30-12 56-52 56-36 0-39-31-19-55" fill="#dce6b2" opacity=".9"/>
+              <path d="M401 319q26 8 50 0m-53 15q25 8 47 1m-42 13 31 1" fill="none" stroke="#abc59e" stroke-width="3" stroke-linecap="round"/>
+              <g class="dragon-wing"><path d="M381 299c-33-8-74-13-81-37 12-3 21-10 29-22-4-24 2-42 17-62 17 37 55 51 54 82-1 19-8 31-19 39" fill="url(#wingMembrane)" stroke="#408e82" stroke-width="4" stroke-linejoin="round"/><path d="M381 298q-38-54-35-118m34 116q-16-39-51-56m51 56q-40-10-78-34" fill="none" stroke="#739c83" stroke-width="3" stroke-linecap="round"/><path d="M345 181q17 36 34 48" fill="none" stroke="#e6d3a0" stroke-width="4" stroke-linecap="round"/></g>
+              <path d="M302 340c-16 14-8 34 12 35l45-1c15-1 16-15 1-19l-17-2" fill="#6ac7ab" stroke="#318c83" stroke-width="3" stroke-linecap="round"/>
+              <path d="m317 363-1 10m13-11v11m12-11v10" stroke="#c6ebc8" stroke-width="4" stroke-linecap="round"/>
+              <path d="M448 326c-14 12-11 29 6 33l35 2c17 0 20-15 4-20l-15-2" fill="#78d3b3" stroke="#318c83" stroke-width="3" stroke-linecap="round"/>
+              <path d="m461 348-1 10m13-9-1 10m13-9-1 9" stroke="#d3efc8" stroke-width="4" stroke-linecap="round"/>
+              <g class="dragon-head">
+                <path d="M455 287c-4-26 7-52 21-65l49 9c13 32 12 60-12 78-21 16-48 10-58-22" fill="url(#dragonFace)" stroke="#318c83" stroke-width="3"/>
+                <path d="m472 207-7-40 28 25m31 5 12-39 16 47" fill="#edd5a0" stroke="#b39d74" stroke-width="3" stroke-linejoin="round"/>
+                <path class="dragon-ear" d="M491 209c-31-29-56-24-42-1 10 17 25 19 42 17" fill="#70c8ab" stroke="#318c83" stroke-width="3"/><path class="dragon-ear" d="m474 211-21-10 13 15" fill="none" stroke="#b9e0bd" stroke-width="4" stroke-linecap="round"/>
+                <path d="M468 227c-3-32 17-51 48-48 30 2 45 23 41 46 23-2 39 6 37 21-2 21-29 36-61 34-38-2-62-22-65-53" fill="url(#dragonFace)" stroke="#318c83" stroke-width="3"/>
+                <path d="M535 254c18 10 36 4 49-3" fill="none" stroke="#37978a" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="574" cy="235" rx="4" ry="3" fill="#337b74"/>
+                <g class="eye-closed" fill="none" stroke="#285d59" stroke-width="5" stroke-linecap="round"><path d="M494 227q12 12 24 0"/><path d="m499 232-4 5m16-5 4 5" stroke-width="3"/></g>
+                <g class="eye-open"><ellipse cx="509" cy="222" rx="13" ry="17" fill="#fff7d6"/><ellipse cx="513" cy="222" rx="6" ry="13" fill="#264d49"/><circle cx="516" cy="216" r="3" fill="white"/><path d="m497 202 20-4" fill="none" stroke="#318b7b" stroke-width="4" stroke-linecap="round"/></g>
+                <path class="mouth-asleep" d="M552 260q10 1 16-3" fill="none" stroke="#285d59" stroke-width="3" stroke-linecap="round"/>
+                <g class="mouth-awake"><path d="M549 258q16 8 28-1c-2 16-24 19-28 1" fill="#285d59"/><path d="m558 263 4 7 4-6" fill="#fff4cd"/></g>
+                <ellipse cx="493" cy="248" rx="10" ry="5" fill="#d5ca95" opacity=".55"/>
+                <path d="m479 192 9 5m9-12 9 6m11-5 8 7" stroke="#e0f6cf" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+              </g>
+              <g fill="#c8ebc6" opacity=".55"><ellipse cx="286" cy="313" rx="5" ry="3"/><ellipse cx="290" cy="299" rx="4" ry="3"/><ellipse cx="278" cy="305" rx="3" ry="2"/></g>
+            </g></g>
+            <g class="sleep-cloud"><text class="sleep-z" x="561" y="178" font-size="22">z</text><text class="sleep-z z2" x="586" y="151" font-size="29">z</text><text class="sleep-z z3" x="616" y="126" font-size="36">Z</text></g>
+            <g fill="#49615f"><ellipse cx="228" cy="403" rx="15" ry="4"/><ellipse cx="548" cy="401" rx="22" ry="5"/><ellipse cx="570" cy="413" rx="8" ry="3"/></g>
+          </g>
+        </svg>
+        <div class="scene-bottom"><span data-i="sceneFoot"></span></div>
+      </div>
+      <div class="state-dashboard"><div class="led" id="led" role="img"></div><div><p class="state" id="state"></p><div class="live-state"><code id="awakeValue"></code><code id="thresholdValue"></code></div><p class="state-description" id="stateDescription"></p></div></div>
+      <div class="trace" aria-labelledby="traceTitle">
+        <p class="trace-title" id="traceTitle" data-i="traceTitle"></p>
+        <div class="trace-grid"><div class="trace-step"><b data-i="traceInputTitle"></b><output id="traceInput"></output></div><div class="trace-step"><b data-i="traceCompareTitle"></b><output id="traceCompare"></output></div><div class="trace-step"><b data-i="traceMemoryTitle"></b><output id="traceMemory" class="trace-memory"></output></div></div>
+        <div id="signalTrack" class="signal-track" data-pulse="none" aria-hidden="true"><span class="signal-dot"></span></div><p class="trace-note" data-i="traceNote"></p>
+      </div>
+    </div>
+    <div class="console-column">
+      <div class="threshold-controls"><div class="control-row"><label for="threshold" data-i="threshold"></label><input id="threshold" type="number" min="1" max="254" value="120"><button id="apply" data-i="apply"></button></div><p class="small" data-i="thresholdHint"></p></div>
+      <div class="meter-box"><div class="pair"><label for="level" data-i="level"></label><output class="readout" id="levelValue" for="level">0</output></div><div class="meter-caption"><span data-i="meterPreview"></span><span class="threshold-badge" id="meterThresholdLabel"></span></div><div id="previewMeter" class="meter-track" role="meter" aria-valuemin="0" aria-valuemax="255" aria-valuenow="0"><div id="meterFill" class="meter-fill"></div><div id="meterThreshold" class="meter-threshold" aria-hidden="true"></div></div><div class="meter-scale" aria-hidden="true"><span>0</span><span>128</span><span>255</span></div><input id="level" type="range" min="0" max="255" value="0" aria-describedby="meterNote"><p class="meter-note" id="meterNote" data-i="meterNote"></p><div class="test-buttons"><button id="below">t − 1</button><button id="equal">t</button><button id="above">t + 1</button><button id="zero">0</button><button id="max">255</button></div></div>
+      <div class="prediction-controls"><label for="prediction" data-i="predict"></label><div class="control-row"><select id="prediction"><option value="" data-i="choose"></option><option value="asleep" data-i="asleep"></option><option value="awake" data-i="awake"></option></select><button class="primary" id="run" disabled data-i="run"></button></div></div>
+      <div class="reset-row"><button id="reset" data-i="reset"></button><button id="sample" data-i="sample"></button></div><p id="sampleValue" class="small sample-readout"></p><div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+    </div>
+  </div><p class="small manual-note" data-i="manual"></p>
+</section>
+<div class="section-label" data-i="learningLabel"></div>
+<div class="grid"><div><section class="card accent"><span class="step" id="phaseLabel"></span><h2 id="phaseTitle"></h2><div id="phaseContent"></div></section><section class="card"><h2 data-i="ipo"></h2><div class="flow"><div><b data-i="input"></b><p data-i="inputText"></p></div><div><b data-i="process"></b><p data-i="processText"></p></div><div><b data-i="output"></b><p data-i="outputText"></p></div></div></section></div><section class="card"><h2 data-i="personalize"></h2><p data-i="personalizeText"></p><div class="icon-editors"><div><h3 data-i="asleep"></h3><div class="editor" id="sleepEditor" role="group"></div></div><div><h3 data-i="awake"></h3><div class="editor" id="wakeEditor" role="group"></div></div></div><p class="small" data-i="iconHelp"></p><button id="restoreIcons" data-i="restoreIcons"></button></section></div>
+<section class="card"><div class="pair record-heading"><h2 data-i="record"></h2><button id="clear" data-i="clear"></button></div><p data-i="recordText"></p><div class="table-wrap"><table><thead><tr><th data-i="trial"></th><th>soundLevel</th><th>threshold</th><th data-i="before"></th><th data-i="prediction"></th><th data-i="observed"></th></tr></thead><tbody id="records"></tbody></table></div><p class="small" data-i="recordLimit"></p></section><div class="footer" data-i="footer"></div></main>
 <article class="sheet"><p>CODE GENIUS · GE-RO-08 · micro:bit V2</p><h1>Don’t Wake the Dragon</h1><p><b data-i="name"></b> __________________________________________________</p><section><h2 data-i="sheet1"></h2><p data-i="sheet1text"></p><p data-i="quietSamples"></p><p data-i="speechSamples"></p><p data-i="thresholdReason"></p><div class="blank"></div></section><section><h2 data-i="sheet2"></h2><p data-i="sheet2text"></p><div class="drawrow"><div><b data-i="asleep"></b><div class="draw" id="printSleep"></div></div><div><b data-i="awake"></b><div class="draw" id="printWake"></div></div></div></section><section><h2 data-i="sheet3"></h2><p class="print-note" data-i="sheet3text"></p><table><thead><tr><th data-i="action"></th><th data-i="prediction"></th><th data-i="observed"></th></tr></thead><tbody><tr><td>A → t − 1</td><td></td><td></td></tr><tr><td>A → t</td><td></td><td></td></tr><tr><td>A → t + 1</td><td></td><td></td></tr><tr><td data-i="lowAfterWake"></td><td></td><td></td></tr><tr><td data-i="repeatReset"></td><td></td><td></td></tr></tbody></table></section><section><h2 data-i="sheet4"></h2><p data-i="sheet4text"></p><div class="blank"></div><div class="blank"></div><p data-i="improve"></p><div class="blank"></div></section><p class="print-note" data-i="sheetFooter"></p></article>
 <script>
 'use strict';
 const words={th:{eyebrow:'สร้าง • คาดการณ์ • ทดสอบ • อธิบาย',subtitle:'ออกแบบมังกรที่จำได้ว่าตื่นแล้ว ใช้ค่าระดับเสียง กติกา และตัวแปรสถานะ',teacherControls:'ครู: เลือกช่วงเรียนและเปิดเฉลย',demo:'1 · สำรวจ',build:'2 · สร้าง',test:'3 · ทดสอบ',reflect:'4 · อธิบาย',phaseNote:'ครูเป็นผู้เปลี่ยนช่วงเรียน ปิดเฉลยก่อนเริ่มสร้าง การเปลี่ยนช่วงไม่ล้างผลงานหรือผลทดสอบ',reveal:'ครู: แสดงแนวคำตอบ',hide:'ครู: ซ่อนแนวคำตอบ',print:'พิมพ์ใบบันทึกเปล่า',reference:'แนวคำตอบสำหรับครู',answerText:'ตรวจค่าระดับเสียงในลูป: เมื่อค่าถึงหรือเกิน threshold และ awake ยังเป็น false จึงตั้ง awake เป็น true แล้วแสดงภาพตื่น ไม่สั่งให้หลับใน else กด A เพื่อเริ่มใหม่',answerCaution:'นี่คือข้อความอธิบายกติกา ไม่ใช่ภาพบล็อก MakeCode การซ่อนเฉลยช่วยจัดการการสอน ไม่ใช่ระบบป้องกันการเปิดซอร์ส',ipo:'เส้นทางของข้อมูล',input:'รับค่า',inputText:'soundLevel: ค่าระดับเสียง 0–255 หรือปุ่ม A',process:'ตัดสินใจ',processText:'ใช้ threshold และความจำ awake เพื่อตัดสินใจ',output:'แสดงผล',outputText:'ภาพ LED หลับหรือตื่นบนจอ 5 × 5',personalize:'ออกแบบให้เป็นของเรา',personalizeText:'เลือก threshold จากค่าที่วัดในห้องเรียนอย่างปลอดภัย แล้วออกแบบภาพสองสถานะที่แยกกันได้ชัดเจน',asleep:'หลับ',awake:'ตื่น',iconHelp:'แตะช่องเพื่อเปิด/ปิด LED หรือใช้ Tab และ Space ภาพจะเปลี่ยนในแบบจำลองเท่านั้น ให้นำแบบไปสร้างบน micro:bit ด้วย',restoreIcons:'คืนภาพเริ่มต้น',simBadge:'แบบจำลอง · ไม่ใช่เครื่องวัดเสียง',simTitle:'ห้องทดลองมังกร',simNotice:'เลื่อนค่าเอง ไม่มีการขอสิทธิ์ไมโครโฟนหรือบันทึกเสียง ต้องใช้ micro:bit V2 จริงเพื่อวัดและทดสอบอุปกรณ์',threshold:'จุดปลุก threshold',apply:'ใช้ค่า + เริ่มใหม่',thresholdHint:'120 เป็นตัวอย่าง ไม่ใช่ค่ามาตรฐาน เลือก 1–254 ในหน้านี้เพื่อทดสอบ t−1, t และ t+1 ได้ครบ',level:'ค่าจำลอง soundLevel',predict:'ก่อนส่งค่า คิดว่ามังกรจะ…',choose:'เลือกคำคาดการณ์',run:'ส่งค่า 1 ครั้ง',reset:'A · เริ่มใหม่',sample:'อ่านค่าจำลอง',manual:'ส่งค่าด้วยปุ่มทีละครั้งเพื่อสังเกต ในโปรแกรมจริงจะตรวจค่าขณะยังหลับประมาณทุก 500 ms (แสดง LED 400 ms + หยุด 100 ms) ใช้เสียงพูดสบาย ๆ ต่อเนื่องอย่างน้อย 1 วินาที แล้วทำให้เงียบก่อนกด A หากเสียงยังสูง มังกรอาจตื่นอีกในการตรวจครั้งถัดไป',record:'หลักฐานการทดสอบ',clear:'ล้างตาราง',recordText:'ตารางเก็บสิ่งที่เกิดขึ้นจริงในแบบจำลอง ไม่ใช่ผลจาก micro:bit ใช้ใบพิมพ์เพื่อบันทึกการทดสอบบนอุปกรณ์',trial:'ครั้ง',before:'ก่อน',prediction:'คาดการณ์',observed:'สังเกต',recordLimit:'แสดง 20 ครั้งล่าสุด ข้อมูลอยู่ในหน่วยความจำชั่วคราวและหายเมื่อปิดหรือรีเฟรชหน้า ไม่มีการส่งหรือบันทึกข้อมูลถาวร',footer:'ใช้แบบออฟไลน์ได้ • ไม่ใช้บริการภายนอก • ไม่ต้องกรอกข้อมูลผู้เรียน • ค่าระดับเสียง 0–255 เป็นค่าระดับสัมพัทธ์ ไม่ใช่เดซิเบล (dB)',name:'ชื่อ',sheet1:'1. เลือกจุดปลุก',sheet1text:'บันทึกอย่างละ 3 ค่า (0–255 ไม่ใช่ dB) ใช้เสียงพูดสบาย ๆ',quietSamples:'เงียบ / เสียงพื้นหลัง: 1 ________ 2 ________ 3 ________',speechSamples:'เสียงพูดสบาย ๆ: 1 ________ 2 ________ 3 ________',thresholdReason:'threshold ที่เลือก = __________ เพราะ…',sheet2:'2. ออกแบบภาพของเรา',sheet2text:'ระบายช่อง LED ให้ผู้ใช้แยกสองสถานะได้',sheet3:'3. คาดการณ์ก่อนทดสอบ',sheet3text:'เขียนค่า t = ______ แยกคาดการณ์กับผลจริง ระบุแหล่งผล: □ แบบจำลอง □ micro:bit จริง ทดสอบด้วยค่าควบคุมเมื่อเสียงจริงตั้งค่าเป๊ะไม่ได้',action:'สิ่งที่ทำ',lowAfterWake:'หลังตื่น → ลดค่าต่ำกว่า t',repeatReset:'ทำซ้ำ → กด A → ค่าต่ำกว่า t',sheet4:'4. อธิบายให้เพื่อนฟัง',sheet4text:'ทำไมเสียงเบาลงแล้วมังกรยังตื่น? awake ช่วยอะไร?',improve:'เพื่อนลองแล้วพบว่า… ฉันปรับ… และทดสอบซ้ำได้ผล…',sheetFooter:'ใช้เสียงเบาที่ปลอดภัย ไม่ตะโกนหรือแข่งความดัง ใช้ค่าจำลองแทนได้ ไม่ต้องเขียนชื่อในหน้าเว็บ',ready:'พร้อมทดลอง: เลือกค่าและคาดการณ์ก่อนส่งค่า',resetMsg:'เริ่มใหม่: awake = false ครั้งถัดไปจะประมวลผลเมื่อกดส่งค่า',changed:'ใช้ threshold ใหม่และเริ่มใหม่แล้ว',invalid:'ใส่จำนวนเต็ม 1–254 เท่านั้น',sampleMsg:'ค่าจำลองที่อ่าน: ',result:'ผลที่สังเกต: ',match:'ตรงกับคำคาดการณ์',mismatch:'ต่างจากคำคาดการณ์ ลองอธิบายสาเหตุ',cleared:'ล้างตารางแล้ว สถานะมังกรยังเหมือนเดิม',empty:'ยังไม่มีการทดสอบ เลือกคำคาดการณ์แล้วส่งค่า',cell:'LED แถว {r} คอลัมน์ {c}',demoTitle:'เสียงเบาลงแล้ว…จะหลับไหม?',buildTitle:'เราเป็นคนสร้างกติกา',testTitle:'ลองที่ขอบของกติกา',reflectTitle:'ให้เพื่อนลอง แล้วอธิบาย',demoBody:'<p>ตั้งค่าเริ่มต้น 120 คาดการณ์แล้วลองส่ง 119 จากนั้นส่ง 120 แล้วลดเหลือ 0 สังเกตว่ามังกรจำอะไรไว้</p><p class="callout">ภารกิจ: สร้างมังกรที่ตื่นเมื่อเสียงถึงจุดที่เราเลือก และหลับอีกครั้งเมื่อกด A</p><p class="quiet">ใช้เสียงเบาที่ครูอนุญาตเท่านั้น ไม่ตะโกน ไม่แข่งความดัง ใช้ตัวเลื่อนแทนเสียงได้เสมอ</p>',buildBody:'<ol class="list"><li>เปิดไฟล์เริ่มต้นใน MakeCode สำหรับ micro:bit V2</li><li>ตรวจตัวแปร threshold และ awake ที่มีให้ ปรับ threshold ของเรา และทำให้เกมเริ่มด้วยภาพหลับ</li><li>เขียนกติกาอ่าน soundLevel และเปลี่ยนภาพพร้อมสถานะเมื่อควรตื่น</li><li>ทำให้ความจำยังคงอยู่เมื่อเสียงเบาลง และให้ A เริ่มใหม่</li><li>วัดค่าหลายครั้ง เลือกจุดปลุกของเรา แล้วสร้างภาพ LED สองภาพ</li></ol><p class="callout">เราสร้าง: เงื่อนไข การเปลี่ยนสถานะ การเริ่มใหม่ และภาพ LED<br>ครูช่วย: การเชื่อมต่อ บันทึกไฟล์ และเครื่องมือ Sound Check แยกต่างหาก (A อ่านหนึ่งครั้ง / กด B ค้างเพื่อดูแถบระดับเสียง)</p><p>แบบจำลองนี้ใช้กติกาอ้างอิง ไม่ได้รันโค้ดที่เราเขียน ต้องนำโค้ดของเราไปทดสอบใน MakeCode และบนบอร์ดจริง</p>',testBody:'<ol class="list"><li>กด A ก่อนทดสอบแต่ละค่า เลือก t−1, t และ t+1 คาดการณ์ก่อนส่งค่า</li><li>ปลุกมังกรแล้วลดค่าเหลือ 0 มังกรควรจำอะไร?</li><li>ส่งค่าเดิมซ้ำ แล้วกด A ส่งค่าต่ำอีกครั้ง</li><li>เปลี่ยน threshold แล้วทดสอบขอบใหม่ ตรวจภาพหลังแก้ด้วย</li></ol><p class="callout">เสียงจริงตั้งให้ตรงค่าทีละหน่วยได้ยาก ใช้ค่าจำลองทดสอบขอบ และใช้บอร์ดจริงตรวจว่าไมโครโฟนและภาพทำงาน</p><p>บันทึกคาดการณ์ ผลจริง และสิ่งที่แก้ แยกผลแบบจำลองออกจากผลบนบอร์ด</p>',reflectBody:'<ol class="list"><li>สลับบทบาท: คนหนึ่งลอง อีกคนอธิบาย แล้วสลับกัน</li><li>ชี้ว่าอะไรคือข้อมูลเข้า กติกา ความจำ และผลลัพธ์</li><li>อธิบายว่าเลือก threshold นี้เพราะอะไร และทำไมมังกรไม่หลับเอง</li><li>ปรับสิ่งหนึ่งจากคำแนะนำของเพื่อน ทดสอบซ้ำและบันทึกไฟล์</li></ol><p class="callout">หลักฐานที่นำเสนอ: โค้ดของเรา ภาพสองสถานะ ค่า threshold พร้อมเหตุผล และผลทดสอบก่อน/หลังแก้ไข</p>'},en:{eyebrow:'Build • Predict • Test • Explain',subtitle:'Design a dragon that remembers waking up. Use sound levels, a rule, and a state variable.',teacherControls:'Teacher: lesson phase and reference',demo:'1 · Explore',build:'2 · Build',test:'3 · Test',reflect:'4 · Explain',phaseNote:'The teacher changes phases. Hide the reference before building. Changing phase preserves designs and test records.',reveal:'Teacher: show reference',hide:'Teacher: hide reference',print:'Print blank record sheet',reference:'Teacher reference',answerText:'Check the sound level in a loop. When it reaches or exceeds threshold and awake is still false, set awake to true and show the awake icon. Do not make an else branch put it to sleep. Button A starts again.',answerCaution:'This is a text explanation, not a MakeCode block image. Hiding the reference supports teaching; it does not prevent viewing the source.',ipo:'Follow the data',input:'Input',inputText:'soundLevel: a relative level from 0–255, or button A',process:'Process',processText:'Use threshold and the awake memory to decide.',output:'Output',outputText:'A sleeping or awake icon on a 5 × 5 LED display.',personalize:'Make it yours',personalizeText:'Choose threshold from safe classroom measurements. Then design two LED icons that are easy to tell apart.',asleep:'Asleep',awake:'Awake',iconHelp:'Tap a cell to toggle its LED, or use Tab and Space. This changes the simulation only. Recreate your design on micro:bit too.',restoreIcons:'Restore default icons',simBadge:'Simulation · not a sound meter',simTitle:'Dragon test lab',simNotice:'Set values manually. No microphone permission or audio recording. A real micro:bit V2 is still needed for measurement and hardware tests.',threshold:'Wake-up threshold',apply:'Apply + reset',thresholdHint:'120 is an example, not a standard. This page accepts 1–254 so all three boundaries t−1, t and t+1 can be tested.',level:'Simulated soundLevel',predict:'Before sending, I predict the dragon will be…',choose:'Choose a prediction',run:'Send one reading',reset:'A · Reset',sample:'Read simulated level',manual:'Send one reading at a time to observe. The real program checks automatically while asleep, about every 500 ms (400 ms LED display + 100 ms pause). Use comfortable speech for at least 1 second, then make it quiet before pressing A. If sound stays high, the dragon may wake again on the next check.',record:'Test evidence',clear:'Clear table',recordText:'This table records actual simulation outcomes, not micro:bit results. Use the printed sheet to record hardware tests.',trial:'Trial',before:'Before',prediction:'Prediction',observed:'Observed',recordLimit:'Shows the latest 20 trials. Data stays in temporary memory and disappears on close or refresh. Nothing is transmitted or stored permanently.',footer:'Works offline • No external services • No learner data entry • Sound levels 0–255 are relative readings, not decibels (dB).',name:'Name',sheet1:'1. Choose a wake-up point',sheet1text:'Record 3 readings per group (0–255, not dB). Use comfortable speech.',quietSamples:'Quiet / background: 1 ________ 2 ________ 3 ________',speechSamples:'Comfortable speech: 1 ________ 2 ________ 3 ________',thresholdReason:'My threshold = __________ because…',sheet2:'2. Design our icons',sheet2text:'Shade the LEDs so a user can tell the two states apart.',sheet3:'3. Predict before testing',sheet3text:'Write t = ______. Keep predictions and results separate. Source: □ simulation □ real micro:bit. Use controlled values when real sound cannot match an exact reading.',action:'Action',lowAfterWake:'After waking → lower below t',repeatReset:'Repeat → press A → below t',sheet4:'4. Explain to a partner',sheet4text:'Why is the dragon still awake when sound gets quieter? How does awake help?',improve:'My partner noticed… I changed… and the retest showed…',sheetFooter:'Use gentle, safe sounds. No shouting or loudness contests. Simulated input is always an option. Do not enter your name on the website.',ready:'Ready: choose a level and predict before sending.',resetMsg:'Reset: awake = false. The next reading is processed only when you press Send.',changed:'New threshold applied and dragon reset.',invalid:'Enter a whole number from 1 to 254.',sampleMsg:'Simulated reading: ',result:'Observed: ',match:'Matches your prediction.',mismatch:'Different from your prediction. Can you explain why?',cleared:'Table cleared. The dragon’s state is unchanged.',empty:'No trials yet. Choose a prediction and send a reading.',cell:'LED row {r}, column {c}',demoTitle:'Quieter now… but asleep?',buildTitle:'You build the rule',testTitle:'Test the edge of the rule',reflectTitle:'Let a partner try. Then explain.',demoBody:'<p>Start with threshold 120. Predict and send 119, then send 120, then lower the input to 0. What does the dragon remember?</p><p class="callout">Mission: build a dragon that wakes at a sound level you choose, and sleeps again when you press A.</p><p class="quiet">Use only teacher-approved gentle sounds. No shouting or loudness contests. The slider is always a quiet alternative.</p>',buildBody:'<ol class="list"><li>Open the starter in MakeCode for micro:bit V2.</li><li>Inspect the supplied threshold and awake variables. Adjust your threshold and start the game asleep.</li><li>Build a rule that reads soundLevel and changes the state and icon when it should wake.</li><li>Keep its memory when sound gets quieter. Make A reset it.</li><li>Take several readings, choose your wake-up point, and create two LED icons.</li></ol><p class="callout">You build: the condition, state change, reset and LED icons.<br>Teacher support: connection, file saving and a separate Sound Check tool (A reads once / hold B for a live level bar).</p><p>This simulator uses a reference rule, not your code. Test your own code in MakeCode and on a real board.</p>',testBody:'<ol class="list"><li>Press A before each boundary trial. Choose t−1, t and t+1. Predict before sending.</li><li>Wake the dragon, then lower the level to 0. What should it remember?</li><li>Send the same reading again. Press A, then send a low reading.</li><li>Change threshold and test the new boundaries. Check your edited icons too.</li></ol><p class="callout">Real sound is hard to set to exact single-unit values. Use simulated inputs for boundary tests and a real board to check the microphone and display.</p><p>Record predictions, observations and fixes. Keep simulation results separate from board results.</p>',reflectBody:'<ol class="list"><li>One partner tests while the other explains. Then swap roles.</li><li>Point out the input, rule, memory and output.</li><li>Explain your threshold choice and why the dragon does not fall asleep by itself.</li><li>Change one thing after feedback, retest and save your project.</li></ol><p class="callout">Present your own code, two state icons, threshold and its reason, and test evidence before and after a change.</p>'}};
+
+// Visual explanations use the same bilingual contract as the lesson.
+Object.assign(words.th,{"pauseMotion": "หยุดแอนิเมชัน", "resumeMotion": "เปิดแอนิเมชัน", "motionOn": "ภาพเคลื่อนไหวเปิดอยู่", "motionOff": "ภาพนิ่ง · ยังทดลองได้ตามปกติ", "sceneLabel": "ถ้ำมังกร · ห้องทดลองสถานะ", "sceneFoot": "ภาพเปลี่ยนตามสถานะ ไม่ได้ฟังเสียงในห้อง", "sceneAsleep": "มังกรหลับอยู่ในถ้ำ ตาปิดและปีกพับ สถานะ awake เป็น false", "sceneAwake": "มังกรตื่นอยู่ในถ้ำ ตาเปิดและกางปีก สถานะ awake เป็น true", "sleepDescription": "กำลังหลับ · เลื่อนค่าอย่างเดียวจะไม่ปลุกมังกร", "wakeDescription": "จำว่าตื่นแล้ว · ลดค่าเหลือ 0 ก็ยังตื่น จนกด A", "meterPreview": "ค่าที่เตรียมส่ง · ยังไม่ประมวลผล", "meterNote": "แถบแสดงค่าจำลอง 0–255 ไม่ใช่ dB เส้นตั้งคือ threshold คาดการณ์แล้วกดส่งค่าเพื่อทดสอบ", "meterLabel": "ค่าจำลองที่เตรียมส่ง", "meterValue": "ค่า {level} จาก 255 จุดปลุก {threshold} ยังไม่ส่งค่า", "traceTitle": "เส้นทางของค่าที่ส่งล่าสุด", "traceInputTitle": "1 · รับค่า", "traceCompareTitle": "2 · เทียบจุดปลุก", "traceMemoryTitle": "3 · จำสถานะ", "traceWaiting": "ยังไม่ได้ส่งค่า", "traceCompareWaiting": "รอกดส่งค่า", "traceBelow": "ต่ำกว่าจุดปลุก", "traceReached": "ถึงหรือเกินจุดปลุก", "traceNote": "ตัวเลื่อนแสดงค่าที่เตรียมส่ง เส้นทางนี้เปลี่ยนเมื่อกดส่งค่า หรือเริ่มใหม่เท่านั้น", "traceCompareHidden": "สังเกตแล้วอธิบาย", "buildStateDescription": "สังเกตสถานะ แล้วอธิบายกติกาด้วยโค้ดของเรา", "learningLabel": "สร้างเอง · ทดสอบ · อธิบาย"});
+Object.assign(words.en,{"pauseMotion": "Pause animation", "resumeMotion": "Enable animation", "motionOn": "Animation is on", "motionOff": "Still view · experiments still work", "sceneLabel": "Dragon cave · state laboratory", "sceneFoot": "The scene follows state. It is not listening.", "sceneAsleep": "A sleeping dragon in a cave, eyes closed and wing folded. The awake state is false.", "sceneAwake": "An awake dragon in a cave, eyes open and wing spread. The awake state is true.", "sleepDescription": "Sleeping · moving the slider alone will not wake it.", "wakeDescription": "Remembers waking · even 0 keeps it awake, until A.", "meterPreview": "Prepared reading · not processed yet", "meterNote": "Simulated level 0–255, not dB. The vertical line marks threshold. Predict, then send to test.", "meterLabel": "Prepared simulated reading", "meterValue": "Level {level} of 255. Threshold {threshold}. Not sent yet.", "traceTitle": "The last reading’s journey", "traceInputTitle": "1 · Input", "traceCompareTitle": "2 · Compare", "traceMemoryTitle": "3 · Remember", "traceWaiting": "No reading sent", "traceCompareWaiting": "Waiting for Send", "traceBelow": "Below threshold", "traceReached": "At or above threshold", "traceNote": "The slider previews a reading. This path changes only when you send a reading or reset.", "traceCompareHidden": "Observe and explain", "buildStateDescription": "Observe the state. Explain the rule in your own code.", "learningLabel": "Build it · test it · explain it"});
 let lang='th',phase='demo',awake=false,threshold=120,log=[],trial=0,feedbackKey='ready',lastResult=null,sampled=null;
 const defaults={sleep:'0000011011000000111000000',wake:'1000101010000000111010001'};let icons={sleep:[...defaults.sleep],wake:[...defaults.wake]};
-const $=id=>document.getElementById(id), w=k=>words[lang][k];
-function renderIcons(){for(const kind of ['sleep','wake']){let grid=$(kind+'Editor');grid.innerHTML='';grid.setAttribute('aria-label',w(kind==='sleep'?'asleep':'awake'));icons[kind].forEach((v,i)=>{let b=document.createElement('button');b.type='button';b.setAttribute('aria-pressed',v==='1');b.setAttribute('aria-label',w('cell').replace('{r}',Math.floor(i/5)+1).replace('{c}',i%5+1));b.onclick=()=>{icons[kind][i]=icons[kind][i]==='1'?'0':'1';b.setAttribute('aria-pressed',icons[kind][i]==='1');renderState()};grid.append(b)})}renderState()}
-function renderState(){$('state').textContent=w(awake?'awake':'asleep');$('awakeValue').textContent='awake = '+awake;$('thresholdValue').textContent='threshold = '+threshold;$('led').setAttribute('aria-label',w(awake?'awake':'asleep')+' · LED 5 × 5');$('led').innerHTML=icons[awake?'wake':'sleep'].map(v=>'<span'+(v==='1'?' class="on"':'')+'></span>').join('')}
-function renderLog(){$('records').innerHTML=log.length?log.map(r=>`<tr><td>${r.n}</td><td>${r.level}</td><td>${r.t}</td><td>${w(r.before?'awake':'asleep')}</td><td>${w(r.pred)}</td><td>${w(r.after?'awake':'asleep')}</td></tr>`).join(''):`<tr><td colspan="6">${w('empty')}</td></tr>`}
-function feedback(){ $('feedback').textContent=feedbackKey==='result'?w('result')+w(lastResult.after?'awake':'asleep')+'. '+w(lastResult.match?'match':'mismatch'):w(feedbackKey);$('sampleValue').textContent=sampled===null?'':w('sampleMsg')+sampled}
-function render(){document.documentElement.lang=lang;document.querySelectorAll('[data-i]').forEach(el=>{el.textContent=w(el.dataset.i)});$('language').textContent=lang==='th'?'English':'ภาษาไทย';$('language').setAttribute('aria-label',lang==='th'?'Switch to English':'เปลี่ยนเป็นภาษาไทย');$('phaseLabel').textContent=w(phase);$('phaseTitle').textContent=w(phase+'Title');$('phaseContent').innerHTML=w(phase+'Body');document.querySelectorAll('[data-phase]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.phase===phase));$('reveal').textContent=w($('answer').hidden?'reveal':'hide');renderIcons();renderLog();feedback()}
-function reset(key='resetMsg'){awake=false;feedbackKey=key;$('prediction').value='';$('run').disabled=true;renderState();feedback()}
-function setLevel(value){$('level').value=value;$('levelValue').value=$('level').value;$('prediction').value='';$('run').disabled=true}
-$('language').onclick=()=>{lang=lang==='th'?'en':'th';render()};document.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>{phase=b.dataset.phase;if(phase==='build'){$('answer').hidden=true;$('reveal').setAttribute('aria-expanded','false')}render()});$('reveal').onclick=()=>{$('answer').hidden=!$('answer').hidden;$('reveal').setAttribute('aria-expanded',!$('answer').hidden);$('reveal').textContent=w($('answer').hidden?'reveal':'hide')};$('print').onclick=()=>window.print();$('level').oninput=()=>setLevel($('level').value);$('prediction').onchange=()=>{$('run').disabled=!$('prediction').value};$('apply').onclick=()=>{let n=Number($('threshold').value);if(!Number.isInteger(n)||n<1||n>254){feedbackKey='invalid';feedback();return}threshold=n;reset('changed')};$('reset').onclick=()=>reset();$('sample').onclick=()=>{sampled=Number($('level').value);feedback()};$('run').onclick=()=>{if(!$('prediction').value)return;const level=Number($('level').value),before=awake,pred=$('prediction').value;if(level>=threshold&&!awake)awake=true;log.push({n:++trial,level,t:threshold,before,pred,after:awake});if(log.length>20)log.shift();lastResult={after:awake,match:pred===(awake?'awake':'asleep')};feedbackKey='result';$('prediction').value='';$('run').disabled=true;renderState();renderLog();feedback()};for(const [id,get] of Object.entries({below:()=>threshold-1,equal:()=>threshold,above:()=>threshold+1,zero:()=>0,max:()=>255}))$(id).onclick=()=>setLevel(get());$('restoreIcons').onclick=()=>{icons={sleep:[...defaults.sleep],wake:[...defaults.wake]};renderIcons()};$('clear').onclick=()=>{log=[];trial=0;feedbackKey='cleared';renderLog();feedback()};for(const id of ['printSleep','printWake'])$(id).innerHTML='<span></span>'.repeat(25);render();
+const $ = id => document.getElementById(id);
+const w = key => words[lang][key];
+const motionPreference = typeof window.matchMedia === 'function'
+  ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+let motionPaused = Boolean(motionPreference && motionPreference.matches);
+let motionOverride = false;
+let lastSceneState = null;
+let lastTrace = null;
+let signalSequence = 0;
+
+function renderMotion() {
+  document.documentElement.setAttribute('data-motion', motionPaused ? 'paused' : 'running');
+  $('motion').textContent = w(motionPaused ? 'resumeMotion' : 'pauseMotion');
+  $('motionStatus').textContent = w(motionPaused ? 'motionOff' : 'motionOn');
+}
+
+function setMotion(paused) {
+  motionPaused = paused;
+  // Do not replay an old wake or submitted reading when motion is enabled again.
+  $('dragonScene').dataset.transition = 'idle';
+  $('signalTrack').dataset.pulse = 'none';
+  renderMotion();
+}
+
+function renderScene() {
+  const scene = $('dragonScene');
+  // Language changes, icon edits and repeated awake readings cannot replay waking.
+  if (lastSceneState !== null && lastSceneState !== awake) {
+    scene.dataset.transition = motionPaused ? 'idle' : (awake ? 'wake' : 'sleep');
+  }
+  scene.dataset.state = awake ? 'awake' : 'asleep';
+  lastSceneState = awake;
+  $('sceneStatus').textContent = w(awake ? 'awake' : 'asleep');
+  $('dragonArt').setAttribute('aria-label', w(awake ? 'sceneAwake' : 'sceneAsleep'));
+  $('stateDescription').textContent = w(phase === 'build' && $('answer').hidden
+    ? 'buildStateDescription' : (awake ? 'wakeDescription' : 'sleepDescription'));
+}
+
+function renderMeter() {
+  const value = Number($('level').value);
+  $('levelValue').value = value;
+  $('meterFill').style.width = (value / 255 * 100) + '%';
+  $('meterThreshold').style.left = (threshold / 255 * 100) + '%';
+  $('meterThresholdLabel').textContent = 't = ' + threshold;
+  $('previewMeter').setAttribute('aria-label', w('meterLabel'));
+  $('previewMeter').setAttribute('aria-valuenow', value);
+  $('previewMeter').setAttribute('aria-valuetext', w('meterValue')
+    .replace('{level}', value).replace('{threshold}', threshold));
+}
+
+function renderTrace() {
+  $('traceInput').textContent = lastTrace ? String(lastTrace.level) : w('traceWaiting');
+  const showComparison = phase !== 'build' || !$('answer').hidden;
+  $('traceCompare').textContent = !showComparison ? w('traceCompareHidden')
+    : (lastTrace ? w(lastTrace.level >= lastTrace.t ? 'traceReached' : 'traceBelow')
+      : w('traceCompareWaiting'));
+  $('traceMemory').textContent = lastTrace
+    ? String(lastTrace.before) + ' → ' + String(lastTrace.after)
+    : 'awake = ' + awake;
+}
+
+function pulseReading() {
+  signalSequence += 1;
+  $('signalTrack').dataset.pulse = motionPaused ? 'none' : (signalSequence % 2 ? 'a' : 'b');
+}
+
+function renderIcons() {
+  for (const kind of ['sleep', 'wake']) {
+    const grid = $(kind + 'Editor');
+    grid.innerHTML = '';
+    grid.setAttribute('aria-label', w(kind === 'sleep' ? 'asleep' : 'awake'));
+    icons[kind].forEach((value, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('aria-pressed', value === '1');
+      button.setAttribute('aria-label', w('cell')
+        .replace('{r}', Math.floor(index / 5) + 1).replace('{c}', index % 5 + 1));
+      button.onclick = () => {
+        icons[kind][index] = icons[kind][index] === '1' ? '0' : '1';
+        button.setAttribute('aria-pressed', icons[kind][index] === '1');
+        renderState();
+      };
+      grid.append(button);
+    });
+  }
+  renderState();
+}
+
+function renderState() {
+  $('state').textContent = w(awake ? 'awake' : 'asleep');
+  $('awakeValue').textContent = 'awake = ' + awake;
+  $('thresholdValue').textContent = 'threshold = ' + threshold;
+  $('led').setAttribute('aria-label', w(awake ? 'awake' : 'asleep') + ' · LED 5 × 5');
+  $('led').innerHTML = icons[awake ? 'wake' : 'sleep']
+    .map(value => '<span' + (value === '1' ? ' class="on"' : '') + '></span>').join('');
+  renderScene();
+  renderTrace();
+}
+
+function renderLog() {
+  $('records').innerHTML = log.length ? log.map(row =>
+    `<tr><td>${row.n}</td><td>${row.level}</td><td>${row.t}</td><td>${w(row.before ? 'awake' : 'asleep')}</td><td>${w(row.pred)}</td><td>${w(row.after ? 'awake' : 'asleep')}</td></tr>`
+  ).join('') : `<tr><td colspan="6">${w('empty')}</td></tr>`;
+}
+
+function feedback() {
+  $('feedback').textContent = feedbackKey === 'result'
+    ? w('result') + w(lastResult.after ? 'awake' : 'asleep') + '. ' + w(lastResult.match ? 'match' : 'mismatch')
+    : w(feedbackKey);
+  $('sampleValue').textContent = sampled === null ? '' : w('sampleMsg') + sampled;
+}
+
+function render() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i]').forEach(element => {
+    element.textContent = w(element.dataset.i);
+  });
+  $('language').textContent = lang === 'th' ? 'English' : 'ภาษาไทย';
+  $('language').setAttribute('aria-label', lang === 'th' ? 'Switch to English' : 'เปลี่ยนเป็นภาษาไทย');
+  $('phaseLabel').textContent = w(phase);
+  $('phaseTitle').textContent = w(phase + 'Title');
+  $('phaseContent').innerHTML = w(phase + 'Body');
+  document.querySelectorAll('[data-phase]').forEach(button =>
+    button.setAttribute('aria-pressed', button.dataset.phase === phase));
+  $('reveal').textContent = w($('answer').hidden ? 'reveal' : 'hide');
+  renderMotion();
+  renderMeter();
+  renderIcons();
+  renderLog();
+  feedback();
+}
+
+function reset(key = 'resetMsg') {
+  awake = false;
+  lastTrace = null;
+  $('signalTrack').dataset.pulse = 'none';
+  feedbackKey = key;
+  $('prediction').value = '';
+  $('run').disabled = true;
+  renderState();
+  renderMeter();
+  feedback();
+}
+
+function setLevel(value) {
+  // A preview is not a reading. Never evaluate the rule or change awake here.
+  $('level').value = value;
+  $('prediction').value = '';
+  $('run').disabled = true;
+  renderMeter();
+}
+
+$('motion').onclick = () => {
+  motionOverride = true;
+  setMotion(!motionPaused);
+};
+if (motionPreference && typeof motionPreference.addEventListener === 'function') {
+  motionPreference.addEventListener('change', event => {
+    if (!motionOverride) setMotion(event.matches);
+  });
+}
+$('language').onclick = () => { lang = lang === 'th' ? 'en' : 'th'; render(); };
+document.querySelectorAll('[data-phase]').forEach(button => {
+  button.onclick = () => {
+    phase = button.dataset.phase;
+    if (phase === 'build') {
+      $('answer').hidden = true;
+      $('reveal').setAttribute('aria-expanded', 'false');
+    }
+    render();
+  };
+});
+$('reveal').onclick = () => {
+  $('answer').hidden = !$('answer').hidden;
+  $('reveal').setAttribute('aria-expanded', !$('answer').hidden);
+  $('reveal').textContent = w($('answer').hidden ? 'reveal' : 'hide');
+  renderScene();
+  renderTrace();
+};
+$('print').onclick = () => window.print();
+$('level').oninput = () => setLevel($('level').value);
+$('prediction').onchange = () => { $('run').disabled = !$('prediction').value; };
+$('apply').onclick = () => {
+  const value = Number($('threshold').value);
+  if (!Number.isInteger(value) || value < 1 || value > 254) {
+    feedbackKey = 'invalid';
+    feedback();
+    return;
+  }
+  threshold = value;
+  reset('changed');
+};
+$('reset').onclick = () => reset();
+$('sample').onclick = () => {
+  sampled = Number($('level').value);
+  feedback();
+};
+$('run').onclick = () => {
+  if (!$('prediction').value) return;
+  const level = Number($('level').value);
+  const before = awake;
+  const pred = $('prediction').value;
+  if (level >= threshold && !awake) awake = true;
+  log.push({ n: ++trial, level, t: threshold, before, pred, after: awake });
+  if (log.length > 20) log.shift();
+  lastTrace = { level, t: threshold, before, after: awake };
+  lastResult = { after: awake, match: pred === (awake ? 'awake' : 'asleep') };
+  feedbackKey = 'result';
+  $('prediction').value = '';
+  $('run').disabled = true;
+  renderState();
+  pulseReading();
+  renderLog();
+  feedback();
+};
+for (const [id, get] of Object.entries({
+  below: () => threshold - 1, equal: () => threshold, above: () => threshold + 1,
+  zero: () => 0, max: () => 255
+})) $(id).onclick = () => setLevel(get());
+$('restoreIcons').onclick = () => {
+  icons = { sleep: [...defaults.sleep], wake: [...defaults.wake] };
+  renderIcons();
+};
+$('clear').onclick = () => {
+  log = [];
+  trial = 0;
+  feedbackKey = 'cleared';
+  renderLog();
+  feedback();
+};
+for (const id of ['printSleep', 'printWake']) $(id).innerHTML = '<span></span>'.repeat(25);
+render();
 </script></body></html>

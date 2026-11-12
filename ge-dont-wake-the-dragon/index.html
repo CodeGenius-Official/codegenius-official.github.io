@@ -21,6 +21,13 @@ html[data-motion="paused"] *,html[data-motion="paused"] *:before,html[data-motio
 @media(max-width:420px){.wrap{padding:14px}.top{align-items:center;flex-wrap:nowrap;gap:10px}.brand{max-width:190px;font-size:11px;gap:6px}.brand .pill{font-size:10px;padding:3px 8px;letter-spacing:0}.top>button{font-size:12px;padding:8px 10px;flex:none}.card{padding:17px}.lab-card{padding:0}.lab-heading{padding:18px 14px 12px;gap:12px}.stage-column{padding:0 12px 14px}.console-column{padding:0 14px 18px}.scene-caption{left:12px;right:12px;top:12px}.scene-caption .scene-label{font-size:8px;max-width:58%}.scene-status{font-size:10px;padding:3px 8px}.scene-bottom{font-size:9px;bottom:9px;left:10px;right:10px}.dragon-scene{border-radius:14px}.state-dashboard{grid-template-columns:72px minmax(0,1fr);gap:12px}.state-dashboard .led{width:68px;gap:3px;border-width:6px;border-radius:10px}.state-dashboard .state{font-size:27px}.state-dashboard .live-state{gap:0 8px}.state-dashboard .live-state code{font-size:11px}.state-description{font-size:12px}.trace{padding:12px}.trace-grid{gap:12px}.trace-step b{font-size:10px}.trace-step output{font-size:11px}.trace-note{font-size:10px}.trace-title{font-size:12px}.meter-box{padding:14px}.meter-box label{font-size:14px}.meter-caption{font-size:11px}.readout{font-size:34px}.manual-note{padding:0 14px 18px;font-size:12px}.teacher{padding:14px}.teacher summary{font-size:15px}.phases button{font-size:12px;padding:8px 10px}.teacher .control-row button{font-size:12px}.flow>div{grid-template-columns:1fr;gap:4px}.hero h1{line-height:1.15;letter-spacing:-.03em}.hero h1 br{display:block}.hero{padding-top:24px}.sub{font-size:16px}.control-row>button{max-width:100%}select{font-size:14px}}
 @media print{body{background:#fff!important}.sheet{background:#fff}*{animation:none!important;transition:none!important}.lab-card,.section-label{display:none!important}}
 
+
+.trace-step{border-radius:10px;transition:background .2s,box-shadow .2s;padding:8px}
+.trace-step[data-active="true"]{background:#fff3be;box-shadow:inset 0 0 0 2px #e7b829;animation:traceFocus .35s ease-out}
+@keyframes traceFocus{from{transform:translateY(3px)}to{transform:translateY(0)}}
+.trace-walk{margin-top:12px}.trace-walk p{margin:10px 0 0;min-height:2.8em;font-size:14px;line-height:1.6}
+html[data-motion="paused"] .trace-step{animation:none;transition:none}
+@media(prefers-reduced-motion:reduce){.trace-step{animation:none!important;transition:none!important}}
 </style></head><body><header><div class="wrap"><div class="top"><span class="brand">CODE GENIUS <span class="pill">GE-RO-08 · micro:bit V2</span></span><button id="language" aria-label="Switch to English">English</button></div><div class="hero"><span class="step" data-i="eyebrow"></span><h1>Don’t Wake <br>the Dragon</h1><p class="sub" data-i="subtitle"></p></div></div></header><main class="wrap"><p class="callout" data-i="ageRoute"></p><p class="small"><a href="https://microbit.org/compliance/" target="_blank" rel="noopener" data-i="safetySource"></a></p><details class="teacher"><summary data-i="teacherControls"></summary><nav class="phases" aria-label="Lesson phase"><button data-phase="demo" aria-pressed="true" data-i="demo"></button><button data-phase="build" aria-pressed="false" data-i="build"></button><button data-phase="test" aria-pressed="false" data-i="test"></button><button data-phase="reflect" aria-pressed="false" data-i="reflect"></button></nav><p class="small" data-i="phaseNote"></p><div class="control-row"><button id="reveal" aria-expanded="false" data-i="reveal"></button><button id="print" data-i="print"></button></div><div id="answer" class="answer" hidden><h3 data-i="reference"></h3><p data-i="answerText"></p><pre>if (soundLevel &gt;= threshold &amp;&amp; awake == false) {
     awake = true
     // show the awake LED icon
@@ -102,7 +109,7 @@ html[data-motion="paused"] *,html[data-motion="paused"] *:before,html[data-motio
       <div class="trace" aria-labelledby="traceTitle">
         <p class="trace-title" id="traceTitle" data-i="traceTitle"></p>
         <div class="trace-grid"><div class="trace-step"><b data-i="traceInputTitle"></b><output id="traceInput"></output></div><div class="trace-step"><b data-i="traceCompareTitle"></b><output id="traceCompare"></output></div><div class="trace-step"><b data-i="traceMemoryTitle"></b><output id="traceMemory" class="trace-memory"></output></div></div>
-        <div id="signalTrack" class="signal-track" data-pulse="none" aria-hidden="true"><span class="signal-dot"></span></div><p class="trace-note" data-i="traceNote"></p>
+        <div id="signalTrack" class="signal-track" data-pulse="none" aria-hidden="true"><span class="signal-dot"></span></div><p class="trace-note" data-i="traceNote"></p><div class="trace-walk" id="traceWalk"><button id="traceNext" disabled></button><p id="traceExplain" role="status" aria-live="polite"></p></div>
       </div>
     </div>
     <div class="console-column">
@@ -135,6 +142,7 @@ let motionOverride = false;
 let lastSceneState = null;
 let lastTrace = null;
 let signalSequence = 0;
+let walkStep = -1;
 
 function renderMotion() {
   document.documentElement.setAttribute('data-motion', motionPaused ? 'paused' : 'running');
@@ -185,8 +193,34 @@ function renderTrace() {
   $('traceMemory').textContent = lastTrace
     ? String(lastTrace.before) + ' → ' + String(lastTrace.after)
     : 'awake = ' + awake;
+  renderWalk();
 }
 
+function renderWalk() {
+  const allowed = phase !== 'build' || !$('answer').hidden;
+  $('traceWalk').hidden = !allowed;
+  $('traceNext').disabled = !lastTrace;
+  $('traceNext').textContent = lang === 'th' ? (walkStep < 0 || walkStep === 2 ? 'ดูเส้นทางทีละขั้น' : 'ขั้นถัดไป →') : (walkStep < 0 || walkStep === 2 ? 'Walk through this reading' : 'Next step →');
+  document.querySelectorAll('.trace-step').forEach((node, i) => node.setAttribute('data-active', allowed && i === walkStep ? 'true' : 'false'));
+  let text = lang === 'th' ? 'คาดการณ์แล้วส่งค่า 1 ครั้ง จากนั้นค่อยดูทีละขั้น' : 'Predict and send a reading first, then inspect each step.';
+  if(lastTrace && walkStep >= 0) {
+    const {level,t,before,after} = lastTrace;
+    const reached = level >= t;
+    const th = [
+      '1 · รับค่า ' + level + ' ที่ส่งล่าสุด ไม่ใช่ค่าตัวเลื่อนที่ยังไม่ได้ส่ง',
+      '2 · เทียบ ' + level + ' ≥ ' + t + ' ได้ ' + reached + ' แล้วตรวจว่าก่อนหน้านี้ awake เป็น false หรือไม่',
+      '3 · awake: ' + before + ' → ' + after + '. ' + (before ? 'ตื่นอยู่แล้ว จึงจำสถานะเดิม แม้ค่าจะลดลง' : after ? 'ถึงจุดปลุกและยังหลับ จึงเปลี่ยนเป็นตื่น' : 'ยังไม่ถึงจุดปลุก จึงยังหลับ')
+    ];
+    const en = [
+      '1 · Read the last submitted value: ' + level + ', not an unsent slider preview.',
+      '2 · ' + level + ' ≥ ' + t + ' is ' + reached + '. Also check whether awake was false.',
+      '3 · awake: ' + before + ' → ' + after + '. ' + (before ? 'Already awake: keep that memory even when the reading falls.' : after ? 'Threshold reached while asleep: wake up.' : 'Below threshold: stay asleep.')
+    ];
+    text = (lang === 'th' ? th : en)[walkStep];
+  }
+  $('traceExplain').textContent = text;
+}
+$('traceNext').onclick = () => { if (!lastTrace) return; walkStep = (walkStep + 1) % 3; renderWalk(); };
 function pulseReading() {
   signalSequence += 1;
   $('signalTrack').dataset.pulse = motionPaused ? 'none' : (signalSequence % 2 ? 'a' : 'b');
@@ -261,6 +295,7 @@ function render() {
 function reset(key = 'resetMsg') {
   awake = false;
   lastTrace = null;
+  walkStep = -1;
   $('signalTrack').dataset.pulse = 'none';
   feedbackKey = key;
   $('prediction').value = '';
@@ -332,6 +367,7 @@ $('run').onclick = () => {
   log.push({ n: ++trial, level, t: threshold, before, pred, after: awake });
   if (log.length > 20) log.shift();
   lastTrace = { level, t: threshold, before, after: awake };
+  walkStep = -1;
   lastResult = { after: awake, match: pred === (awake ? 'awake' : 'asleep') };
   feedbackKey = 'result';
   $('prediction').value = '';

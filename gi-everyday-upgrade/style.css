@@ -3,3 +3,6 @@
 .pencil{transition:left 1.5s ease-in,transform 1.5s ease-in}.demo.roll .pencil{left:95%;transform:rotate(170deg)}.demo.fixed.roll .pencil{left:calc(70% - 58px);transform:rotate(65deg)}
 /* Teaching text stays at full contrast during navigation. Motion is reserved for the demonstration. */
 .reveal{animation:none}
+
+/* Vector icons remain legible without platform emoji fonts. */
+.symbol{display:inline-block;width:1.5em;height:1.5em;vertical-align:middle;flex-shrink:0}.big .symbol{width:1em;height:1em}.badge .symbol{width:28px;height:28px}.pencil .symbol{width:56px;height:56px}

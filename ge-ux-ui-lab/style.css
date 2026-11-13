@@ -44,3 +44,6 @@ body[data-slide="preset"] #paperGuide,body[data-slide="paper"] #presetDemo{displ
 #routeCard{max-width:1050px;margin:auto}#routeCard p{font-size:23px;line-height:1.5}#routeCard button{min-height:70px;font-size:25px}#routeCard .row{margin:24px 0}#routeCard button[aria-pressed=true]{border:3px solid #007d88}@media(max-width:700px){#routeCard p{font-size:20px}}
 body[data-slide="rice"] .mission-stage{padding-top:12px;padding-bottom:12px}body[data-slide="rice"] .mission-status{margin-bottom:4px}
 body[data-slide="rice"] .mission-stage h3{margin:5px 12px}body[data-slide="rice"] .mission-status{font-size:17px;line-height:1.35}
+/* Keep peer-test instructions clear above slide navigation on projectors. */
+body[data-slide="peer"] #test .panel>ol>li{margin-bottom:10px}
+body[data-slide="peer"] #test .criteria{margin-bottom:12px}

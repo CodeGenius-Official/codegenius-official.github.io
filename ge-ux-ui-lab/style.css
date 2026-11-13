@@ -36,3 +36,7 @@ body[data-slide=preview] #preview{min-height:240px;padding:16px}body[data-slide=
 
 /* Click-only teaching revision */
 body[data-slide="preset"] #paperGuide,body[data-slide="paper"] #presetDemo{display:none}#presetDemo,#paperGuide{max-width:1050px;margin:auto}#presetDemo .mission-stage{min-height:125px;padding:16px;margin:14px 0}#paperGuide li{font-size:24px;margin:22px 0}body[data-slide="water-observe"] #realMissions>label,body[data-slide="rice-observe"] #realMissions>label{font-size:26px;padding:28px}body[data-slide="water-observe"] #realMissions>label p,body[data-slide="rice-observe"] #realMissions>label p{font-size:22px}body[data-slide="peer"] .test-grid{display:block;max-width:1050px;margin:auto}@media(max-width:700px){#paperGuide li{font-size:20px;margin:16px 0}}
+
+/* Inquiry-led journey */
+#inquiryCard,#funCard,#journeyQuiz{max-width:1050px;margin:0 auto}#inquiryCard h1{font-size:34px;line-height:1.25;margin:18px 0}#inquiryCard .row button,#journeyQuiz .row button,#funCard .row button{flex:1;min-width:180px}button[aria-pressed=true]{border-color:#007d88;background:#def5f3}.quiz-feedback,.inquiry-response{min-height:62px;padding:14px 0;font-size:22px}#journeyQuiz h3{font-size:25px}#journeyQuiz small{display:block;margin-top:16px}@media(max-width:700px){#inquiryCard h1{font-size:26px}.quiz-feedback,.inquiry-response{font-size:20px}}
+.external-button{display:inline-block;text-decoration:none;margin:12px 12px 0 0;padding:12px 18px;border-radius:12px}#funCard li{margin:14px 0;font-size:21px;line-height:1.4}

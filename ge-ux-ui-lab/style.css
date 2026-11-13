@@ -40,3 +40,7 @@ body[data-slide="preset"] #paperGuide,body[data-slide="paper"] #presetDemo{displ
 /* Inquiry-led journey */
 #inquiryCard,#funCard,#journeyQuiz{max-width:1050px;margin:0 auto}#inquiryCard h1{font-size:34px;line-height:1.25;margin:18px 0}#inquiryCard .row button,#journeyQuiz .row button,#funCard .row button{flex:1;min-width:180px}button[aria-pressed=true]{border-color:#007d88;background:#def5f3}.quiz-feedback,.inquiry-response{min-height:62px;padding:14px 0;font-size:22px}#journeyQuiz h3{font-size:25px}#journeyQuiz small{display:block;margin-top:16px}@media(max-width:700px){#inquiryCard h1{font-size:26px}.quiz-feedback,.inquiry-response{font-size:20px}}
 .external-button{display:inline-block;text-decoration:none;margin:12px 12px 0 0;padding:12px 18px;border-radius:12px}#funCard li{margin:14px 0;font-size:21px;line-height:1.4}
+
+#routeCard{max-width:1050px;margin:auto}#routeCard p{font-size:23px;line-height:1.5}#routeCard button{min-height:70px;font-size:25px}#routeCard .row{margin:24px 0}#routeCard button[aria-pressed=true]{border:3px solid #007d88}@media(max-width:700px){#routeCard p{font-size:20px}}
+body[data-slide="rice"] .mission-stage{padding-top:12px;padding-bottom:12px}body[data-slide="rice"] .mission-status{margin-bottom:4px}
+body[data-slide="rice"] .mission-stage h3{margin:5px 12px}body[data-slide="rice"] .mission-status{font-size:17px;line-height:1.35}

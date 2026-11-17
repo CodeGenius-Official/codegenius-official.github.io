@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Code Genius practice timer for G-PRC 2026 VINU: 12 mock exam sets, 4 missions each, 6 minutes per mission.">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>VINU Mock Exam Timer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&family=Sarabun:wght@400;500;600&display=swap">
+<style>
+/* Layout: a practice console. Pick a set -> mission board on the left, a big 6:00 clock on the right; stacks on phones. Colors follow the Code Genius exam sheets (teal frame, coral labels). */
+:root {
+  --teal: #12aec0;
+  --teal-ink: #0b7f8d;
+  --coral: #e65f4b;
+  --sun: #f6b73c;
+  --bg: #eef7f8;
+  --surface: #ffffff;
+  --line: #cfe3e6;
+  --fg: #16343a;
+  --muted: #5a7479;
+  --danger-bg: #fde4df;
+  --font-display: "Mitr", "Sarabun", system-ui, sans-serif;
+  --font-body: "Sarabun", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --teal: #3cc6d6; --teal-ink: #7fdbe6; --coral: #ff8572; --sun: #f7c55f;
+    --bg: #0d1c1f; --surface: #15292d; --line: #24414a; --fg: #e3f1f3; --muted: #93adb2; --danger-bg: #3a1d19;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --teal: #3cc6d6; --teal-ink: #7fdbe6; --coral: #ff8572; --sun: #f7c55f;
+  --bg: #0d1c1f; --surface: #15292d; --line: #24414a; --fg: #e3f1f3; --muted: #93adb2; --danger-bg: #3a1d19;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 1240px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; text-wrap: balance; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--coral); font-weight: 600; }
+.th { color: var(--muted); font-size: 15px; }
+
+/* ---------- Home ---------- */
+.hero { display: grid; gap: 8px; margin-bottom: 24px; }
+.hero h1 { font-size: clamp(30px, 5vw, 46px); color: var(--teal-ink); line-height: 1.15; }
+.hero p { margin: 0; max-width: 62ch; color: var(--muted); }
+.rules { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 14px; }
+.sets { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.set {
+  text-align: left; background: var(--surface); color: var(--fg);
+  border: 2px solid var(--line); border-radius: 18px; padding: 18px;
+  display: grid; gap: 12px; transition: border-color .15s, transform .15s;
+}
+.set:hover { border-color: var(--teal); transform: translateY(-2px); }
+.set .num { font-family: var(--font-display); font-size: 44px; line-height: 1; color: var(--teal); font-variant-numeric: tabular-nums; }
+.set h2 { font-size: 20px; }
+.set ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; color: var(--muted); }
+.set ol li { display: flex; gap: 8px; }
+.set ol b { color: var(--fg); font-weight: 600; min-width: 1.2em; }
+.set .go { font-family: var(--font-display); color: var(--coral); font-size: 15px; }
+.set-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.tag { font-size: 12px; font-weight: 600; letter-spacing: .04em; border-radius: 999px; padding: 2px 10px; background: color-mix(in srgb, var(--teal) 16%, transparent); color: var(--teal-ink); }
+.tag.alt { background: color-mix(in srgb, var(--sun) 22%, transparent); color: var(--fg); }
+.rulebox { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; display: grid; gap: 4px; font-size: 15px; max-width: 760px; }
+.rulebox b { font-family: var(--font-display); font-weight: 500; color: var(--coral); }
+.rulebox ul { margin: 0; padding-left: 20px; }
+.rulebox small { color: var(--muted); }
+.best { font-size: 13px; color: var(--muted); }
+
+/* ---------- Exam ---------- */
+.topbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: 16px; }
+.back { background: none; border: 1px solid var(--line); color: var(--fg); border-radius: 999px; padding: 6px 14px; }
+.topbar h1 { font-size: 24px; color: var(--teal-ink); }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.tab {
+  border: 2px solid var(--line); background: var(--surface); color: var(--fg);
+  border-radius: 12px; padding: 6px 14px; font-family: var(--font-display); font-size: 15px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.tab[aria-current="true"] { border-color: var(--teal); background: var(--teal); color: #fff; }
+.tab .st { font-size: 12px; font-family: var(--font-body); font-weight: 600; }
+.tab.done .st { color: var(--teal-ink); }
+.tab.out .st { color: var(--coral); }
+.tab[aria-current="true"] .st { color: #fff; }
+
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
+@media (max-width: 900px) { .stage { grid-template-columns: 1fr; } .clock { order: -1; } }
+.board { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.board-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; }
+.board-head h2 { font-size: 22px; }
+.board-head .mno { font-family: var(--font-display); color: var(--coral); font-size: 20px; }
+.board img { width: 100%; height: auto; border-radius: 10px; background: #fff; display: block; }
+.task { margin: 0; font-size: 15px; color: var(--muted); }
+
+.clock {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px;
+  display: grid; gap: 14px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px);
+}
+.clock .label { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.digits {
+  font-family: var(--font-display); font-weight: 500; font-variant-numeric: tabular-nums;
+  font-size: clamp(64px, 9vw, 96px); line-height: 1; color: var(--teal-ink); text-align: center;
+}
+.bar { height: 10px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 100%; background: var(--teal); transform-origin: left; transition: background .3s; }
+.clock.warn .digits { color: var(--sun); }
+.clock.warn .bar i { background: var(--sun); }
+.clock.hurry .digits { color: var(--coral); }
+.clock.hurry .bar i { background: var(--coral); }
+.clock.timeout { background: var(--danger-bg); border-color: var(--coral); }
+.clock.timeout .digits { color: var(--coral); animation: blink 1s steps(2, start) infinite; }
+.clock.finished .digits { color: var(--teal); }
+@keyframes blink { to { visibility: hidden; } }
+.status { text-align: center; font-family: var(--font-display); font-size: 18px; min-height: 1.5em; }
+.controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn {
+  border: 2px solid var(--teal); background: var(--surface); color: var(--teal-ink);
+  border-radius: 12px; padding: 10px 12px; font-family: var(--font-display); font-size: 16px;
+}
+.btn.primary { background: var(--teal); color: #fff; }
+.btn.coral { border-color: var(--coral); background: var(--coral); color: #fff; }
+.btn.wide { grid-column: 1 / -1; }
+.btn[disabled] { opacity: .4; cursor: not-allowed; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.tool { background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 4px 12px; font-size: 14px; }
+.keys { font-size: 13px; color: var(--muted); text-align: center; margin: 0; }
+kbd { font-family: inherit; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; background: var(--bg); }
+
+/* ---------- Summary ---------- */
+.summary { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 18px; max-width: 720px; }
+.summary h2 { font-size: 28px; color: var(--teal-ink); }
+.results { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.results th, .results td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+.results th { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.pill { display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 13px; font-weight: 600; }
+.pill.ok { background: color-mix(in srgb, var(--teal) 18%, transparent); color: var(--teal-ink); }
+.pill.over { background: var(--danger-bg); color: var(--coral); }
+.pill.skip { background: var(--bg); color: var(--muted); }
+.row-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.table-scroll { overflow-x: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .set { transition: none; } .set:hover { transform: none; }
+  .clock.timeout .digits { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="hero">
+      <span class="eyebrow">Code Genius · G-PRC 2026 practice</span>
+      <h1>VINU Mock Exam Timer</h1>
+      <p>Choose a mock exam set. Each set has 4 missions. Find the shortest path and run your code to finish each mission within 6 minutes.</p>
+      <p class="th">เลือกชุดข้อสอบ แต่ละชุดมี 4 ภารกิจ หาเส้นทางที่สั้นที่สุด แล้วรันโค้ดให้ทำภารกิจสำเร็จภายใน 6 นาที</p>
+      <div class="rules">
+        <span class="chip">⏱ 6:00 per mission</span>
+        <span class="chip">4 missions per set</span>
+        <span class="chip">12 sets</span>
+        <span class="chip">Alarm at time out</span>
+      </div>
+      <div class="rulebox">
+        <b>The mission fails if you:</b>
+        <ul>
+          <li>don't finish within 6 minutes</li>
+          <li>move two or more blocks at the same time</li>
+          <li>touch a bomb block</li>
+        </ul>
+        <span>Finished early? Press <strong>SAVE</strong> in the VINU app and wait for scoring. When time is up, stop and don't touch VINU.</span>
+        <small>From the G-PRC 2026 VINU Finals Participant Notice.</small>
+      </div>
+    </div>
+    <div class="sets" id="sets"></div>
+  </section>
+
+  <!-- EXAM -->
+  <section id="exam" hidden>
+    <div class="topbar">
+      <button class="back" id="backBtn" type="button">← All sets</button>
+      <h1 id="examTitle">Mock Exam 01</h1>
+      <nav class="tabs" id="tabs" aria-label="Missions"></nav>
+    </div>
+    <div class="stage">
+      <article class="board">
+        <div class="board-head">
+          <h2 id="missionType">Move Specified Blocks</h2>
+          <span class="mno" id="missionNo">Mission 1</span>
+        </div>
+        <img id="missionImg" alt="" width="1172" height="797">
+      </article>
+      <aside class="clock" id="clock" aria-live="polite">
+        <span class="label">Time left</span>
+        <div class="digits" id="digits">6:00</div>
+        <div class="bar"><i id="barFill"></i></div>
+        <div class="status" id="status">Ready</div>
+        <div class="controls">
+          <button class="btn primary wide" id="startBtn" type="button">Start</button>
+          <button class="btn" id="resetBtn" type="button">Restart 6:00</button>
+          <button class="btn" id="doneBtn" type="button">Mission done ✓</button>
+          <button class="btn coral wide" id="stopAlarmBtn" type="button" hidden>Stop alarm</button>
+          <button class="btn primary wide" id="nextBtn" type="button">Next mission →</button>
+        </div>
+        <div class="tools">
+          <button class="tool" id="soundBtn" type="button" aria-pressed="true">🔔 Sound on</button>
+          <button class="tool" id="fsBtn" type="button">⛶ Full screen</button>
+        </div>
+        <p class="keys"><kbd>Space</kbd> start / pause · <kbd>N</kbd> next · <kbd>R</kbd> restart</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section id="summary" hidden>
+    <div class="summary">
+      <div>
+        <span class="eyebrow" id="sumEyebrow">Mock Exam 01 · complete</span>
+        <h2>Set complete!</h2>
+      </div>
+      <div class="table-scroll">
+        <table class="results">
+          <thead><tr><th>Mission</th><th>Task</th><th>Time used</th><th>Result</th></tr></thead>
+          <tbody id="sumRows"></tbody>
+        </table>
+      </div>
+      <div class="row-actions">
+        <button class="btn primary" id="retryBtn" type="button">Try this set again</button>
+        <button class="btn" id="homeBtn" type="button">Choose another set</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var LIMIT = 6 * 60; // seconds per mission
+  var A = "Move Specified Blocks", B = "Move Any Block", C = "Push Blocks Out";
+  // Sets 01-04: Code Genius mock sheets. Sets 05-12: made by build_sets.py (mission sources listed there).
+  var SETS = [
+    [A, B, A, C], [A, A, B, C], [B, A, B, C], [A, C, B, A],
+    [A, B, A, C], [A, C, B, A], [B, A, C, A], [A, B, A, C],
+    [A, C, B, B], [B, B, C, A], [A, A, B, C], [A, B, A, C]
+  ];
+  var pad = function (n) { return String(n).padStart(2, "0"); };
+  var fmt = function (s) { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ":" + pad(s % 60); };
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---------- state ----------
+  var exam = 0, mission = 0, results = [];
+  var running = false, remaining = LIMIT, endAt = 0, tickId = null, timedOut = false;
+  var soundOn = true;
+  try { soundOn = localStorage.getItem("vinu-sound") !== "off"; } catch (e) {}
+
+  // ---------- audio ----------
+  var ctx = null, alarmId = null, alarmStop = 0;
+  function audio() {
+    if (!ctx) { var A = window.AudioContext || window.webkitAudioContext; if (A) ctx = new A(); }
+    if (ctx && ctx.state === "suspended") ctx.resume();
+    return ctx;
+  }
+  function beep(freq, dur, when, vol) {
+    var c = audio(); if (!c || !soundOn) return;
+    var t = c.currentTime + (when || 0);
+    var o = c.createOscillator(), g = c.createGain();
+    o.type = "square"; o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol || 0.25, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(c.destination); o.start(t); o.stop(t + dur + 0.02);
+  }
+  function ringOnce() { for (var i = 0; i < 4; i++) beep(i % 2 ? 1100 : 880, 0.12, i * 0.15, 0.3); }
+  function startAlarm() {
+    stopAlarm();
+    alarmStop = Date.now() + 20000; // ring for up to 20 s
+    ringOnce();
+    alarmId = setInterval(function () { if (Date.now() > alarmStop) return stopAlarm(); ringOnce(); }, 1000);
+    $("stopAlarmBtn").hidden = false;
+  }
+  function stopAlarm() { if (alarmId) clearInterval(alarmId); alarmId = null; $("stopAlarmBtn").hidden = true; }
+
+  // ---------- wake lock (keep screen on while timing) ----------
+  var lock = null;
+  function keepAwake() { try { if (navigator.wakeLock && !lock) navigator.wakeLock.request("screen").then(function (l) { lock = l; l.addEventListener("release", function () { lock = null; }); }).catch(function () {}); } catch (e) {} }
+  function letSleep() { try { if (lock) lock.release(); } catch (e) {} lock = null; }
+
+  // ---------- views ----------
+  function show(id) { ["home", "exam", "summary"].forEach(function (v) { $(v).hidden = v !== id; }); window.scrollTo(0, 0); }
+
+  function renderHome() {
+    var best = {};
+    try { best = JSON.parse(localStorage.getItem("vinu-best") || "{}"); } catch (e) {}
+    $("sets").innerHTML = SETS.map(function (m, i) {
+      var b = best[i] != null ? '<span class="best">Last run: ' + best[i] + ' / 4 missions in time</span>' : '<span class="best">Not tried yet on this device</span>';
+      return '<button class="set" type="button" data-set="' + i + '">' +
+        '<span class="num">' + pad(i + 1) + '</span>' +
+        '<h2>Mock Exam ' + pad(i + 1) + '</h2>' +
+        '<ol>' + m.map(function (t, j) { return '<li><b>' + (j + 1) + '</b>' + t + '</li>'; }).join("") + '</ol>' +
+        b + '<span class="go">Start set →</span></button>';
+    }).join("");
+  }
+
+  function renderTabs() {
+    $("tabs").innerHTML = SETS[exam].map(function (t, j) {
+      var r = results[j], cls = "tab", st = "";
+      if (r) { cls += r.inTime ? " done" : " out"; st = r.inTime ? "✓ " + fmt(r.used) : (r.skipped ? "skipped" : "time out"); }
+      return '<button type="button" class="' + cls + '" data-m="' + j + '" aria-current="' + (j === mission) + '">Mission ' + (j + 1) +
+        (st ? ' <span class="st">' + st + '</span>' : '') + '</button>';
+    }).join("");
+  }
+
+  function loadMission(j, autoStart) {
+    stopTimer(); stopAlarm();
+    mission = j; remaining = LIMIT; timedOut = false;
+    var type = SETS[exam][j];
+    $("missionType").textContent = type;
+    $("missionNo").textContent = "Mission " + (j + 1);
+    $("missionImg").src = "missions/exam" + (exam + 1) + "-m" + (j + 1) + ".jpg";
+    $("missionImg").alt = "Mock Exam " + pad(exam + 1) + " Mission " + (j + 1) + ": " + type + ". Start layout on the left, target layout on the right.";
+    $("nextBtn").textContent = j === 3 ? "Finish set →" : "Next mission →";
+    renderTabs(); paint();
+    if (autoStart) startTimer();
+  }
+
+  // ---------- timer ----------
+  function paint() {
+    $("digits").textContent = fmt(remaining);
+    $("barFill").style.transform = "scaleX(" + (remaining / LIMIT) + ")";
+    var c = $("clock");
+    c.classList.toggle("warn", remaining <= 60 && remaining > 30 && !timedOut);
+    c.classList.toggle("hurry", remaining <= 30 && !timedOut);
+    c.classList.toggle("timeout", timedOut);
+    var r = results[mission];
+    c.classList.toggle("finished", !!(r && r.inTime && !running));
+    $("startBtn").textContent = running ? "Pause" : (remaining < LIMIT && !timedOut ? "Resume" : "Start");
+    $("startBtn").disabled = timedOut;
+    $("doneBtn").disabled = timedOut || (!running && remaining === LIMIT);
+    var s = "Ready";
+    if (timedOut) s = "⏰ Time's up!";
+    else if (r && r.inTime && !running) s = "✓ Done in " + fmt(r.used) + " · press SAVE";
+    else if (running) s = remaining <= 30 ? "Hurry up!" : "Go!";
+    else if (remaining < LIMIT) s = "Paused";
+    $("status").textContent = s;
+  }
+  var lastWhole = null;
+  function tick() {
+    remaining = (endAt - Date.now()) / 1000;
+    var whole = Math.ceil(remaining);
+    if (whole !== lastWhole) {
+      lastWhole = whole;
+      if (whole <= 10 && whole > 0) beep(660, 0.08, 0, 0.15); // countdown ticks
+    }
+    if (remaining <= 0) {
+      remaining = 0; timedOut = true; stopTimer();
+      if (!results[mission] || !results[mission].inTime) results[mission] = { used: LIMIT, inTime: false };
+      renderTabs(); startAlarm();
+    }
+    paint();
+  }
+  function startTimer() {
+    if (running || timedOut) return;
+    audio();
+    running = true; endAt = Date.now() + remaining * 1000; lastWhole = null;
+    if (results[mission] && results[mission].inTime) delete results[mission];
+    tickId = setInterval(tick, 200); keepAwake(); paint(); renderTabs();
+  }
+  function stopTimer() { running = false; if (tickId) clearInterval(tickId); tickId = null; letSleep(); }
+  function pauseTimer() { if (!running) return; remaining = (endAt - Date.now()) / 1000; stopTimer(); paint(); }
+
+  function markDone() {
+    if (timedOut) return;
+    if (running) pauseTimer();
+    results[mission] = { used: LIMIT - remaining, inTime: true };
+    beep(988, 0.12, 0, 0.2); beep(1319, 0.2, 0.13, 0.2);
+    renderTabs(); paint();
+  }
+  function next() {
+    if (running) pauseTimer();
+    if (!results[mission]) results[mission] = { used: LIMIT - remaining, inTime: false, skipped: true };
+    if (mission < 3) loadMission(mission + 1, true); else finish();
+  }
+  function finish() {
+    stopTimer(); stopAlarm();
+    var ok = 0;
+    $("sumRows").innerHTML = SETS[exam].map(function (t, j) {
+      var r = results[j] || { used: 0, inTime: false, skipped: true };
+      if (r.inTime) ok++;
+      var pill = r.inTime ? '<span class="pill ok">In time</span>' : (r.skipped ? '<span class="pill skip">Not finished</span>' : '<span class="pill over">Time out</span>');
+      return '<tr><td>' + (j + 1) + '</td><td>' + t + '</td><td>' + fmt(r.used) + '</td><td>' + pill + '</td></tr>';
+    }).join("");
+    $("sumEyebrow").textContent = "Mock Exam " + pad(exam + 1) + " · " + ok + " of 4 missions in time";
+    try { var b = JSON.parse(localStorage.getItem("vinu-best") || "{}"); b[exam] = ok; localStorage.setItem("vinu-best", JSON.stringify(b)); } catch (e) {}
+    show("summary");
+  }
+  function openSet(i) { exam = i; results = []; show("exam"); $("examTitle").textContent = "Mock Exam " + pad(i + 1); loadMission(0, true); }
+  function goHome() { stopTimer(); stopAlarm(); renderHome(); show("home"); }
+
+  // ---------- events ----------
+  $("sets").addEventListener("click", function (e) { var b = e.target.closest("[data-set]"); if (b) openSet(+b.dataset.set); });
+  $("tabs").addEventListener("click", function (e) { var b = e.target.closest("[data-m]"); if (b && +b.dataset.m !== mission) loadMission(+b.dataset.m, false); });
+  $("startBtn").addEventListener("click", function () { running ? pauseTimer() : startTimer(); });
+  $("resetBtn").addEventListener("click", function () { var r = results[mission]; if (r && !r.inTime) delete results[mission]; loadMission(mission, false); });
+  $("doneBtn").addEventListener("click", markDone);
+  $("nextBtn").addEventListener("click", next);
+  $("stopAlarmBtn").addEventListener("click", stopAlarm);
+  $("backBtn").addEventListener("click", goHome);
+  $("homeBtn").addEventListener("click", goHome);
+  $("retryBtn").addEventListener("click", function () { openSet(exam); });
+  function paintSound() { $("soundBtn").textContent = soundOn ? "🔔 Sound on" : "🔕 Sound off"; $("soundBtn").setAttribute("aria-pressed", soundOn); }
+  $("soundBtn").addEventListener("click", function () {
+    soundOn = !soundOn; if (!soundOn) stopAlarm(); else beep(880, 0.1);
+    try { localStorage.setItem("vinu-sound", soundOn ? "on" : "off"); } catch (e) {}
+    paintSound();
+  });
+  $("fsBtn").addEventListener("click", function () {
+    try {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function () {});
+    } catch (e) {}
+  });
+  document.addEventListener("keydown", function (e) {
+    if ($("exam").hidden || e.target.closest("input, textarea")) return;
+    if (e.code === "Space") { e.preventDefault(); if (!timedOut) (running ? pauseTimer() : startTimer()); }
+    else if (e.key === "n" || e.key === "N") next();
+    else if (e.key === "r" || e.key === "R") $("resetBtn").click();
+  });
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && running) keepAwake(); });
+
+  paintSound(); renderHome();
+})();
+</script>
+</body>
+</html>

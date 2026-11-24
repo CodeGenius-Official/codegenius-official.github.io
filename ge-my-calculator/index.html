@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GE · My Calculator — Simple UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#29384C;--navy2:#3B4C63;--teal:#00A3B4;--teal-soft:#E6F7F9;--teal-line:#B9E6EC;--yellow:#FDD736;--yellow-soft:#FFF8D9;--muted:#6B7886;--line:#D3DCE5;--orange:#F28C28;--good:#1E9E6A;--good-soft:#E8F6EF;--bad:#D9534F;--bad-soft:#FDECEC;--bg:#F6F9FB}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Sarabun,system-ui,sans-serif;color:var(--navy);background:var(--bg);line-height:1.5}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+header.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+header.top .wrap{display:flex;align-items:center;gap:12px;height:62px}
+header.top img{width:40px;height:40px;object-fit:contain}
+header.top .brand{font-weight:700;line-height:1.1}
+header.top .brand small{display:block;font-weight:600;color:var(--muted);font-size:12px}
+header.top .sp{flex:1}
+.back{color:var(--teal);text-decoration:none;font-weight:600;font-size:14px}
+.lang{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.lang button{border:0;background:#fff;padding:6px 12px;font-weight:700;font-size:13px;color:var(--muted)}
+.lang button.on{background:var(--navy);color:#fff}
+.hero{padding:34px 0 18px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--teal)}
+.hero h1{margin:6px 0 4px;font-size:clamp(26px,4vw,38px);line-height:1.15}
+.hero p{margin:0;color:var(--muted);max-width:720px}
+.pill{display:inline-block;background:var(--teal);color:#fff;font-weight:700;font-size:12px;border-radius:99px;padding:3px 10px;margin-left:6px;vertical-align:middle}
+nav.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px}
+nav.tabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:8px 16px;font-weight:700;color:var(--navy)}
+nav.tabs button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+nav.tabs .n{display:inline-flex;width:22px;height:22px;border-radius:7px;background:var(--teal-soft);color:var(--teal);align-items:center;justify-content:center;font-size:12px;margin-right:6px}
+nav.tabs button.on .n{background:var(--teal);color:#fff}
+section.panel{display:none;padding:10px 0 40px}
+section.panel.on{display:block}
+.card{background:#fff;border-radius:18px;box-shadow:0 0 0 1px var(--line);padding:20px}
+.card h2{margin:0 0 4px;font-size:22px}
+.hint{color:var(--muted);margin:0 0 14px}
+.tip{background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:14px;padding:10px 14px;font-weight:600;margin-bottom:14px}
+/* phones */
+.phone{width:230px;height:420px;background:var(--navy);border-radius:32px;padding:6px;position:relative;flex:none}
+.phone .in{width:100%;height:100%;background:var(--navy2);border-radius:27px;padding:26px 9px 22px;position:relative}
+.phone .notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:56px;height:10px;border-radius:6px;background:#1C2533}
+.phone .bar{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:56px;height:4px;border-radius:3px;background:#6F7F95}
+.screen{width:100%;height:100%;background:#fff;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+/* compare */
+.round{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px;flex-wrap:wrap}
+.dots{display:flex;gap:6px}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots i.done{background:var(--teal)} .dots i.cur{background:var(--navy)}
+.qtitle{font-size:20px;font-weight:700}
+.pair{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin:8px 0 6px}
+.opt{display:flex;flex-direction:column;align-items:center;gap:10px;border:3px solid transparent;border-radius:24px;padding:10px;background:none}
+.opt:hover{border-color:var(--teal-line)}
+.opt .lbl{width:44px;height:44px;border-radius:12px;background:var(--navy);color:#fff;font-weight:700;font-size:22px;display:flex;align-items:center;justify-content:center}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.reveal{display:none;margin-top:14px}
+.reveal.on{display:block}
+.verdict{font-weight:700;font-size:18px;margin-bottom:8px}
+.reasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.rs{border-radius:12px;padding:10px 12px;font-size:15px}
+.rs b{display:block}
+.rs.ok{background:var(--good-soft);border-left:5px solid var(--good)}
+.rs.no{background:var(--bad-soft);border-left:5px solid var(--bad)}
+.nav-row{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}
+.btn{border:0;border-radius:12px;padding:10px 18px;font-weight:700;background:var(--navy);color:#fff}
+.btn.ghost{background:#fff;color:var(--navy);box-shadow:0 0 0 1px var(--line)}
+.btn.teal{background:var(--teal)}
+/* app mockups */
+.calc-g .disp{height:110px;background:#F2F6F9;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end;padding:8px 14px}
+.calc-g .disp .ex{font-size:14px;color:var(--muted);min-height:20px}
+.calc-g .disp .res{font-size:40px;font-weight:700;line-height:1}
+.calc-g .keys{flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,1fr);gap:6px;padding:8px}
+.k{border:0;border-radius:10px;background:#EEF2F6;font-size:19px;font-weight:700;color:var(--navy);display:flex;align-items:center;justify-content:center;user-select:none}
+.k:active{transform:scale(.94)}
+.k.op{background:var(--teal-soft);color:var(--teal)}
+.k.c{background:#FDE8E7;color:var(--bad)}
+.k.eq{background:var(--orange);color:#fff}
+.calc-b .top{display:flex;gap:3px;padding:5px;flex-wrap:wrap;background:#F7F0FF}
+.calc-b .top span{font-size:8px;background:#E3D4F7;border-radius:3px;padding:1px 4px;color:#6B4C9A}
+.calc-b .disp{margin:5px 7px;height:32px;border:1px solid #ddd;display:flex;align-items:center;justify-content:flex-end;padding:0 7px;font-size:12px;color:#9a9a9a;background:repeating-linear-gradient(45deg,#fff,#fff 6px,#f4f4f4 6px,#f4f4f4 12px)}
+.calc-b .keys{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:6px}
+.calc-b .k{height:26px;border-radius:3px;font-size:10px;color:#fff;font-weight:600}
+.calc-b .ad{margin:auto 7px 7px;height:58px;border-radius:7px;background:linear-gradient(90deg,#FF6FB5,#FFC24B);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;text-align:center;border:0}
+/* generic mock pieces */
+.mk{padding:10px;display:flex;flex-direction:column;gap:8px;height:100%}
+.mk .h{font-weight:700;font-size:15px}
+.mk .big{font-size:46px;font-weight:700;text-align:center;letter-spacing:1px}
+.mk .row2{display:flex;gap:8px}
+.mk .b{flex:1;border-radius:12px;padding:12px 0;text-align:center;font-weight:700;color:#fff}
+.tiny{font-size:9px}
+.ad2{background:linear-gradient(90deg,#FF6FB5,#FFC24B);color:#fff;font-weight:700;font-size:11px;text-align:center;border-radius:6px;padding:6px}
+/* speed */
+.speed{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.speed .col{display:flex;flex-direction:column;align-items:center;gap:10px}
+.task{display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.task span{background:var(--navy);color:#fff;border-radius:10px;padding:5px 12px;font-weight:700}
+.stat{display:flex;gap:10px}
+.stat div{background:#fff;box-shadow:0 0 0 1px var(--line);border-radius:12px;padding:6px 14px;text-align:center;min-width:92px}
+.stat b{display:block;font-size:22px}
+.stat small{color:var(--muted);font-weight:600}
+.result{margin-top:16px;display:none}
+.result.on{display:block}
+.flash{animation:fl .5s}
+@keyframes fl{0%{box-shadow:0 0 0 0 rgba(30,158,106,.6)}100%{box-shadow:0 0 0 14px rgba(30,158,106,0)}}
+/* spot */
+.spot-wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
+#spotPhone .disp,#spotPhone .top,#spotPhone .k,#spotPhone .ad{cursor:pointer}
+.found-el{outline:3px dashed var(--bad)!important;outline-offset:2px;box-shadow:0 0 0 200px rgba(217,83,79,0) inset}
+#spotPhone .k.found-el{outline-color:#fff!important}
+.found-list{flex:1;min-width:260px;display:flex;flex-direction:column;gap:10px}
+.fl{border-radius:12px;padding:10px 12px;background:#fff;box-shadow:0 0 0 1px var(--line);color:var(--muted)}
+.fl.on{background:var(--bad-soft);box-shadow:none;border-left:5px solid var(--bad);color:var(--navy)}
+.fl b{display:block}
+/* fix it */
+.fix-wrap{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.controls{flex:1;min-width:280px;display:flex;flex-direction:column;gap:12px}
+.ctl{background:#fff;box-shadow:0 0 0 1px var(--line);border-radius:14px;padding:12px}
+.ctl .t{font-weight:700;margin-bottom:6px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 12px;font-weight:700;color:var(--navy)}
+.seg button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.score{display:flex;gap:6px;flex-wrap:wrap}
+.score span{border-radius:99px;padding:4px 12px;font-weight:700;font-size:13px;background:var(--bad-soft);color:var(--bad)}
+.score span.on{background:var(--good-soft);color:var(--good)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.rule{background:#fff;box-shadow:0 0 0 1px var(--line);border-radius:16px;padding:14px}
+.rule .ic{width:38px;height:38px;border-radius:11px;background:var(--navy);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+footer{border-top:1px solid var(--teal-line);color:var(--muted);font-size:13px;padding:14px 0 30px}
+.opt{cursor:pointer}
+body{overflow-x:hidden}
+@media (max-width:720px){.speed{grid-template-columns:1fr}.phone{width:210px;height:390px}
+ header.top .brand small,.back{display:none}.hero h1 .pill{display:table;margin:6px 0 0}.wrap{padding:0 16px}.card{padding:16px}}
+[data-en]{}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <img src="logo.jpg" alt="Code Genius" onerror="this.src='../assets/code-genius-logo.jpeg'">
+  <div class="brand">Code Genius<small>GE-UX-03 · My Calculator</small></div>
+  <div class="sp"></div>
+  <a class="back" href="../#ge" data-t="back">← กลับ Activity Hub</a>
+  <div class="lang"><button id="lth" class="on">TH</button><button id="len">EN</button></div>
+</div></header>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">GENIUS EXPLORER · SIMPLE UI</div>
+    <h1><span data-t="h1">หน้าจอไหนใช้ง่ายกว่า?</span><span class="pill">GE-UX-03</span></h1>
+    <p data-t="sub">สำรวจหน้าจอแอปที่ใช้งานง่ายกับหน้าจอที่ทำให้สับสน ลองกดจริง หาจุดที่ผิด แล้วซ่อมให้ใช้ง่ายขึ้นด้วยหลัก Simple UI 4 ข้อ</p>
+  </div>
+
+  <nav class="tabs">
+    <button class="on" data-tab="compare"><span class="n">1</span><span data-t="tab1">เลือกหน้าจอ</span></button>
+    <button data-tab="speed"><span class="n">2</span><span data-t="tab2">แข่งกดเร็ว</span></button>
+    <button data-tab="spot"><span class="n">3</span><span data-t="tab3">หาจุดที่ใช้ยาก</span></button>
+    <button data-tab="fix"><span class="n">4</span><span data-t="tab4">ซ่อมหน้าจอ</span></button>
+    <button data-tab="rules"><span class="n">★</span><span data-t="tab5">หลัก Simple UI</span></button>
+  </nav>
+
+  <!-- 1 COMPARE -->
+  <section class="panel on" id="p-compare"><div class="card">
+    <div class="round"><div class="qtitle" id="qtitle"></div><div class="dots" id="dots"></div></div>
+    <p class="hint" id="qtask"></p>
+    <div class="pair" id="pair"></div>
+    <div class="reveal" id="reveal"><div class="verdict" id="verdict"></div><div class="reasons" id="reasons"></div></div>
+    <div class="nav-row"><button class="btn ghost" id="prevQ" data-t="prev">← ก่อนหน้า</button><button class="btn" id="nextQ" data-t="next">ข้อถัดไป →</button></div>
+  </div></section>
+
+  <!-- 2 SPEED -->
+  <section class="panel" id="p-speed"><div class="card">
+    <h2 data-t="speedT">แข่งกดเร็ว: หน้าจอไหนกดได้เร็วกว่า?</h2>
+    <p class="hint" data-t="speedH">กดตามโจทย์ให้ครบบนเครื่องคิดเลขทั้งสองเครื่อง ระบบจะจับเวลาและนับครั้งที่กดผิด</p>
+    <div style="text-align:center;margin-bottom:12px"><div class="task"><span data-t="task1">โจทย์: กด 7 + 5 =</span></div></div>
+    <div class="speed">
+      <div class="col"><div class="opt" style="pointer-events:none"><div class="lbl">A</div></div><div id="spA"></div><div class="stat"><div><b id="tA">–</b><small data-t="sec">วินาที</small></div><div><b id="eA">0</b><small data-t="mis">กดผิด</small></div></div></div>
+      <div class="col"><div class="opt" style="pointer-events:none"><div class="lbl">B</div></div><div id="spB"></div><div class="stat"><div><b id="tB">–</b><small data-t="sec">วินาที</small></div><div><b id="eB">0</b><small data-t="mis">กดผิด</small></div></div></div>
+    </div>
+    <div class="result card" id="speedRes" style="box-shadow:none;background:var(--yellow-soft)"></div>
+    <div class="nav-row"><button class="btn ghost" id="speedReset" data-t="again">เล่นใหม่</button></div>
+  </div></section>
+
+  <!-- 3 SPOT -->
+  <section class="panel" id="p-spot"><div class="card">
+    <h2 data-t="spotT">นักสืบ UI: หาจุดที่ทำให้ใช้ยาก 4 จุด</h2>
+    <p class="hint" data-t="spotH">แตะบนหน้าจอตรงที่คิดว่าทำให้ผู้ใช้สับสน</p>
+    <div class="spot-wrap">
+      <div id="spotPhone" style="position:relative"></div>
+      <div class="found-list">
+        <div class="tip"><span data-t="foundN">เจอแล้ว</span> <span id="fcount">0</span> / 4</div>
+        <div class="fl" id="f1"><b>①</b><span data-t="sp1">???</span></div>
+        <div class="fl" id="f2"><b>②</b><span data-t="sp2">???</span></div>
+        <div class="fl" id="f3"><b>③</b><span data-t="sp3">???</span></div>
+        <div class="fl" id="f4"><b>④</b><span data-t="sp4">???</span></div>
+        <button class="btn ghost" id="spotReset" data-t="again">เล่นใหม่</button>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 4 FIX -->
+  <section class="panel" id="p-fix"><div class="card">
+    <h2 data-t="fixT">ซ่อมหน้าจอ: ทำให้ใช้ง่ายขึ้น</h2>
+    <p class="hint" data-t="fixH">ปรับทีละอย่าง แล้วดูว่าหน้าจอใช้ง่ายขึ้นไหม ทำให้ครบ 4 ข้อ</p>
+    <div class="fix-wrap">
+      <div id="fixPhone"></div>
+      <div class="controls">
+        <div class="ctl"><div class="t" data-t="c1">① หน้าจอแสดงผล</div><div class="seg" data-k="disp"><button data-v="0" class="on" data-t="small">เล็ก</button><button data-v="1" data-t="bigT">ใหญ่ ชัด</button></div></div>
+        <div class="ctl"><div class="t" data-t="c2">② ปุ่ม =</div><div class="seg" data-k="eq"><button data-v="0" class="on" data-t="same">เหมือนปุ่มอื่น</button><button data-v="1" data-t="stand">ใหญ่ สีเด่น</button></div></div>
+        <div class="ctl"><div class="t" data-t="c3">③ การจัดกลุ่มปุ่ม</div><div class="seg" data-k="grp"><button data-v="0" class="on" data-t="mixed">ปนกัน</button><button data-v="1" data-t="grouped">แยกกลุ่ม</button></div></div>
+        <div class="ctl"><div class="t" data-t="c4">④ สิ่งที่ไม่จำเป็น</div><div class="seg" data-k="clut"><button data-v="0" class="on" data-t="keep">มีเมนู + โฆษณา</button><button data-v="1" data-t="remove">เอาออก</button></div></div>
+        <div class="ctl"><div class="t" data-t="scoreT">หลักที่ทำได้แล้ว</div><div class="score" id="score"></div></div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- RULES -->
+  <section class="panel" id="p-rules"><div class="card">
+    <h2 data-t="rulesT">หลัก Simple UI 4 ข้อ</h2>
+    <p class="hint" data-t="rulesH">หน้าจอที่ดีทำให้คนเห็นครั้งแรกแล้วใช้ได้เลย โดยไม่ต้องมีใครสอน</p>
+    <div class="rules">
+      <div class="rule"><div class="ic">1</div><b data-t="r1">ชัดเจน</b><div data-t="r1d">หน้าจอแสดงผลใหญ่ อ่านง่าย</div></div>
+      <div class="rule"><div class="ic">2</div><b data-t="r2">กดง่าย</b><div data-t="r2d">ปุ่มสำคัญใหญ่ เด่น นิ้วเอื้อมถึง</div></div>
+      <div class="rule"><div class="ic">3</div><b data-t="r3">เป็นระเบียบ</b><div data-t="r3d">จัดกลุ่มปุ่มที่ทำหน้าที่คล้ายกัน</div></div>
+      <div class="rule"><div class="ic">4</div><b data-t="r4">ไม่รก</b><div data-t="r4d">ไม่ใส่สิ่งที่ผู้ใช้ไม่ต้องใช้</div></div>
+    </div>
+    <div class="tip" style="margin-top:16px" data-t="frame">ประโยคนักออกแบบ: "ฉันออกแบบ ___ แบบนี้ เพราะผู้ใช้ ___ และเพื่อให้ ___"</div>
+  </div></section>
+</div>
+
+<footer><div class="wrap">© Code Genius · GE-UX-03 My Calculator · Genius Explorer · v1.0</div></footer>
+
+<script>
+let L='th';
+const T={
+ back:['← กลับ Activity Hub','← Back to Activity Hub'],
+ h1:['หน้าจอไหนใช้ง่ายกว่า?','Which screen is easier to use?'],
+ sub:['สำรวจหน้าจอแอปที่ใช้งานง่ายกับหน้าจอที่ทำให้สับสน ลองกดจริง หาจุดที่ผิด แล้วซ่อมให้ใช้ง่ายขึ้นด้วยหลัก Simple UI 4 ข้อ','Compare easy and confusing app screens, try them for real, spot the problems, and fix them using the 4 Simple UI principles.'],
+ tab1:['เลือกหน้าจอ','Pick a screen'],tab2:['แข่งกดเร็ว','Speed test'],tab3:['หาจุดที่ใช้ยาก','Spot the problems'],tab4:['ซ่อมหน้าจอ','Fix the screen'],tab5:['หลัก Simple UI','Simple UI rules'],
+ prev:['← ก่อนหน้า','← Back'],next:['ข้อถัดไป →','Next →'],
+ speedT:['แข่งกดเร็ว: หน้าจอไหนกดได้เร็วกว่า?','Speed test: which screen is faster?'],
+ speedH:['กดตามโจทย์ให้ครบบนเครื่องคิดเลขทั้งสองเครื่อง ระบบจะจับเวลาและนับครั้งที่กดผิด','Do the task on both calculators. The timer starts on your first tap and counts wrong presses.'],
+ task1:['โจทย์: กด 7 + 5 =','Task: press 7 + 5 ='],sec:['วินาที','seconds'],mis:['กดผิด','mistakes'],again:['เล่นใหม่','Play again'],
+ spotT:['นักสืบ UI: หาจุดที่ทำให้ใช้ยาก 4 จุด','UI detective: find 4 problems'],spotH:['แตะบนหน้าจอตรงที่คิดว่าทำให้ผู้ใช้สับสน','Tap the parts of the screen you think confuse users.'],
+ foundN:['เจอแล้ว','Found'],
+ sp1:['หน้าจอแสดงผลเล็ก สีจาง มีลายรบกวน','The display is small, faint and busy'],
+ sp2:['ปุ่ม = เล็กและซ่อนอยู่ปนกับปุ่มอื่น','The = button is tiny and hidden among the others'],
+ sp3:['ปุ่มเลขกับเครื่องหมายปนกัน สีมั่ว','Numbers and operations are mixed up in random colours'],
+ sp4:['เมนูที่ไม่ต้องใช้ และโฆษณาที่กดผิดง่าย','Menus nobody needs, and an ad that is easy to tap by mistake'],
+ fixT:['ซ่อมหน้าจอ: ทำให้ใช้ง่ายขึ้น','Fix the screen: make it easier'],fixH:['ปรับทีละอย่าง แล้วดูว่าหน้าจอใช้ง่ายขึ้นไหม ทำให้ครบ 4 ข้อ','Change one thing at a time and watch the screen improve. Fix all 4.'],
+ c1:['① หน้าจอแสดงผล','① Display'],c2:['② ปุ่ม =','② The = button'],c3:['③ การจัดกลุ่มปุ่ม','③ Button groups'],c4:['④ สิ่งที่ไม่จำเป็น','④ Extra stuff'],
+ small:['เล็ก','Small'],bigT:['ใหญ่ ชัด','Big & clear'],same:['เหมือนปุ่มอื่น','Same as others'],stand:['ใหญ่ สีเด่น','Big & bright'],mixed:['ปนกัน','Mixed up'],grouped:['แยกกลุ่ม','Grouped'],keep:['มีเมนู + โฆษณา','Menus + ad'],remove:['เอาออก','Remove'],
+ scoreT:['หลักที่ทำได้แล้ว','Rules achieved'],
+ rulesT:['หลัก Simple UI 4 ข้อ','The 4 Simple UI principles'],rulesH:['หน้าจอที่ดีทำให้คนเห็นครั้งแรกแล้วใช้ได้เลย โดยไม่ต้องมีใครสอน','A good screen can be used the first time, without anyone teaching you.'],
+ r1:['ชัดเจน','Clear'],r1d:['หน้าจอแสดงผลใหญ่ อ่านง่าย','The display is big and easy to read'],
+ r2:['กดง่าย','Easy to press'],r2d:['ปุ่มสำคัญใหญ่ เด่น นิ้วเอื้อมถึง','Key buttons are big, stand out and are easy to reach'],
+ r3:['เป็นระเบียบ','Organised'],r3d:['จัดกลุ่มปุ่มที่ทำหน้าที่คล้ายกัน','Buttons that do similar jobs are grouped together'],
+ r4:['ไม่รก','Not cluttered'],r4d:['ไม่ใส่สิ่งที่ผู้ใช้ไม่ต้องใช้','Nothing the user doesn\'t need'],
+ frame:['ประโยคนักออกแบบ: "ฉันออกแบบ ___ แบบนี้ เพราะผู้ใช้ ___ และเพื่อให้ ___"','Designer sentence: "I designed ___ like this because users ___ so that ___"'],
+};
+const t=k=>T[k]?T[k][L==='th'?0:1]:k;
+const RULE=['ชัดเจน|Clear','กดง่าย|Easy to press','เป็นระเบียบ|Organised','ไม่รก|Not cluttered'];
+const rn=i=>RULE[i].split('|')[L==='th'?0:1];
+const ph=inner=>`<div class="phone"><div class="in"><div class="notch"></div><div class="screen">${inner}</div><div class="bar"></div></div></div>`;
+const COL=['#E57373','#64B5F6','#81C784','#BA68C8','#FFB74D','#4DB6AC','#F06292','#7986CB','#A1887F','#90A4AE'];
+
+/* ---------- calculators ---------- */
+function goodCalc(id){return `<div class="calc-g" style="display:flex;flex-direction:column;height:100%"><div class="disp"><div class="ex" id="${id}x"></div><div class="res" id="${id}r">0</div></div><div class="keys">
+<button class="k c" data-v="C">C</button><button class="k op" data-v="÷">÷</button><button class="k op" data-v="×">×</button><button class="k op" data-v="−">−</button>
+<button class="k" data-v="7">7</button><button class="k" data-v="8">8</button><button class="k" data-v="9">9</button><button class="k op" data-v="+">+</button>
+<button class="k" data-v="4">4</button><button class="k" data-v="5">5</button><button class="k" data-v="6">6</button><button class="k eq" data-v="=" style="grid-row:3 / span 3;grid-column:4">=</button>
+<button class="k" data-v="1">1</button><button class="k" data-v="2">2</button><button class="k" data-v="3">3</button>
+<button class="k" data-v="0" style="grid-column:span 2">0</button><button class="k" data-v=".">.</button></div></div>`}
+const BADK=['9','=','÷','3','%','M+','7','C','1','×','√','5','x²','8','4','MR','−','0','+','6','2','(',')','π','.','±','MC','⌫'];
+function badCalc(id){return `<div class="calc-b" style="display:flex;flex-direction:column;height:100%"><div class="top"><span>MENU</span><span>THEME</span><span>SHARE</span><span>HELP</span><span>SETTINGS</span><span>MORE</span><span>★</span></div><div class="disp" id="${id}r">0</div><div class="keys">${BADK.map((k,i)=>`<button class="k" data-v="${k}" style="background:${COL[(i*3)%COL.length]}">${k}</button>`).join('')}</div><button class="ad" data-v="AD">🎉 ${L==='th'?'กดเลย! รับของรางวัล':'TAP NOW! Win a prize'} 🎉</button></div>`}
+
+/* ---------- 1 compare ---------- */
+const Q=[
+ {app:['เครื่องคิดเลข','Calculator'],task:['ถ้าต้องกด 7 + 5 = ให้เร็วที่สุด จะใช้หน้าจอไหน?','To press 7 + 5 = as fast as possible, which screen would you use?'],
+  A:()=>badCalc('qa'),B:()=>goodCalc('qb'),good:'B',
+  ok:[[0,'ตัวเลขใหญ่ เห็นโจทย์และคำตอบ','Big numbers show the sum and answer'],[1,'ปุ่ม = ใหญ่ สีส้ม อยู่มุมขวาล่าง','A big orange = in the bottom right'],[2,'ตัวเลขตรงกลาง เครื่องหมายด้านขวา','Numbers in the middle, operations on the right']],
+  no:[[3,'มีเมนูและโฆษณาที่ไม่ต้องใช้','Extra menus and an ad'],[1,'ปุ่มเล็ก ปุ่ม = หาไม่เจอ','Tiny buttons, = is hard to find']]},
+ {app:['นาฬิกาจับเวลา','Timer'],task:['อยากเริ่มจับเวลาให้เร็วที่สุด จะใช้หน้าจอไหน?','You want to start the timer quickly. Which screen?'],
+  A:()=>`<div class="mk"><div class="h">⏱ ${L==='th'?'จับเวลา':'Timer'}</div><div class="big">00:30</div><div style="flex:1"></div><div class="row2"><div class="b" style="background:#1E9E6A;font-size:20px">▶ ${L==='th'?'เริ่ม':'Start'}</div><div class="b" style="background:#D9534F;font-size:20px">■ ${L==='th'?'หยุด':'Stop'}</div></div></div>`,
+  B:()=>`<div class="mk"><div class="row2 tiny" style="gap:3px;flex-wrap:wrap">${['LAP','SPLIT','MODE','ALARM','THEME','SYNC'].map(x=>`<span style="background:#eee;border-radius:3px;padding:1px 4px">${x}</span>`).join('')}</div><div style="font-size:20px;text-align:center;color:#bbb">00:30</div><div class="row2" style="gap:4px">${['▶','■','⟲','⏸','⏭'].map(x=>`<div class="b" style="background:#999;padding:4px 0;font-size:11px">${x}</div>`).join('')}</div><div style="flex:1"></div><div class="ad2">${L==='th'?'ดาวน์โหลดเกมใหม่!':'Download a new game!'}</div></div>`,
+  good:'A',ok:[[0,'เวลาตัวใหญ่ อ่านง่าย','Big, easy-to-read time'],[1,'ปุ่มเริ่ม/หยุดใหญ่ มีสีและคำบอก','Big Start/Stop buttons with colour and words']],
+  no:[[1,'ปุ่มเล็ก สีเทาเหมือนกันหมด เดายาก','Small grey buttons that all look the same'],[3,'เมนูเยอะ มีโฆษณา','Lots of menus and an ad']]},
+ {app:['เครื่องเล่นเพลง','Music player'],task:['อยากกดเล่นเพลงถัดไป จะใช้หน้าจอไหน?','You want to skip to the next song. Which screen?'],
+  A:()=>`<div class="mk"><div class="h">♪</div><div style="height:90px;border-radius:10px;background:linear-gradient(135deg,#B39DDB,#80DEEA)"></div><div class="tiny" style="text-align:center;color:#999">song_final_v2.mp3</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">${['⏮','⏯','⏭','🔀','🔁','❤','⬇','⋯'].map(x=>`<div style="background:#f0f0f0;border-radius:4px;text-align:center;font-size:11px;padding:4px 0">${x}</div>`).join('')}</div><div class="ad2">${L==='th'?'สมัครพรีเมียม!':'Go Premium!'}</div></div>`,
+  B:()=>`<div class="mk"><div style="height:120px;border-radius:12px;background:linear-gradient(135deg,#B39DDB,#80DEEA)"></div><div style="text-align:center;font-weight:700">${L==='th'?'เพลงโปรดของฉัน':'My Favourite Song'}</div><div style="flex:1"></div><div class="row2" style="align-items:center"><div style="flex:1;text-align:center;font-size:24px">⏮</div><div style="width:64px;height:64px;border-radius:50%;background:#00A3B4;color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center">⏯</div><div style="flex:1;text-align:center;font-size:24px">⏭</div></div><div style="height:8px"></div></div>`,
+  good:'B',ok:[[0,'ชื่อเพลงอ่านง่าย','The song title is easy to read'],[1,'ปุ่มเล่นใหญ่ตรงกลาง ปุ่มก่อน/ถัดไปอยู่ข้าง ๆ','A big Play button in the middle, Back/Next beside it'],[3,'มีเฉพาะปุ่มที่ใช้บ่อย','Only the buttons people use most']],
+  no:[[2,'ปุ่มทุกแบบปนกันขนาดเท่ากัน','Every button mixed together at the same size'],[3,'มีโฆษณา','There is an ad']]},
+ {app:['เมนูเกม','Game menu'],task:['อยากเริ่มเล่นเกมทันที จะใช้หน้าจอไหน?','You want to start playing right away. Which screen?'],
+  A:()=>`<div class="mk" style="background:#1C2533;color:#fff"><div style="text-align:center;font-size:26px;font-weight:700;margin-top:20px">🚀 Space Run</div><div style="flex:1"></div><div class="b" style="background:#FDD736;color:#29384C;font-size:24px;padding:16px 0">▶ ${L==='th'?'เล่นเลย':'PLAY'}</div><div class="row2"><div class="b" style="background:#3B4C63;font-size:13px">⚙ ${L==='th'?'ตั้งค่า':'Settings'}</div><div class="b" style="background:#3B4C63;font-size:13px">🏆 ${L==='th'?'คะแนน':'Scores'}</div></div></div>`,
+  B:()=>`<div class="mk" style="background:#1C2533;color:#fff"><div class="tiny" style="display:flex;flex-wrap:wrap;gap:3px">${['SHOP','GIFTS','EVENTS','NEWS','FRIENDS','VIP','MAIL'].map(x=>`<span style="background:#B03A8C;border-radius:3px;padding:1px 4px">${x}</span>`).join('')}</div><div style="text-align:center;font-size:15px;font-weight:700">🚀 Space Run</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px">${['SHOP','PLAY','SKINS','PASS','QUEST','SPIN'].map(x=>`<div style="background:#3B4C63;border-radius:4px;text-align:center;font-size:9px;padding:8px 0">${x}</div>`).join('')}</div><div style="flex:1"></div><div class="ad2">${L==='th'?'ซื้อเพชร ลด 90%!':'Buy gems 90% off!'}</div></div>`,
+  good:'A',ok:[[1,'ปุ่ม "เล่นเลย" ใหญ่ สีเหลืองเด่นที่สุด','The PLAY button is biggest and brightest'],[2,'ปุ่มรองอยู่ด้วยกันด้านล่าง','Smaller buttons are grouped below']],
+  no:[[1,'ปุ่ม PLAY ขนาดเท่าปุ่มอื่น หาไม่เจอ','PLAY is the same size as everything else'],[3,'ร้านค้า โฆษณา เมนูเต็มจอ','Shop buttons, ads and menus everywhere']]},
+];
+let qi=0;const ans={};
+function renderQ(){
+  const q=Q[qi];
+  document.getElementById('qtitle').textContent=(L==='th'?'ข้อ ':'Round ')+(qi+1)+' · '+q.app[L==='th'?0:1];
+  document.getElementById('qtask').textContent=q.task[L==='th'?0:1];
+  document.getElementById('dots').innerHTML=Q.map((_,i)=>`<i class="${i===qi?'cur':(ans[i]?'done':'')}"></i>`).join('');
+  document.getElementById('pair').innerHTML=['A','B'].map(s=>`<div class="opt" role="button" tabindex="0" data-s="${s}"><div class="lbl">${s}</div>${ph(q[s]().replace(/<button /g,'<div ').replace(/<\/button>/g,'</div>'))}</div>`).join('');
+  document.querySelectorAll('#pair .opt').forEach(b=>{b.onclick=()=>{ans[qi]=b.dataset.s;showReveal()};b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();b.click()}}});
+  document.getElementById('reveal').classList.remove('on');
+  if(ans[qi])showReveal();
+  document.getElementById('prevQ').style.visibility=qi?'visible':'hidden';
+  document.getElementById('nextQ').textContent=qi<Q.length-1?t('next'):(L==='th'?'เริ่มใหม่ ⟲':'Start over ⟲');
+}
+function showReveal(){
+  const q=Q[qi],pick=ans[qi],right=pick===q.good;
+  document.querySelectorAll('#pair .opt').forEach(b=>{b.classList.remove('right','wrong');if(b.dataset.s===q.good)b.classList.add('right');else if(b.dataset.s===pick)b.classList.add('wrong')});
+  const bad=q.good==='A'?'B':'A';
+  document.getElementById('verdict').innerHTML=(right?(L==='th'?'✅ ถูกต้อง! ':'✅ Yes! '):(L==='th'?'🤔 ลองดูอีกที: ':'🤔 Look again: '))+(L==='th'?`หน้าจอ ${q.good} ใช้ง่ายกว่า`:`Screen ${q.good} is easier`);
+  const i=L==='th'?1:2;
+  document.getElementById('reasons').innerHTML=q.ok.map(r=>`<div class="rs ok"><b>${q.good} · ${rn(r[0])}</b>${r[i]}</div>`).join('')+q.no.map(r=>`<div class="rs no"><b>${bad} · ${L==='th'?'ไม่':'Not '}${rn(r[0])}</b>${r[i]}</div>`).join('');
+  document.getElementById('reveal').classList.add('on');
+  document.querySelectorAll('#dots i')[qi].className='cur';
+}
+document.getElementById('nextQ').onclick=()=>{qi=qi<Q.length-1?qi+1:0;if(qi===0)for(const k in ans)delete ans[k];renderQ()};
+document.getElementById('prevQ').onclick=()=>{if(qi>0){qi--;renderQ()}};
+
+/* ---------- 2 speed ---------- */
+const TARGET=['7','+','5','='];
+const S={A:{},B:{}};
+function setupSpeed(){
+  document.getElementById('spA').innerHTML=ph(badCalc('sa'));
+  document.getElementById('spB').innerHTML=ph(goodCalc('sb'));
+  ['A','B'].forEach(s=>{S[s]={i:0,err:0,t0:0,done:false,time:null};document.getElementById('t'+s).textContent='–';document.getElementById('e'+s).textContent='0'});
+  wireCalc('spA','sa','A');wireCalc('spB','sb','B');
+  document.getElementById('speedRes').classList.remove('on');
+}
+function wireCalc(box,id,s){
+  const disp=document.getElementById(id+'r'),ex=document.getElementById(id+'x');
+  let shown='';
+  document.querySelectorAll('#'+box+' [data-v]').forEach(b=>b.onclick=()=>{
+    const st=S[s];if(st.done)return;
+    if(!st.t0){st.t0=performance.now();st.tick=setInterval(()=>{document.getElementById('t'+s).textContent=((performance.now()-st.t0)/1000).toFixed(1)},100)}
+    const v=b.dataset.v;
+    if(v===TARGET[st.i]){st.i++;shown+=(v==='='?'':v);disp.textContent=v==='='?'12':shown;if(ex&&v==='=')ex.textContent='7 + 5';
+      if(st.i===TARGET.length){st.done=true;clearInterval(st.tick);st.time=(performance.now()-st.t0)/1000;document.getElementById('t'+s).textContent=st.time.toFixed(1);document.getElementById(box).querySelector('.phone').classList.add('flash');speedResult()}}
+    else{st.err++;document.getElementById('e'+s).textContent=st.err;b.style.outline='3px solid #D9534F';setTimeout(()=>b.style.outline='',300)}
+  });
+}
+function speedResult(){
+  if(!(S.A.done&&S.B.done))return;
+  const f=S.A.time<S.B.time?'A':'B';
+  const el=document.getElementById('speedRes');
+  el.innerHTML=L==='th'
+   ?`<b>หน้าจอ ${f} เร็วกว่า!</b> A ใช้ ${S.A.time.toFixed(1)} วินาที (กดผิด ${S.A.err} ครั้ง) · B ใช้ ${S.B.time.toFixed(1)} วินาที (กดผิด ${S.B.err} ครั้ง)<br>คุยกันต่อ: อะไรในหน้าจอที่ทำให้กดเร็วขึ้นหรือช้าลง?`
+   :`<b>Screen ${f} was faster!</b> A took ${S.A.time.toFixed(1)}s (${S.A.err} mistakes) · B took ${S.B.time.toFixed(1)}s (${S.B.err} mistakes)<br>Talk about it: what on the screen made it faster or slower?`;
+  el.classList.add('on');
+}
+document.getElementById('speedReset').onclick=setupSpeed;
+
+/* ---------- 3 spot ---------- */
+let found=new Set();
+function setupSpot(){
+  found=new Set();
+  const box=document.getElementById('spotPhone');
+  box.innerHTML=ph(badCalc('sp'));
+  const mark=(n,el)=>{found.add(n);el.classList.add('found-el');updSpot()};
+  box.querySelector('.disp').onclick=e=>mark(1,e.currentTarget);
+  box.querySelectorAll('.keys [data-v]').forEach(b=>b.onclick=()=>b.dataset.v==='='?mark(2,b):mark(3,box.querySelector('.keys')));
+  box.querySelector('.top').onclick=()=>{mark(4,box.querySelector('.top'));box.querySelector('.ad').classList.add('found-el')};
+  box.querySelector('.ad').onclick=()=>{mark(4,box.querySelector('.ad'));box.querySelector('.top').classList.add('found-el')};
+  updSpot();
+}
+function updSpot(){
+  document.getElementById('fcount').textContent=found.size;
+  [1,2,3,4].forEach(n=>{const el=document.getElementById('f'+n);el.classList.toggle('on',found.has(n));el.querySelector('span').textContent=found.has(n)?t('sp'+n):'???'});
+}
+document.getElementById('spotReset').onclick=setupSpot;
+
+/* ---------- 4 fix ---------- */
+const F={disp:0,eq:0,grp:0,clut:0};
+function renderFix(){
+  const goodOrder=['C','÷','×','−','7','8','9','+','4','5','6','1','2','3','0','.'];
+  const mixed=['9','=','÷','3','7','C','1','×','5','8','4','−','0','+','6','2','.'];
+  let keys='';
+  if(F.grp){
+    keys=`<div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,1fr);gap:6px;padding:8px">`+
+      goodOrder.map(k=>{const op='÷×−+'.includes(k),c=k==='C';return `<div class="k ${op?'op':''} ${c?'c':''}" style="${k==='0'?'grid-column:span 2':''}">${k}</div>`}).join('')+
+      `<div class="k ${F.eq?'eq':''}" style="grid-row:3 / span 3;grid-column:4;${F.eq?'font-size:26px':''}">=</div></div>`;
+  }else{
+    keys=`<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:6px">`+mixed.map((k,i)=>k==='='&&F.eq
+      ?`<div class="k eq" style="grid-column:span 2;grid-row:span 2;font-size:24px">=</div>`
+      :`<div class="k" style="height:34px;font-size:13px;color:#fff;background:${COL[(i*3)%COL.length]}">${k}</div>`).join('')+`</div>`;
+  }
+  const disp=F.disp?`<div style="height:100px;background:#F2F6F9;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end;padding:8px 14px"><div style="font-size:13px;color:#6B7886">7 + 5</div><div style="font-size:40px;font-weight:700;line-height:1">12</div></div>`
+                   :`<div class="calc-b"><div class="disp">12</div></div>`;
+  const top=F.clut?'':`<div class="calc-b"><div class="top"><span>MENU</span><span>THEME</span><span>SHARE</span><span>HELP</span><span>SETTINGS</span></div></div>`;
+  const ad=F.clut?'':`<div class="calc-b" style="margin-top:auto"><div class="ad">🎉 ${L==='th'?'กดเลย! รับของรางวัล':'TAP NOW! Win a prize'} 🎉</div></div>`;
+  document.getElementById('fixPhone').innerHTML=ph(`<div style="display:flex;flex-direction:column;height:100%">${top}${disp}${keys}${ad}</div>`);
+  const ks=['disp','eq','grp','clut'];
+  document.getElementById('score').innerHTML=ks.map((k,i)=>`<span class="${F[k]?'on':''}">${F[k]?'✓':'✗'} ${rn(i)}</span>`).join('')+
+    (ks.every(k=>F[k])?`<div style="width:100%;margin-top:8px;font-weight:700;color:var(--good)">${L==='th'?'🎉 เยี่ยม! ครบทั้ง 4 หลักแล้ว ลองไปกดในแท็บ "แข่งกดเร็ว" เทียบกันดู':'🎉 Great! All 4 rules done. Compare it in the Speed test tab.'}</div>`:'');
+}
+document.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{g.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');F[g.dataset.k]=+b.dataset.v;renderFix()}));
+
+/* ---------- tabs + language ---------- */
+document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+b.dataset.tab).classList.add('on');
+});
+function applyLang(){
+  document.documentElement.lang=L;
+  document.querySelectorAll('[data-t]').forEach(el=>{if(T[el.dataset.t])el.textContent=t(el.dataset.t)});
+  document.getElementById('lth').classList.toggle('on',L==='th');document.getElementById('len').classList.toggle('on',L==='en');
+  renderQ();setupSpeed();setupSpot();renderFix();
+  try{localStorage.setItem('cg-lang',L)}catch(e){}
+}
+document.getElementById('lth').onclick=()=>{L='th';applyLang()};
+document.getElementById('len').onclick=()=>{L='en';applyLang()};
+try{const s=localStorage.getItem('cg-lang');if(s==='en'||s==='th')L=s;const q=new URLSearchParams(location.search).get('lang');if(q==='en'||q==='th')L=q}catch(e){}
+applyLang();
+try{const tb=new URLSearchParams(location.search).get('tab');const b=tb&&document.querySelector('nav.tabs button[data-tab="'+tb+'"]');if(b)b.click()}catch(e){}
+</script>
+</body>
+</html>
